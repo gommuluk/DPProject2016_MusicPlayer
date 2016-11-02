@@ -17,6 +17,7 @@ import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 public class PlayerTab extends JPanel {
@@ -82,20 +83,19 @@ public class PlayerTab extends JPanel {
     }
 
     //add whole Buttons
-    private void addButtonImage(JButton button, String imageFileName) throws IOException {
-        Image buttonImage = ImageIO.read(new File("./"+ imageFileName));
+    private void addButtonImage(JButton button, String imageFileName) throws IOException, URISyntaxException {
+        Image buttonImage = ImageIO.read(new File(getClass().getResource(imageFileName).toURI()));
         buttonImage = buttonImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         button.setIcon(new ImageIcon(buttonImage));
-
     }
 
     private void addPlayButton() {
         playButton = new JButton();
-        
+
         /* buttons setting */
         try {
             addButtonImage(playButton, "play.jpg");
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             playButton.setText("▶");
         }
 
@@ -136,9 +136,9 @@ public class PlayerTab extends JPanel {
         seekPreviousButton = new JButton();
 
         try {
-            addButtonImage(seekPreviousButton, "seek-Previous.png");
+            addButtonImage(seekPreviousButton, "seek-previous.png");
 
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             seekPreviousButton.setText("<<");
         }
 
@@ -155,7 +155,7 @@ public class PlayerTab extends JPanel {
         stopButton = new JButton();
         try {
             addButtonImage(stopButton, "stop.png");
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             stopButton.setText("■");
         }
 
@@ -172,8 +172,8 @@ public class PlayerTab extends JPanel {
     private void addPlayModeButton() {
         playModeButton = new JButton();
         try {
-        	addButtonImage(playModeButton,"loop");
-        } catch (Exception e) {
+        	addButtonImage(playModeButton,"loop.png");
+        } catch (IOException | URISyntaxException e) {
             playModeButton.setText("A/R");
         }
 
@@ -181,15 +181,15 @@ public class PlayerTab extends JPanel {
             if (CurrentMusic.playMode == 0) {
                 CurrentMusic.playMode++;
                 playModeButton.setText("A/N");
-                
+
             } else if (CurrentMusic.playMode == 1) {
                 CurrentMusic.playMode++;
                 playModeButton.setText("O/R");
-                
+
             } else {
                 CurrentMusic.playMode = 0;
                 playModeButton.setText("A/R");
-                
+
             }
         });
         buttonPanel.add(playModeButton);
@@ -261,7 +261,7 @@ public class PlayerTab extends JPanel {
 
         try {
             if (musicImage == null) {
-                musicImage = ImageIO.read(new File("./"+ "defaultImage.jpg"));
+                musicImage = ImageIO.read(getClass().getResource("defaultImage.jpg"));
             }
             musicImage = musicImage.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
 
@@ -314,7 +314,7 @@ public class PlayerTab extends JPanel {
         starButton.setText("★");
         try {
             addButtonImage(playButton, "play.jpg");
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             playButton.setText("▶");
         }
     }
