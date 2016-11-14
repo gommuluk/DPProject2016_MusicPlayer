@@ -34,8 +34,7 @@ public class Lyric_Repeat extends Thread {
                 msec = total % 100;
 
             }
-            PlayerTab.text.setText(c.lyricShow(min, sec, msec));
-            PlayerTab.text.updateUI();
+            PlayerTab.lyric.setText(c.lyricShow(min, sec, msec));
         }
     }
 

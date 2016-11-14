@@ -7,49 +7,70 @@ import Music.Music;
 import Music.MusicListManager;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import org.omg.CORBA.Current;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
-public class PlayerTab extends JPanel {
+public class PlayerTab extends JFXPanel {
 
-    public static JLabel text;
-    private final JFXPanel fxPanel = new JFXPanel();
-    private final JPanel buttonPanel = new JPanel(new GridLayout(2, 3, 30, 10));
+    private VBox root = new VBox();
+
+    public static Label lyric;
+
     /* Music info -> Image, name */
-    private JPanel musicInfoPanel;
-    private JLabel musicName;
+    private BorderPane musicInfoPanel;
+    private Label musicName;
     private Image musicImage;
-    private JLabel musicImageLabel;
+    private ImageView musicImageView;
+
     /* Buttons */
-    private JButton playButton;
-    private JButton seekNextButton;
-    private JButton seekPreviousButton;
-    private JButton stopButton;
-    private JButton playModeButton;
-    private JButton starButton; // for favorite
-    private JSlider volumeSlider;
-    private JSlider currentTimeSlider;
+    private TilePane buttonPanel;
+    private Button playButton;
+    private Button seekNextButton;
+    private Button seekPreviousButton;
+    private Button stopButton;
+    private Button playModeButton;
+    private Button starButton; // for favorite
+    private Slider volumeSlider;
+    private Slider currentTimeSlider;
     private Tab tabPanel;
 
     public PlayerTab() {
-
         this.setPreferredSize(new Dimension(240, 300));
-        this.setBackground(Color.BLACK);
+        this.setVisible(true);
 
+        Platform.runLater(() -> {
+            initFX(this);
+        });
+    }
+
+    // can play media using javafx scene and mediaplayer
+    private void initFX(JFXPanel fxPanel) {
+        Scene scene = initScene();
+        fxPanel.setScene(scene);
+    }
+
+    private Scene initScene() {
         addImageLabel();
 
         addCurrentTimeSlider();
 
+        buttonPanel = new TilePane();
         addSeekPreviousButton();
         addPlayButton();
         addSeekNextButton();
@@ -58,126 +79,120 @@ public class PlayerTab extends JPanel {
         addStopButton();
         addStarButton();
 
-        buttonPanel.setBackground(Color.black);
-        this.add(buttonPanel);
+        root.getChildren().add(buttonPanel);
         addVolumeSlider();
-        //TODO!!!!!
-        addLyric();
+//        //TODO!!!!!
+//        addLyric();
 
-        Platform.runLater(() -> initFX(fxPanel));
-        fxPanel.setSize(0, 0);
-
-        this.add(fxPanel);
-        this.setVisible(true);
+        return (new Scene(root, Color.GREENYELLOW));
     }
 
-    private void initFX(JFXPanel fxPanel) {
-        Scene scene = initScene();
-        fxPanel.setScene(scene);
-    }                                   // can play media using javafx scene and mediaplayer
+    private void addImageLabel() {
+        if (musicImage == null) {
+            musicImage = new Image(getClass().getResourceAsStream("defaultImage.jpg"), 200, 200, true, true);
+        }
 
-    private Scene initScene() {
-        Group root = new Group();
+        musicImageView = new ImageView(musicImage);
 
-        return (new Scene(root, javafx.scene.paint.Color.GREENYELLOW));
+        musicInfoPanel = new BorderPane();
+        musicInfoPanel.setCenter(musicImageView);
+
+        musicName = new Label("Ready");
+        musicName.setTextFill(Color.WHITE);
+        musicName.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        musicInfoPanel.setPrefSize(30, 30);
+        musicInfoPanel.setBottom(musicName);
+
+        root.getChildren().add(musicInfoPanel);
+    }
+
+    private void addCurrentTimeSlider() {
+        // TODO
+        // horizontal plz
+        currentTimeSlider = new Slider();
+        currentTimeSlider.setValueChanging(true);
+        currentTimeSlider.setMax(100);
+        currentTimeSlider.setMin(100);
+        CurrentMusic currentMusic = CurrentMusic.getInstance();
+
+        currentTimeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double percent = (newValue.floatValue() - currentTimeSlider.getMin()) / (currentTimeSlider.getMax() - currentTimeSlider.getMin());
+            currentMusic.seek((float)percent);
+        });
+
+        currentTimeSlider.setValue(currentTimeSlider.getMin());
+
+        currentMusic.addChangeTimeEvent(currentTimeSlider, (Slider jSlider) -> {
+            Platform.runLater(() -> {
+                Optional<Duration> currentTimeOptional = currentMusic.getCurrentTime();
+                Optional<Duration> totalTimeOptional = currentMusic.getTotalTime();
+                if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent()) {
+                    double percent = currentTimeOptional.get().toMillis() / totalTimeOptional.get().toMillis();
+                    jSlider.setValue((int) (percent * (jSlider.getMax() - jSlider.getMin())) + jSlider.getMin());
+                }
+            });
+        });
+        root.getChildren().add(currentTimeSlider);
     }
 
     //add whole Buttons
-    private void addButtonImage(JButton button, String imageFileName) throws IOException, URISyntaxException {
-        Image buttonImage = ImageIO.read(new File(getClass().getResource(imageFileName).toURI()));
-        buttonImage = buttonImage.getScaledInstance(20, 20, Image.SCALE_DEFAULT);
-        button.setIcon(new ImageIcon(buttonImage));
+    private void addButtonImage(Button button, String imageFileName) {
+        Image buttonImage = new Image(getClass().getResourceAsStream(imageFileName), 20, 20, true, true);
+        if (buttonImage.getWidth() != 0) {
+            button.setText(null);
+            button.setGraphic(new ImageView(buttonImage));
+        }
+    }
+
+    private void addSeekPreviousButton() {
+        seekPreviousButton = new Button("<<");
+
+        addButtonImage(seekPreviousButton, "seek-previous.png");
+
+        seekPreviousButton.setOnAction(event -> {
+            CurrentMusic currentMusic = CurrentMusic.getInstance();
+            currentMusic.seekPrevious();
+        });
+        buttonPanel.getChildren().add(seekPreviousButton);
     }
 
     private void addPlayButton() {
-        playButton = new JButton();
+        playButton = new Button("▶");
 
-        /* buttons setting */
-        try {
-            addButtonImage(playButton, "play.jpg");
-        } catch (IOException | URISyntaxException e) {
-            playButton.setText("▶");
-        }
+        addButtonImage(playButton, "play.jpg");
 
-        playButton.addActionListener(e -> {
+        playButton.setOnAction(event -> {
             CurrentMusic currentMusic = CurrentMusic.getInstance();
             if (currentMusic.isPlayable()) {
                 CurrentMusic.getInstance().play();
-                try {
-                    addButtonImage(playButton, "pause.png");
-                } catch (Exception k) {
-                    playButton.setText("||");
-                }
+                playButton.setText("||");
+                addButtonImage(playButton, "pause.png");
                 MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().toMusic());
             } else {
                 CurrentMusic.getInstance().pause();
                 reset();
             }
         });
-        buttonPanel.add(playButton);
+        buttonPanel.getChildren().add(playButton);
     }
 
     private void addSeekNextButton() {
-        seekNextButton = new JButton();
-        try {
-            addButtonImage(seekNextButton, "seek-next.png");
-        } catch (Exception e) {
-            seekNextButton.setText(">>");
-        }
+        seekNextButton = new Button(">>");
+        addButtonImage(seekNextButton, "seek-next.png");
 
-        seekNextButton.addActionListener(e -> {
+        seekNextButton.setOnAction(event -> {
             CurrentMusic currentMusic = CurrentMusic.getInstance();
             currentMusic.seekNext();
         });
-        buttonPanel.add(seekNextButton);
-    }
-
-    private void addSeekPreviousButton() {
-        seekPreviousButton = new JButton();
-
-        try {
-            addButtonImage(seekPreviousButton, "seek-previous.png");
-
-        } catch (IOException | URISyntaxException e) {
-            seekPreviousButton.setText("<<");
-        }
-
-        seekPreviousButton.addActionListener(e -> {
-            CurrentMusic currentMusic = CurrentMusic.getInstance();
-            currentMusic.seekPrevious();
-        });
-
-        buttonPanel.add(seekPreviousButton);
-
-    }
-
-    private void addStopButton() {
-        stopButton = new JButton();
-        try {
-            addButtonImage(stopButton, "stop.png");
-        } catch (IOException | URISyntaxException e) {
-            stopButton.setText("■");
-        }
-
-        stopButton.addActionListener(e -> {
-            CurrentMusic currentMusic = CurrentMusic.getInstance();
-            currentMusic.stop();
-            reset();
-        });
-        buttonPanel.add(stopButton);
-
-
+        buttonPanel.getChildren().add(seekNextButton);
     }
 
     private void addPlayModeButton() {
-        playModeButton = new JButton();
-        try {
-        	addButtonImage(playModeButton,"loop.png");
-        } catch (IOException | URISyntaxException e) {
-            playModeButton.setText("A/R");
-        }
+        playModeButton = new Button("A/R");
+        addButtonImage(playModeButton,"loop.png");
 
-        playModeButton.addActionListener(e -> {
+        playModeButton.setOnAction(event -> {
             if (CurrentMusic.playMode == 0) {
                 CurrentMusic.playMode++;
                 playModeButton.setText("A/N");
@@ -192,109 +207,57 @@ public class PlayerTab extends JPanel {
 
             }
         });
-        buttonPanel.add(playModeButton);
+        buttonPanel.getChildren().add(playModeButton);
     }
 
-    private void addVolumeSlider() {
-        //vertical plz
-        volumeSlider = new JSlider();
+    private void addStopButton() {
+        stopButton = new Button("■");
 
-        // TODO add graphic option
-        volumeSlider.addChangeListener(evt -> {
-            float volume = (float) (volumeSlider.getValue() - volumeSlider.getMinimum()) / (volumeSlider.getMaximum() - volumeSlider.getMinimum());
+        addButtonImage(stopButton, "stop.png");
+
+        stopButton.setOnAction(e -> {
             CurrentMusic currentMusic = CurrentMusic.getInstance();
-            currentMusic.setVolume(volume);
+            currentMusic.stop();
+            reset();
         });
-        volumeSlider.setBackground(Color.BLACK);
-        volumeSlider.setPaintTicks(true);
-        volumeSlider.setForeground(Color.white);
-        this.add(volumeSlider);
-    }
-
-    private void addCurrentTimeSlider() {
-        // TODO
-        // horizontal plz
-        currentTimeSlider = new JSlider();
-        currentTimeSlider.setEnabled(true);
-        CurrentMusic currentMusic = CurrentMusic.getInstance();
-
-        currentTimeSlider.addChangeListener(evt -> {
-            float percent = (float) (currentTimeSlider.getValue() - currentTimeSlider.getMinimum()) / (currentTimeSlider.getMaximum() - currentTimeSlider.getMinimum());
-            currentMusic.seek(percent);
-        });
-        currentTimeSlider.setBackground(Color.BLACK);
-        currentTimeSlider.setPaintTicks(true);
-        currentTimeSlider.setForeground(Color.white);
-
-        currentTimeSlider.setValue(currentTimeSlider.getMinimum());
-
-        currentMusic.addChangeTimeEvent(currentTimeSlider, (JSlider jSlider) -> {
-            SwingUtilities.invokeLater(() -> {
-                Optional<Duration> currentTimeOptional = currentMusic.getCurrentTime();
-                Optional<Duration> totalTimeOptional = currentMusic.getTotalTime();
-                if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent()) {
-                    double percent = currentTimeOptional.get().toMillis() / totalTimeOptional.get().toMillis();
-                    jSlider.setValue((int) (percent * (jSlider.getMaximum() - jSlider.getMinimum())) + jSlider.getMinimum());
-                }
-            });
-        });
-        this.add(currentTimeSlider);
+        buttonPanel.getChildren().add(stopButton);
     }
 
     private void addStarButton() {
-        //TODO
-        starButton = new JButton("★");
-        starButton.addActionListener(e -> {
+        starButton = new Button("★");
+        starButton.setOnAction(e -> {
             Music temp = CurrentMusic.getInstance().toMusic();
             if (MusicList.listNum != 1) {
                 MusicListManager.getInstance().addToFavoriteMusicList(temp);
-
             } else {
                 MusicListManager.getInstance().deleteToFavoriteMusicList(temp);
                 tabPanel.getFavoriteButton().doClick();
             }
         });
-        buttonPanel.add(starButton);
+        buttonPanel.getChildren().add(starButton);
     }
 
-    private void addImageLabel() {
+    private void addVolumeSlider() {
+        //vertical plz
+        volumeSlider = new Slider();
 
-        try {
-            if (musicImage == null) {
-                musicImage = ImageIO.read(getClass().getResource("defaultImage.jpg"));
-            }
-            musicImage = musicImage.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
+        // TODO implements with progress bar
+        volumeSlider.setMin(0);
+        volumeSlider.setMin(100);
 
-            musicImageLabel = new JLabel(new ImageIcon(musicImage));
-
-            musicInfoPanel = new JPanel();
-            musicInfoPanel.setLayout(new BorderLayout());
-            musicInfoPanel.add(musicImageLabel, BorderLayout.CENTER);
-
-            musicName = new JLabel();
-            musicName.setText("Ready");
-            musicName.setForeground(Color.WHITE);
-            musicName.setBackground(Color.darkGray);
-            musicName.setOpaque(true);
-
-            musicInfoPanel.setSize(30, 30);
-            musicInfoPanel.add(musicName, BorderLayout.SOUTH);
-
-            this.add(musicInfoPanel);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            double volume = (newValue.doubleValue() - volumeSlider.getMin()) / (volumeSlider.getMax() - volumeSlider.getMin());
+            CurrentMusic.getInstance().setVolume((float)volume);
+        });
+        root.getChildren().add(volumeSlider);
     }
 
     private void replaceMusicInfo() {
         try {
             Music music = CurrentMusic.getInstance().toMusic();
             if (music.getAlbumArt() != null) {
-                musicImage = ImageIO.read(new ByteArrayInputStream(music.getAlbumArt()));
-                musicImage = musicImage.getScaledInstance(200, 200, Image.SCALE_DEFAULT);
-                musicImageLabel.removeAll();
-                musicImageLabel.setIcon(new ImageIcon(musicImage));
+                musicImage = new Image(new ByteArrayInputStream(music.getAlbumArt()), 200, 200, true, true);
+                musicImageView.setImage(musicImage);
             }
             musicName.setText(FilePathParser.getFileName(music.getFilename()));
         } catch (Exception e) {
@@ -302,37 +265,36 @@ public class PlayerTab extends JPanel {
     }
 
     public void doStop() {
-        stopButton.doClick();
+        Platform.runLater(() -> stopButton.fire());
     }
 
     public void doPlay() {
-        replaceMusicInfo();
-        playButton.doClick();
+        Platform.runLater(() -> {
+            replaceMusicInfo();
+            playButton.fire();
+        });
     }
 
     public void reset() {
-        starButton.setText("★");
-        try {
-            addButtonImage(playButton, "play.jpg");
-        } catch (IOException | URISyntaxException e) {
+        Platform.runLater(() -> {
+            starButton.setText("★");
             playButton.setText("▶");
-        }
+            addButtonImage(playButton, "play.jpg");
+        });
     }
 
     public void connectPanels(Tab tabPanel) {
         this.tabPanel = tabPanel;
     }
 
-    private void addLyric() {
-        text = new JLabel();
-
-        text.setOpaque(true);
-        text.setBackground(Color.BLACK);
-        text.setForeground(Color.WHITE);
-        text.setSize(30, 30);
-        add(text);
-
-        new Lyric_Repeat();
-        //buttonPanel.add(text1);
-    }
+//    private void addLyric() {
+//        lyric = new Label();
+//
+//        lyric.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+//        lyric.setTextFill(Color.WHITE);
+//        lyric.setPrefSize(30, 30);
+//
+//        // new Lyric_Repeat();
+//        //buttonPanel.add(text1);
+//    }
 }
