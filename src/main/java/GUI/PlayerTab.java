@@ -239,15 +239,11 @@ public class PlayerTab extends JFXPanel {
 
     private void addVolumeSlider() {
         //vertical plz
-        volumeSlider = new Slider();
+        volumeSlider = new Slider(0, 1, 0.5);
 
         // TODO implements with progress bar
-        volumeSlider.setMin(0);
-        volumeSlider.setMin(100);
-
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            double volume = (newValue.doubleValue() - volumeSlider.getMin()) / (volumeSlider.getMax() - volumeSlider.getMin());
-            CurrentMusic.getInstance().setVolume((float)volume);
+            CurrentMusic.getInstance().setVolume(newValue.floatValue());
         });
         root.getChildren().add(volumeSlider);
     }
