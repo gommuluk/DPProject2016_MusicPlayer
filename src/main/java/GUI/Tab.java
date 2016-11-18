@@ -8,11 +8,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
 
-class Tab extends JFXPanel {
+class Tab extends Pane {
     /* whole Buttons in Music List Tab */
     private final Button allMusic = new Button("전체 음악");
     private final Button favoriteMusic = new Button("즐겨찾기");
@@ -20,27 +21,12 @@ class Tab extends JFXPanel {
 
 
     private GridPane buttonPanel;
-    private Group root;
     private MusicList musicList;
     private PlayerTab playerTab;
 
     public static int listNum = 0;
 
     public Tab() {
-        this.setVisible(true);
-        Platform.runLater(() -> {
-            initFX(this);
-        });
-
-    }
-
-    private void initFX(Tab tab) {
-        root = new Group();
-        Scene scene = createScene();
-        tab.setScene(scene);
-    }
-
-    private Scene createScene() {
         setActionListeners();
         buttonPanel = new GridPane();
         buttonPanel.setHgap(10);
@@ -49,8 +35,8 @@ class Tab extends JFXPanel {
         buttonPanel.add(allMusic, 0, 0);
         buttonPanel.add(favoriteMusic, 0, 1);
         buttonPanel.add(recentMusic, 0, 2);
-        root.getChildren().add(buttonPanel);
-        return (new Scene(root, Color.ALICEBLUE));
+        this.getChildren().add(buttonPanel);
+        this.setVisible(true);
     }
 
     /* can add buttons into Panel. this Function executed when this Object initialize */
@@ -91,5 +77,6 @@ class Tab extends JFXPanel {
     public Button getFavoriteButton() {
         return this.favoriteMusic;
     }
+
 
 }
