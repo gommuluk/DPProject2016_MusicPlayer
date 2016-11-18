@@ -1,6 +1,8 @@
 package GUI;
 
-import javax.swing.*;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.Label;
+
 
 /**
  * Created by Elliad on 2015-12-08.
@@ -9,12 +11,15 @@ import javax.swing.*;
  */
 public class ErrorDetector {
     public ErrorDetector() {
-        JFrame errorFrame = new JFrame("Error");
-        errorFrame.add(new JLabel("\tCannot Find chosen File"));
-
-        errorFrame.setSize(200, 50);
-        errorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+    	
+    	TitledPane errorFrame = new TitledPane();
+    	errorFrame.setText("Error");
+    	errorFrame.getChildrenUnmodifiable().add(new Label("\tCannot Find chosen File"));
+    	errorFrame.setPrefSize(200, 50);
         errorFrame.setVisible(true);
+    	
+//    	BorderPane errorFrame = new BorderPane ("Error");
+//        errorFrame.add(new Label("\tCannot Find chosen File"));     
+
     }
 }
