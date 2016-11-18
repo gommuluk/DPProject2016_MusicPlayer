@@ -37,6 +37,8 @@ class Toolbar extends JMenuBar {
     /* Constructor */
     public Toolbar(MusicList musicList) {
         onCreate(musicList);
+        onAlarmToolBarCreate();
+    	onAutomaticShutdownToolBarCreate();
     }
 
     /* Constructor */
