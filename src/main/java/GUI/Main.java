@@ -22,7 +22,7 @@ class Main {
         Tab tabPanel = new Tab();                                       // Button Tab Panel
 
         playerPanel.connectPanels(tabPanel);                            // Connect Panels
-        tabPanel.connectPanels(playerPanel);                            // Connect Panels
+        tabPanel.connectPanels(playerPanel, musicList);                            // Connect Panels
 
         CurrentMusic.getInstance().setPlayerTab(playerPanel);           // SetUp Panels
         this.mainFrame.setLayout(new BorderLayout());                                           //Setting Layout and add Panels start
@@ -30,7 +30,7 @@ class Main {
 
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.mainFrame.add(tabPanel.createTab(musicList), BorderLayout.WEST);
+        this.mainFrame.add(tabPanel, BorderLayout.WEST);
         this.mainFrame.add(new JScrollPane(musicList.getPanel()), BorderLayout.CENTER);
         this.mainFrame.add(playerPanel, BorderLayout.EAST);
 

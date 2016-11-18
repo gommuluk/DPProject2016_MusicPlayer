@@ -251,7 +251,7 @@ public class PlayerTab extends JPanel {
 
             } else {
                 MusicListManager.getInstance().deleteToFavoriteMusicList(temp);
-                tabPanel.getFavoriteButton().doClick();
+                tabPanel.getFavoriteButton().fire();
             }
         });
         buttonPanel.add(starButton);
