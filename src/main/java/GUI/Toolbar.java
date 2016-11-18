@@ -16,9 +16,9 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
-class Toolbar extends JMenuBar {
+class Toolbar extends MenuBar {
     /* These Menus are create into ToolBar */
-	private final MenuBar menuBar = new MenuBar();
+	//private final MenuBar menuBar = new MenuBar();
     //private final JMenu fileMenu = new JMenu("File Path");
 	private final Menu fileMenu = new Menu("_File Path");
     //private final JMenuItem setMenuItem = new JMenuItem("Set");
@@ -62,10 +62,10 @@ class Toolbar extends JMenuBar {
 
         //add menu to this
         //this.add(fileMenu);
-        menuBar.getMenus().add(fileMenu);
+        this.getMenus().add(fileMenu);
 
         //add this to the frame
-        menuBar.setVisible(true);
+        this.setVisible(true);
 
         /*setMenuItem.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
@@ -130,10 +130,10 @@ class Toolbar extends JMenuBar {
         alarmMenu.getItems().add(setAlarmMenuItem);
         
         //add menu to this
-        menuBar.getMenus().addAll(alarmMenu);
+        this.getMenus().addAll(alarmMenu);
         
         //add this to the frame
-        menuBar.setVisible(true);
+        this.setVisible(true);
         
         setAlarmMenuItem.setOnAction(e -> new AlarmFrame());
     }
@@ -148,10 +148,10 @@ class Toolbar extends JMenuBar {
         automaticShutdownMenu.getItems().add(setAutomaticShutdownMenuItem);
         
         //add menu to this
-        menuBar.getMenus().addAll(automaticShutdownMenu);
+        this.getMenus().addAll(automaticShutdownMenu);
         
         //add this to the frame
-        menuBar.setVisible(true);
+        this.setVisible(true);
         
         setAutomaticShutdownMenuItem.setOnAction(e -> {
             new ShutdownFrame();

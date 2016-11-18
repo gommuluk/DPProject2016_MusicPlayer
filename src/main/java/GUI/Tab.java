@@ -71,7 +71,7 @@ class Tab extends Pane {
         musicList.arrayListToListModel(MusicListManager.getInstance().nowList());
         musicList.getPanel().updateUI();
         playerTab.reset();
-        playerTab.updateUI();
+        //playerTab.updateUI();
     }
     /* can give Favorite List Button */
     public Button getFavoriteButton() {
