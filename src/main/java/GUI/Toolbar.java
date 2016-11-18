@@ -5,6 +5,8 @@ import Util.RecursiveFinder;
 
 import javax.swing.*;
 
+import FileIO.FileIO;
+
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.stage.*;
+import java.io.File;
 
 class Toolbar extends MenuBar {
     /* These Menus are create into ToolBar */
@@ -94,13 +98,13 @@ class Toolbar extends MenuBar {
         });*/
         
         setMenuItem.setOnAction(e -> {
-            JFileChooser chooser = new JFileChooser();
-            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int returnVal = chooser.showOpenDialog(null);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
+            DirectoryChooser chooser = new DirectoryChooser();
+            //chooser.setFileSelectionMode(FileChooser);
+            File returnVal = chooser.showDialog(null);
+            if (returnVal != null) {
                 try {
                     RecursiveFinder finder = new RecursiveFinder(
-                            chooser.getSelectedFile().getPath());
+                            chooser.getInitialDirectory().toString());
                     String[] paths = finder.find()
                             .stream()
                             .map(Path::toAbsolutePath)
