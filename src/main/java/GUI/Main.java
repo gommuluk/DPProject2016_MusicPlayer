@@ -9,10 +9,10 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;;
 
-class Main extends Application{
+public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
-        BorderPane root = new BorderPane ();
+        BorderPane root = new BorderPane();
         Scene scene = new Scene(root,1600, 900);
         FileIO.makeDirectory(System.getProperty("user.home") + "/Desktop/" + "music-info");
         PlayerTab playerPanel = new PlayerTab();                        // Player Panel
@@ -29,13 +29,19 @@ class Main extends Application{
         root.setTop(new Toolbar(musicList));
 
         root.setLeft(tabPanel);
-        root.setCenter(new ScrollBar(musicList.getPanel()));
+        //root.setCenter(new ScrollBar(musicList.getPanel()));
         root.setRight(playerPanel);
 
         root.setVisible(true);
-        primaryStage.setTitle("제목");
+        primaryStage.setTitle("title");
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+    public Main() {
     }
 }
