@@ -3,21 +3,18 @@ package GUI;
 import FileIO.FileIO;
 import Music.CurrentMusic;
 
-import javafx.scene.control.MenuBar;;
-import javafx.scene.layout.BorderPane;;
-import javafx.embed.swing.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;;
 
-
-class Main {
-    private final BorderPane mainPane = new BorderPane ();
-
-    public static void main(String[] args) {
-        Main main = new Main();
+class Main extends Application{
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        BorderPane root = new BorderPane ();
+        Scene scene = new Scene(root,1600, 900);
         FileIO.makeDirectory(System.getProperty("user.home") + "/Desktop/" + "music-info");
-        main.init();
-    }
-
-    private void init() {
         PlayerTab playerPanel = new PlayerTab();                        // Player Panel
         MusicList musicList = new MusicList(playerPanel);               // Music List Panel
         Tab tabPanel = new Tab();                                       // Button Tab Panel
@@ -27,14 +24,18 @@ class Main {
 
         CurrentMusic.getInstance().setPlayerTab(playerPanel);           // SetUp Panels
 
-        this.mainPane.setPrefSize(800, 500);
+        root.setPrefSize(800, 500);
 
-        this.mainPane.setTop(new Toolbar(musicList));
-//        addStackPane(hbox);
-        this.mainPane.setLeft(tabPanel.createTab(musicList));
-        this.mainPane.setCenter(new ScrollBar(musicList.getPanel()));
-        this.mainPane.setRight(playerPanel);
+        root.setTop(new Toolbar(musicList));
 
-        this.mainPane.setVisible(true);                                                        //Setting Layout and add Panels end
+        root.setLeft(tabPanel.createTab(musicList));
+        root.setCenter(new ScrollBar(musicList.getPanel()));
+        root.setRight(playerPanel);
+
+        root.setVisible(true);
+        primaryStage.setTitle("제목");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
     }
 }
