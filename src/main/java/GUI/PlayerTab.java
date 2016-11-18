@@ -26,9 +26,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
-public class PlayerTab extends JFXPanel {
+public class PlayerTab extends VBox {
 
-    private VBox root = new VBox();
 
     public static Label lyric;
 
@@ -51,21 +50,6 @@ public class PlayerTab extends JFXPanel {
     private Tab tabPanel;
 
     public PlayerTab() {
-        this.setPreferredSize(new Dimension(240, 300));
-        this.setVisible(true);
-
-        Platform.runLater(() -> {
-            initFX(this);
-        });
-    }
-
-    // can play media using javafx scene and mediaplayer
-    private void initFX(JFXPanel fxPanel) {
-        Scene scene = initScene();
-        fxPanel.setScene(scene);
-    }
-
-    private Scene initScene() {
         addImageLabel();
 
         addCurrentTimeSlider();
@@ -79,12 +63,14 @@ public class PlayerTab extends JFXPanel {
         addStopButton();
         addStarButton();
 
-        root.getChildren().add(buttonPanel);
+        this.getChildren().add(buttonPanel);
         addVolumeSlider();
 //        //TODO!!!!!
 //        addLyric();
+        this.setPrefSize(240, 300);
+        this.setVisible(true);
 
-        return (new Scene(root, Color.GREENYELLOW));
+
     }
 
     private void addImageLabel() {
@@ -104,7 +90,7 @@ public class PlayerTab extends JFXPanel {
         musicInfoPanel.setPrefSize(30, 30);
         musicInfoPanel.setBottom(musicName);
 
-        root.getChildren().add(musicInfoPanel);
+        this.getChildren().add(musicInfoPanel);
     }
 
     private void addCurrentTimeSlider() {
@@ -133,7 +119,7 @@ public class PlayerTab extends JFXPanel {
                 }
             });
         });
-        root.getChildren().add(currentTimeSlider);
+        this.getChildren().add(currentTimeSlider);
     }
 
     //add whole Buttons
@@ -245,7 +231,7 @@ public class PlayerTab extends JFXPanel {
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             CurrentMusic.getInstance().setVolume(newValue.floatValue());
         });
-        root.getChildren().add(volumeSlider);
+        this.getChildren().add(volumeSlider);
     }
 
     private void replaceMusicInfo() {
