@@ -4,13 +4,8 @@ import FileIO.FileIO;
 
 import GUI.ErrorDetector;
 import GUI.MusicList;
-import com.mpatric.mp3agic.InvalidDataException;
-import com.mpatric.mp3agic.UnsupportedTagException;
 
-import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
-import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -74,7 +69,7 @@ public class MusicListManager {	// manage music objects and it made by singleton
     
     public Music find(String filePath) {	// find music file
         try {
-            Music temp = nowList().get(findIndex(filePath));
+            Music temp = currentList().get(findIndex(filePath));
             if (temp != null) return temp;
             else return null;
         } catch (Exception e) {
@@ -83,22 +78,17 @@ public class MusicListManager {	// manage music objects and it made by singleton
         }
     }
 
-
     public int findIndex(String filePath){	// find music file's index
-        for(Music iter : nowList()){
+        for(Music iter : currentList()){
             if(iter.getFilename().replaceAll("[+]", " ").equals(filePath)){
-                return nowList().indexOf(iter);
+                return currentList().indexOf(iter);
             }
         }
         return -1;
     }
 
     public Music at(int i) {	// return music object
-       return nowList().get(i);
-    }
-
-    public ArrayList<Music> getMusicList() {	// return music list
-        return musicList;
+       return currentList().get(i);
     }
 
     public void addToRecentPlayList(Music music) {	// add to recent play list
@@ -123,9 +113,9 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
     public boolean deleteToFavoriteMusicList(Music music) {	// delete music object in favoite music list 
         if(isExist(music)) {
-            for(int i = 0 ; i < nowList().size() ; i++) {
-                if(nowList().get(i).getFilename().equals(music.getFilename())) {
-                    nowList().remove(i);
+            for(int i = 0; i < currentList().size() ; i++) {
+                if(currentList().get(i).getFilename().equals(music.getFilename())) {
+                    currentList().remove(i);
                     break;
                 }
             }
@@ -135,11 +125,12 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
     }
 
-    private boolean isExist(Music music) {	// check music object exist
-        return MusicListManager.getInstance().findIndex(music.getFilename()) != -1;
-    }
 
-    public ArrayList<Music> nowList() {	// return using list
+
+    public ArrayList<Music> getMusicList() {	// return music list
+        return musicList;
+    }
+    public ArrayList<Music> currentList() {	// return using list
         switch(MusicList.listNum) {
             case 0 :
                 return musicList;
@@ -149,5 +140,8 @@ public class MusicListManager {	// manage music objects and it made by singleton
                 return recentPlayList;
         }
         return null;
+    }
+    private boolean isExist(Music music) {	// check music object exist
+        return MusicListManager.getInstance().findIndex(music.getFilename()) != -1;
     }
 }

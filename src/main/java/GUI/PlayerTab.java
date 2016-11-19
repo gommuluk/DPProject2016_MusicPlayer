@@ -150,8 +150,7 @@ public class PlayerTab extends VBox {
 
         playButton.setOnAction(event -> {
             CurrentMusic currentMusic = CurrentMusic.getInstance();
-            if (currentMusic.isPlayable()) {
-                CurrentMusic.getInstance().play();
+            if (CurrentMusic.getInstance().play()) {
                 playButton.setText("||");
                 addButtonImage(playButton, "pause.png");
                 MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().toMusic());

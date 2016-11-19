@@ -1,17 +1,10 @@
 package GUI;
 
 import Music.MusicListManager;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-
-import javax.swing.*;
 
 class Tab extends Pane {
     /* whole Buttons in Music List Tab */
@@ -68,7 +61,7 @@ class Tab extends Pane {
     }
     /* refresh lists and reset whole player's buttons */
     private void tabClicked() {
-        musicList.arrayListToListModel(MusicListManager.getInstance().nowList());
+        musicList.arrayListToListModel(MusicListManager.getInstance().currentList());
         musicList.getPanel().updateUI();
         playerTab.reset();
         //playerTab.updateUI();
