@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class MusicList {
-    public int listNum = 0;
+    public static int listNum = 0;
 
     private ListView<Music> musicList; // Store Music List
     private BorderPane musicListPane = new BorderPane();
