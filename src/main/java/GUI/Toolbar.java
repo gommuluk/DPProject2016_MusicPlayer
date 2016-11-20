@@ -3,17 +3,9 @@ package GUI;
 import Music.MusicListManager;
 import Util.RecursiveFinder;
 
-import javax.swing.*;
-
-import FileIO.FileIO;
-
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -75,9 +67,10 @@ class Toolbar extends MenuBar {
                     for (String path : paths) {
                         MusicListManager.getInstance().addMusic(path);
                     }
-                    musicList.arrayListToListModel(MusicListManager.getInstance().getMusicList());
+                    musicList.setMusicList(MusicListManager.getInstance().getMusicList());
                     MusicList.listNum = 0;
-                    musicList.getPanel().updateUI();
+                    //musicList.getPanel().updateUI();
+                    musicList.getPane().requestLayout();
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
