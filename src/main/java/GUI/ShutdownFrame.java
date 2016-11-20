@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import Alarm.AutomaticShutdown;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 class ShutdownFrame extends JFrame{	// shutdown frame extends jframe to make shutdonw setting window
 	private JFXPanel fxPanel;
@@ -24,7 +21,7 @@ class ShutdownFrame extends JFrame{	// shutdown frame extends jframe to make shu
     private Group root;
 	ShutdownFrame(){	// make shutdown frame
         super("AutomaticShutdown Window");
-        this.setSize(1600,900);
+        this.setSize(250,150);
         this.setLocation(400,200);
         addJFXPanel();
 
@@ -90,5 +87,5 @@ class ShutdownFrame extends JFrame{	// shutdown frame extends jframe to make shu
 
         return (new Scene(root, Color.GREENYELLOW));
     }
-	
+
 }
