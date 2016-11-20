@@ -8,12 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import java.util.ArrayList;
 public class MusicList {
     public static int listNum = 0;
 
-    private ListView<MP3Music> musicList; // Store MP3Music List
+    private ListView<MP3Music> musicList;
     private BorderPane musicListPane = new BorderPane();
     private VBox vBox;
 
@@ -29,8 +26,7 @@ public class MusicList {
     	musicList = new ListView<MP3Music>();
         musicList.setOrientation(Orientation.VERTICAL);
 
-        //musicList.setPrefWidth(100);
-        //musicList.setPrefHeight(70);
+        musicList.setPrefHeight(300);
         musicList.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
              @Override
@@ -40,7 +36,7 @@ public class MusicList {
                      MP3Music currentMP3Music = musicList.getSelectionModel().getSelectedItem();
 
                      playerTab.doStop();
-                     CurrentMusic.getInstance().setMedia(musicList.getSelectionModel().getSelectedItems().get(0).getFilename());
+                     CurrentMusic.getInstance().setMedia(currentMP3Music.getFilename());
                      MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().toMusic());
                      playerTab.doPlay();
                      listNum = Tab.listNum;
@@ -71,6 +67,7 @@ public class MusicList {
     }
 
     public void updateVBox() {
+        vBox.getChildren().clear();
         vBox.getChildren().add(musicList);
     }
 

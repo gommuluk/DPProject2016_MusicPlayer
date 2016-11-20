@@ -1,19 +1,17 @@
 package GUI;
 
 import FileIO.FileIO;
-import Music.CurrentMusic;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;;
+import javafx.stage.Stage;
 
 public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root,1600, 900);
+        Scene scene = new Scene(root,800, 350);
         FileIO.makeDirectory(System.getProperty("user.home") + "/Desktop/" + "music-info");
         PlayerTab playerPanel = new PlayerTab();                        // Player Panel
         MusicList musicList = new MusicList(playerPanel);               // MP3Music List Panel
@@ -22,7 +20,7 @@ public class Main extends Application{
         playerPanel.connectPanels(tabPanel);                            // Connect Panels
         tabPanel.connectPanels(playerPanel, musicList);                            // Connect Panels
 
-        root.setPrefSize(800, 500);
+        root.setPrefSize(800, 600);
 
         root.setTop(new Toolbar(musicList));
 
@@ -39,7 +37,5 @@ public class Main extends Application{
 
     public static void main(String[] args) {
         launch(args);
-    }
-    public Main() {
     }
 }
