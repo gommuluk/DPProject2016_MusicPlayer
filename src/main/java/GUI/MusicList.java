@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,10 @@ public class MusicList {
              }
          });
 
+    }
+
+    public Pane getPane() {
+        return new Pane();
     }
 
     public void setMusicList(ArrayList<Music> arrMusic) {
