@@ -7,7 +7,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 class Tab extends Pane {
-    /* whole Buttons in Music List Tab */
+    /* whole Buttons in MP3Music List Tab */
     private final Button allMusic = new Button("전체 음악");
     private final Button favoriteMusic = new Button("즐겨찾기");
     private final Button recentMusic = new Button("최근 재생한 곡");

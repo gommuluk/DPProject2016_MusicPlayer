@@ -16,7 +16,7 @@ public class Main extends Application{
         Scene scene = new Scene(root,1600, 900);
         FileIO.makeDirectory(System.getProperty("user.home") + "/Desktop/" + "music-info");
         PlayerTab playerPanel = new PlayerTab();                        // Player Panel
-        MusicList musicList = new MusicList(playerPanel);               // Music List Panel
+        MusicList musicList = new MusicList(playerPanel);               // MP3Music List Panel
         Tab tabPanel = new Tab();                                       // Button Tab Panel
 
         playerPanel.connectPanels(tabPanel);                            // Connect Panels

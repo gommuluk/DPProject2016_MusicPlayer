@@ -1,7 +1,6 @@
 package Music;
 
 import FileIO.FilePathParser;
-import GUI.PlayerTab;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -10,13 +9,12 @@ import javafx.util.Duration;
 import java.io.File;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class CurrentMusic {
     public static int playMode = 0;
     private static CurrentMusic uniqueInstance;
     private Optional<MediaPlayer> mediaPlayerOptional;
-    private Music thisMusic;
+    private MP3Music thisMP3Music;
     private CurrentMusic() {
         this.mediaPlayerOptional = Optional.empty();
 
@@ -39,7 +37,7 @@ public class CurrentMusic {
             return true;
         }
         return false;
-    } // 빼야 함.
+    }
 
     public boolean setMedia(String filePath) {
         File file = new File(filePath);
@@ -50,7 +48,7 @@ public class CurrentMusic {
             return true;
         }
         return false;
-    } // 빼야 함.
+    }
 
     public Optional<Duration> getCurrentTime() {
         return mediaPlayerOptional.map(MediaPlayer::getCurrentTime);
@@ -72,12 +70,12 @@ public class CurrentMusic {
         }
     }
 
-    public Music toMusic() {
+    public MP3Music toMusic() {
         try {
             String filePath = mediaPlayerOptional.get().getMedia().getSource();
             filePath = FilePathParser.parseSeparator(filePath);
-            thisMusic = MusicListManager.getInstance().find(filePath);
-            return thisMusic;
+            thisMP3Music = MusicListManager.getInstance().find(filePath);
+            return thisMP3Music;
         } catch (Exception e1) {
             return null;
         }
@@ -118,7 +116,7 @@ public class CurrentMusic {
             mediaPlayer.seek(duration.add(delta));
         }
     }
-/*
+
     public boolean play() {
         if(isPlayable()) {
             mediaPlayerOptional.ifPresent(mediaPlayer -> {
@@ -140,9 +138,7 @@ public class CurrentMusic {
                     case 2:
                         break;
                 }
-                playerTab.doStop();
                 setMedia(MusicListManager.getInstance().at(i).getFilename());
-                playerTab.doPlay();
             });
             return true;
         }
@@ -156,6 +152,6 @@ public class CurrentMusic {
     public void stop() {
         mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
-*/
+
 
 }

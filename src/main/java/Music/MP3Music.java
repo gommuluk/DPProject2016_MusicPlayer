@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic library
+public class MP3Music extends Mp3File {	// extends MP3File - it is in Mp3agic library
     private final String FILE_INFO_ADDRESS = System.getProperty("user.home")
             + File.separatorChar
             + "music-info"
@@ -20,7 +20,7 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
     private Lyric lyrics;	// lyric object
     private String lyricsFileAddress, lyricsFileName;	// save lyric file's address and name
     private String artist, composer, name, album;	// music info
-    private byte[] image; // save music image	
+    private byte[] image; // save music image
     private boolean favorite;	// set when music selected to favorite
     private ID3v1 id3v1Tag;	// save id3v1tag
     private ID3v2 id3v2Tag;	// save id3v2tag
@@ -29,7 +29,7 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
     private String[] musicInfo;	// use saving music information
 
     //make an object with file's name and address. infoInfo has musicfile's address when it read musicinfofile.txt's information
-    public Music(String musicFileName, String musicFileAddress, String[] infoInfo) throws UnsupportedTagException, InvalidDataException, IOException {
+    public MP3Music(String musicFileName, String musicFileAddress, String[] infoInfo) throws UnsupportedTagException, InvalidDataException, IOException {
         super(musicFileAddress
                 + File.separatorChar
                 + musicFileName
@@ -57,9 +57,9 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
         setMusicInformation();
 
     }
-    
+
     //make an object with file
-    public Music(File file) throws UnsupportedTagException, InvalidDataException, IOException{
+    public MP3Music(File file) throws UnsupportedTagException, InvalidDataException, IOException{
     	super(file.getAbsolutePath());
     	boolean check = true;
     	String path = file.getAbsolutePath();
@@ -86,7 +86,7 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
 
 
     }
-    
+
     //set music information - 2 case
     private void setMusicInformation() {
         if (isV1Tag) {
@@ -109,7 +109,7 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
         return Integer.toString(this.playCount) + "/" + this.fileName + "/" +
                 this.fileAddress + "/" + this.lyricsFileName + "/" + this.lyricsFileAddress + "\n";
     }
-    
+
     public String toString() {     //return file name
         return this.fileName;
     }
@@ -118,7 +118,7 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
         this.lyricsFileName = lyricsFileName;
         this.lyricsFileAddress = lyricsFileAddress;
     }
-    
+
     public byte[] getAlbumArt(){	//return album art
     	return this.image;
     }
@@ -126,9 +126,9 @@ public class Music extends Mp3File {	// extends MP3File - it is in Mp3agic libra
 
     public void setFavorite() { this.favorite = !this.favorite; }	// toggle favorite status
 
-    public Music clone() {	// make clone object
+    public MP3Music clone() {	// make clone object
         try {
-            return new Music(fileName, fileAddress, musicInfo);
+            return new MP3Music(fileName, fileAddress, musicInfo);
         } catch (UnsupportedTagException | InvalidDataException | IOException e) {
             e.printStackTrace();
         }

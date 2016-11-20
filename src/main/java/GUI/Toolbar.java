@@ -19,7 +19,7 @@ class Toolbar extends MenuBar {
 
 	private final Menu alarmMenu = new Menu("_Alarm");
 	private final MenuItem setAlarmMenuItem = new MenuItem("Set");
-    
+
 	private final Menu automaticShutdownMenu = new Menu("_Automatic Shutdown");
 	private final MenuItem setAutomaticShutdownMenuItem = new MenuItem("Set");
 
@@ -37,7 +37,7 @@ class Toolbar extends MenuBar {
     }
 
     private void onCreate(MusicList musicList) {
-    	
+
         //connect musicList
 
         //create menu items
@@ -50,7 +50,7 @@ class Toolbar extends MenuBar {
 
         //add this to the frame
         this.setVisible(true);
-        
+
         setMenuItem.setOnAction(e -> {
             DirectoryChooser chooser = new DirectoryChooser();
             File returnVal = chooser.showDialog(null);
@@ -67,7 +67,7 @@ class Toolbar extends MenuBar {
                     for (String path : paths) {
                         MusicListManager.getInstance().addMusic(path);
                     }
-                    musicList.setMusicList(MusicListManager.getInstance().getMusicList());
+                    musicList.setMusicList(MusicListManager.getInstance().getMP3MusicList());
                     MusicList.listNum = 0;
                     //musicList.getPanel().updateUI();
                     musicList.getPane().requestLayout();
@@ -77,37 +77,37 @@ class Toolbar extends MenuBar {
             }
             });
     }
-    
+
     /* Alarm Tools */
     private void onAlarmToolBarCreate(){
-    	
+
     	setAlarmMenuItem.setMnemonicParsing(true);
-        
+
         //add menu items to menus
         alarmMenu.getItems().add(setAlarmMenuItem);
-        
+
         //add menu to this
         this.getMenus().addAll(alarmMenu);
-        
+
         //add this to the frame
         this.setVisible(true);
-        
+
         setAlarmMenuItem.setOnAction(e -> new AlarmFrame());
     }
     /* Alarm Tools */
     private void onAutomaticShutdownToolBarCreate(){
-    	
+
     	setAutomaticShutdownMenuItem.setMnemonicParsing(true);
-        
+
         //add menu items to menus
         automaticShutdownMenu.getItems().add(setAutomaticShutdownMenuItem);
-        
+
         //add menu to this
         this.getMenus().addAll(automaticShutdownMenu);
-        
+
         //add this to the frame
         this.setVisible(true);
-        
+
         setAutomaticShutdownMenuItem.setOnAction(e -> {
             new ShutdownFrame();
         });

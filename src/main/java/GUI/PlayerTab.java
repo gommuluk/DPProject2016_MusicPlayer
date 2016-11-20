@@ -2,14 +2,10 @@ package GUI;
 
 import FileIO.FilePathParser;
 import Music.CurrentMusic;
-import Music.Lyric_Repeat;
-import Music.Music;
+import Music.MP3Music;
 import Music.MusicListManager;
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -18,12 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import org.omg.CORBA.Current;
 
-import java.awt.Dimension;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Optional;
 
 public class PlayerTab extends VBox {
@@ -31,7 +23,7 @@ public class PlayerTab extends VBox {
 
     public static Label lyric;
 
-    /* Music info -> Image, name */
+    /* MP3Music info -> Image, name */
     private BorderPane musicInfoPanel;
     private Label musicName;
     private Image musicImage;
@@ -211,7 +203,7 @@ public class PlayerTab extends VBox {
     private void addStarButton() {
         starButton = new Button("★");
         starButton.setOnAction(e -> {
-            Music temp = CurrentMusic.getInstance().toMusic();
+            MP3Music temp = CurrentMusic.getInstance().toMusic();
             if (MusicList.listNum != 1) {
                 MusicListManager.getInstance().addToFavoriteMusicList(temp);
             } else {
@@ -235,12 +227,12 @@ public class PlayerTab extends VBox {
 
     private void replaceMusicInfo() {
         try {
-            Music music = CurrentMusic.getInstance().toMusic();
-            if (music.getAlbumArt() != null) {
-                musicImage = new Image(new ByteArrayInputStream(music.getAlbumArt()), 200, 200, true, true);
+            MP3Music MP3Music = CurrentMusic.getInstance().toMusic();
+            if (MP3Music.getAlbumArt() != null) {
+                musicImage = new Image(new ByteArrayInputStream(MP3Music.getAlbumArt()), 200, 200, true, true);
                 musicImageView.setImage(musicImage);
             }
-            musicName.setText(FilePathParser.getFileName(music.getFilename()));
+            musicName.setText(FilePathParser.getFileName(MP3Music.getFilename()));
         } catch (Exception e) {
         }
     }
