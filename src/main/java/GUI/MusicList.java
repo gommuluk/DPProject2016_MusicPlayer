@@ -6,16 +6,22 @@ import Music.MusicListManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
 public class MusicList {
+    public int listNum = 0;
+
     private ListView<Music> musicList; // Store Music List
-    public static int listNum = 0;                                                  // Static Variable ; that can recognize list that you are playing now
+    private BorderPane musicListPane = new BorderPane();
+    private VBox vBox;
 
     public MusicList(PlayerTab playerTab) {
     	musicList = new ListView<Music>();
@@ -40,10 +46,17 @@ public class MusicList {
              }
          });
 
+        vBox.setPadding(new Insets(10));
+        vBox.setSpacing(10);
+        vBox.getChildren().add(musicList);
+
+        musicListPane.setCenter(vBox);
+        musicList.setVisible(true);
+
     }
 
     public Pane getPane() {
-        return new Pane();
+        return musicListPane;
     }
 
     public void setMusicList(ArrayList<Music> arrMusic) {
