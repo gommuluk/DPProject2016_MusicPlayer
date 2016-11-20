@@ -46,6 +46,8 @@ public class MusicList {
              }
          });
 
+        vBox = new VBox();
+
         vBox.setPadding(new Insets(10));
         vBox.setSpacing(10);
         vBox.getChildren().add(musicList);
