@@ -22,8 +22,6 @@ public class Main extends Application{
         playerPanel.connectPanels(tabPanel);                            // Connect Panels
         tabPanel.connectPanels(playerPanel, musicList);                            // Connect Panels
 
-        CurrentMusic.getInstance().setPlayerTab(playerPanel);           // SetUp Panels
-
         root.setPrefSize(800, 500);
 
         root.setTop(new Toolbar(musicList));

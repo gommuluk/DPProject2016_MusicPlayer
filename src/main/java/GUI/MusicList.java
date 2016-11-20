@@ -54,6 +54,7 @@ public class MusicList {
 
         musicListPane.setCenter(vBox);
         musicList.setVisible(true);
+        musicListPane.setVisible(true);
 
     }
 
@@ -67,5 +68,3 @@ public class MusicList {
     }
 
 }
-
-

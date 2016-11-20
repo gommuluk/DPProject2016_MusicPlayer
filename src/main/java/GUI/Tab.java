@@ -61,8 +61,8 @@ class Tab extends Pane {
     }
     /* refresh lists and reset whole player's buttons */
     private void tabClicked() {
-        musicList.arrayListToListModel(MusicListManager.getInstance().currentList());
-        musicList.getPanel().updateUI();
+        musicList.setMusicList(MusicListManager.getInstance().currentList());
+        musicList.getPane().requestLayout();
         playerTab.reset();
         //playerTab.updateUI();
     }
