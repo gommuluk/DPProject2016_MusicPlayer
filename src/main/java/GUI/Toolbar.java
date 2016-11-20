@@ -57,7 +57,7 @@ class Toolbar extends MenuBar {
             if (returnVal != null) {
                 try {
                     RecursiveFinder finder = new RecursiveFinder(
-                            chooser.getInitialDirectory().toString());
+                            returnVal.getPath());
                     String[] paths = finder.find()
                             .stream()
                             .map(Path::toAbsolutePath)
@@ -69,7 +69,6 @@ class Toolbar extends MenuBar {
                     }
                     musicList.setMusicList(MusicListManager.getInstance().getMP3MusicList());
                     MusicList.listNum = 0;
-                    //musicList.getPanel().updateUI();
                     musicList.getPane().requestLayout();
                 } catch (IOException exception) {
                     exception.printStackTrace();
