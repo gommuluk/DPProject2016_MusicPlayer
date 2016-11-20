@@ -27,7 +27,7 @@ public class Main extends Application{
         root.setTop(new Toolbar(musicList));
 
         root.setLeft(tabPanel);
-        //root.setCenter(new ScrollBar(musicList.getPanel()));
+        root.setCenter(musicList.getPane());
         root.setRight(playerPanel);
 
         root.setVisible(true);

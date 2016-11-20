@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -50,7 +52,7 @@ public class MusicList {
 
         vBox.setPadding(new Insets(10));
         vBox.setSpacing(10);
-        vBox.getChildren().add(musicList);
+        updateVBox();
 
         musicListPane.setCenter(vBox);
         musicList.setVisible(true);
@@ -58,13 +60,18 @@ public class MusicList {
 
     }
 
-    public Pane getPane() {
+    public BorderPane getPane() {
         return musicListPane;
     }
 
     public void setMusicList(ArrayList<MP3Music> arrMP3Music) {
         ObservableList<MP3Music> items = FXCollections.observableArrayList(arrMP3Music);
         musicList.setItems(items);
+        updateVBox();
+    }
+
+    public void updateVBox() {
+        vBox.getChildren().add(musicList);
     }
 
 }
