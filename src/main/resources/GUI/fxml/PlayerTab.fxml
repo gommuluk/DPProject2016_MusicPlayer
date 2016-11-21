@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Button?>
+<VBox fx:controller="GUI.PlayerTab" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <ImageView>
+         <image>
+           <Image url="@../defaultImage.jpg"/>
+         </image>
+    </ImageView>
+    <Label text="Ready" textFill="white" prefHeight="30" prefWidth="30"/>
+    <Slider min="0" max="1.0">
+    </Slider>
+    <Button text=">>" maxWidth="72" maxHeight="72">
+      <graphic>
+        <ImageView>
+          <image>
+            <Image url="@../seek-previous.png"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button text="▶" maxWidth="72" maxHeight="72">
+      <graphic>
+        <ImageView>
+          <image>
+            <Image url="@../play.jpg"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button text=">>" maxWidth="72" maxHeight="72">
+      <graphic>
+        <ImageView>
+          <image>
+            <Image url="@../seek-next.png"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button text="A/R" maxWidth="18" maxHeight="18">
+      <graphic>
+        <ImageView>
+          <image>
+            <Image url="@../loop.png"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button text="■" maxWidth="72" maxHeight="72">
+      <graphic>
+        <ImageView>
+          <image>
+            <Image url="@../stop.png"/>
+          </image>
+        </ImageView>
+      </graphic>
+    </Button>
+    <Button text="★" maxWidth="72" maxHeight="72"/>
+    <Slider max="1" value="0.5"/>
+  </children>
+</VBox>
