@@ -5,23 +5,40 @@ import Util.RecursiveFinder;
 
 import java.io.IOException;
 import java.nio.file.Path;
-
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.stage.*;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import java.io.File;
 
-class Toolbar extends MenuBar {
+class Toolbar implements Initializable{
     /* These Menus are create into ToolBar */
-	private final Menu fileMenu = new Menu("_File Path");
+	/*private final Menu fileMenu = new Menu("_File Path");
 	private final MenuItem setMenuItem = new MenuItem("Set");
 
 	private final Menu alarmMenu = new Menu("_Alarm");
 	private final MenuItem setAlarmMenuItem = new MenuItem("Set");
 
 	private final Menu automaticShutdownMenu = new Menu("_Automatic Shutdown");
-	private final MenuItem setAutomaticShutdownMenuItem = new MenuItem("Set");
+	private final MenuItem setAutomaticShutdownMenuItem = new MenuItem("Set");*/
+	@FXML
+	private MenuBar menuBar;
+	@FXML 
+	private Menu fileMenu;
+	@FXML
+	private MenuItem setMenuItem;
+	@FXML
+	private Menu alarmMenu;
+	@FXML
+	private MenuItem setAlarmMenuItem;
+	@FXML
+	private Menu automaticShutdownMenu;
+	@FXML
+	private MenuItem setAutomaticShutdownMenuItem;
 
     /* Constructor */
     public Toolbar(MusicList musicList) {
@@ -29,27 +46,30 @@ class Toolbar extends MenuBar {
         onAlarmToolBarCreate();
     	onAutomaticShutdownToolBarCreate();
     }
-
-    /* Constructor */
-    public Toolbar(){
-    	onAlarmToolBarCreate();
-    	onAutomaticShutdownToolBarCreate();
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
+    public MenuBar getMenuBar(){
+    	return menuBar;
     }
 
     private void onCreate(MusicList musicList) {
 
         //connect musicList
-
+  
         //create menu items
     	setMenuItem.setMnemonicParsing(true);
 
-        fileMenu.getItems().add(setMenuItem);
+        //fileMenu.getItems().add(setMenuItem);
 
         //add menu to this
-        this.getMenus().add(fileMenu);
+        //menuBar.getMenus().add(fileMenu);
 
         //add this to the frame
-        this.setVisible(true);
+        menuBar.setVisible(true);
 
         setMenuItem.setOnAction(e -> {
             DirectoryChooser chooser = new DirectoryChooser();
@@ -83,13 +103,13 @@ class Toolbar extends MenuBar {
     	setAlarmMenuItem.setMnemonicParsing(true);
 
         //add menu items to menus
-        alarmMenu.getItems().add(setAlarmMenuItem);
+        //alarmMenu.getItems().add(setAlarmMenuItem);
 
         //add menu to this
-        this.getMenus().addAll(alarmMenu);
+        //menuBar.getMenus().addAll(alarmMenu);
 
         //add this to the frame
-        this.setVisible(true);
+        menuBar.setVisible(true);
 
         setAlarmMenuItem.setOnAction(e -> new AlarmFrame());
     }
@@ -99,13 +119,13 @@ class Toolbar extends MenuBar {
     	setAutomaticShutdownMenuItem.setMnemonicParsing(true);
 
         //add menu items to menus
-        automaticShutdownMenu.getItems().add(setAutomaticShutdownMenuItem);
+        //automaticShutdownMenu.getItems().add(setAutomaticShutdownMenuItem);
 
         //add menu to this
-        this.getMenus().addAll(automaticShutdownMenu);
+        //menuBar.getMenus().addAll(automaticShutdownMenu);
 
         //add this to the frame
-        this.setVisible(true);
+        menuBar.setVisible(true);
 
         setAutomaticShutdownMenuItem.setOnAction(e -> {
             new ShutdownFrame();
