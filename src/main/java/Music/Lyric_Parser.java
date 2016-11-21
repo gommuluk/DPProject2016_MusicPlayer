@@ -12,34 +12,31 @@ public class Lyric_Parser {
     private String[] index = new String[10];
 
     public Lyric_Parser() {
-        splitLrc();
+    	CurrentMusic currentMusicInstance = CurrentMusic.getInstance();
+    	 if (currentMusicInstance.toMusic() == null) return;
+         ArrayList<String> b = FileIO.readTextFile("",
+        		 currentMusicInstance.toMusic().getFilename().replace(".mp3", ".lrc"), "");
+
+         for (int i = 0; i < b.size(); i++) {
+             index = b.get(i).split("]");
+             lrcTime[i] = index[0];
+             lrcTime[i] = lrcTime[i].replaceAll("\\[", "");
+             try {
+                 lrc[i] = index[1];
+             } catch (Exception ArrayIndexOutOfBoundsException) {
+
+             }
+             time[i][0] = (lrcTime[i].charAt(0) - 48) * 10
+                     + (lrcTime[i].charAt(1) - 48);
+             time[i][1] = (lrcTime[i].charAt(3) - 48) * 10
+                     + (lrcTime[i].charAt(4) - 48);
+             time[i][2] = (lrcTime[i].charAt(6) - 48) * 10
+                     + (lrcTime[i].charAt(7) - 48);
+         }
     }
 
     public int[][] getTime() {
         return time;
-    }
-
-    private void splitLrc() {
-        if (CurrentMusic.getInstance().toMusic() == null) return;
-        ArrayList<String> b = FileIO.readTextFile("",
-                CurrentMusic.getInstance().toMusic().getFilename().replace(".mp3", ".lrc"), "");
-
-        for (int i = 0; i < b.size(); i++) {
-            index = b.get(i).split("]");
-            lrcTime[i] = index[0];
-            lrcTime[i] = lrcTime[i].replaceAll("\\[", "");
-            try {
-                lrc[i] = index[1];
-            } catch (Exception ArrayIndexOutOfBoundsException) {
-
-            }
-            time[i][0] = (lrcTime[i].charAt(0) - 48) * 10
-                    + (lrcTime[i].charAt(1) - 48);
-            time[i][1] = (lrcTime[i].charAt(3) - 48) * 10
-                    + (lrcTime[i].charAt(4) - 48);
-            time[i][2] = (lrcTime[i].charAt(6) - 48) * 10
-                    + (lrcTime[i].charAt(7) - 48);
-        }
     }
 
     public String[] getLrc() {
