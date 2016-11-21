@@ -15,7 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import java.io.File;
 
-class Toolbar implements Initializable{
+public class Toolbar implements Initializable {
     /* These Menus are create into ToolBar */
 	/*private final Menu fileMenu = new Menu("_File Path");
 	private final MenuItem setMenuItem = new MenuItem("Set");
@@ -27,7 +27,7 @@ class Toolbar implements Initializable{
 	private final MenuItem setAutomaticShutdownMenuItem = new MenuItem("Set");*/
 	@FXML
 	private MenuBar menuBar;
-	@FXML 
+	@FXML
 	private Menu fileMenu;
 	@FXML
 	private MenuItem setMenuItem;
@@ -46,12 +46,16 @@ class Toolbar implements Initializable{
         onAlarmToolBarCreate();
     	onAutomaticShutdownToolBarCreate();
     }
-    
+
+    public Toolbar() {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     public MenuBar getMenuBar(){
     	return menuBar;
     }
@@ -59,7 +63,7 @@ class Toolbar implements Initializable{
     private void onCreate(MusicList musicList) {
 
         //connect musicList
-  
+
         //create menu items
     	setMenuItem.setMnemonicParsing(true);
 
