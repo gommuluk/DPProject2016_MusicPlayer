@@ -105,7 +105,7 @@ public class MP3Music extends Mp3File {	// extends MP3File - it is in Mp3agic li
     }
 
     //return play count, file name, file address, lyricfile name, lyricfile address to save music information
-    public String getSaveInfo() {
+    public String getFileInformationInfo() {
         return Integer.toString(this.playCount) + "/" + this.fileName + "/" +
                 this.fileAddress + "/" + this.lyricsFileName + "/" + this.lyricsFileAddress + "\n";
     }
