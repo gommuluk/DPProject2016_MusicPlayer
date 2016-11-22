@@ -1,8 +1,8 @@
 package GUI;
 
-import Music.CurrentMusic;
-import Music.MP3Music;
-import Music.MusicListManager;
+import Model.CurrentMusic;
+import Model.Music;
+import Model.MusicListManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -18,31 +18,27 @@ import java.util.ArrayList;
 public class MusicList {
     public static int listNum = 0;
 
-    private ListView<MP3Music> musicList;
+    private ListView<Music> musicList;
     private BorderPane musicListPane = new BorderPane();
     private VBox vBox;
 
     public MusicList(PlayerTab playerTab) {
-    	musicList = new ListView<MP3Music>();
+    	musicList = new ListView<>();
         musicList.setOrientation(Orientation.VERTICAL);
 
         musicList.setPrefHeight(300);
-        musicList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        musicList.setOnMouseClicked(click -> {
 
-             @Override
-             public void handle(MouseEvent click) {
+            if (click.getClickCount() == 2) {
+                Music currentMusic = musicList.getSelectionModel().getSelectedItem();
 
-                 if (click.getClickCount() == 2) {
-                     MP3Music currentMP3Music = musicList.getSelectionModel().getSelectedItem();
-
-                     playerTab.doStop();
-                     CurrentMusic.getInstance().setMedia(currentMP3Music.getFilename());
-                     MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().toMusic());
-                     playerTab.doPlay();
-                     listNum = Tab.listNum;
-                 }
-             }
-         });
+                playerTab.doStop();
+                CurrentMusic.getInstance().setMedia(currentMusic.getFileName());
+                MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
+                playerTab.doPlay();
+                listNum = Tab.listNum;
+            }
+        });
 
         vBox = new VBox();
 
@@ -60,8 +56,8 @@ public class MusicList {
         return musicListPane;
     }
 
-    public void setMusicList(ArrayList<MP3Music> arrMP3Music) {
-        ObservableList<MP3Music> items = FXCollections.observableArrayList(arrMP3Music);
+    public void setMusicList(ArrayList<Music> arrMusic) {
+        ObservableList<Music> items = FXCollections.observableArrayList(arrMusic);
         musicList.setItems(items);
         updateVBox();
     }

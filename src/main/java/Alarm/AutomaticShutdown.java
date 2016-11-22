@@ -1,11 +1,6 @@
 package Alarm;
 
-import java.io.IOException;
-import java.util.Calendar;
-
-import javax.swing.JFrame;
-
-import Music.MusicListManager;
+import Model.MusicListManager;
 
 public class AutomaticShutdown extends Thread {	// automatic shutdown with thread to run under main program
 
@@ -22,7 +17,7 @@ public class AutomaticShutdown extends Thread {	// automatic shutdown with threa
         }
         return uniqueInstance;
     }
-    
+
     @Override
     public void run() { // to run
     	this.flag = false;
@@ -31,7 +26,7 @@ public class AutomaticShutdown extends Thread {	// automatic shutdown with threa
             System.exit(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        
+
     	}
     }
 
@@ -41,9 +36,9 @@ public class AutomaticShutdown extends Thread {	// automatic shutdown with threa
 
         this.ringring = setTime * 1000 * 60;
     }
-    
+
     public boolean getStatus(){
     	return flag;
     }
-    
+
 }

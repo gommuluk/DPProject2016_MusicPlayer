@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 import FileIO.FilePathParser;
 import javafx.scene.media.Media;
@@ -14,7 +14,7 @@ public class CurrentMusic {
     public static int playMode = 0;
     private static CurrentMusic uniqueInstance;
     private Optional<MediaPlayer> mediaPlayerOptional;
-    private MP3Music thisMP3Music;
+    private Music music;
     private CurrentMusic() {
         this.mediaPlayerOptional = Optional.empty();
 
@@ -70,12 +70,12 @@ public class CurrentMusic {
         }
     }
 
-    public MP3Music toMusic() {
+    public Music getMusic() {
         try {
             String filePath = mediaPlayerOptional.get().getMedia().getSource();
             filePath = FilePathParser.parseSeparator(filePath);
-            thisMP3Music = MusicListManager.getInstance().find(filePath);
-            return thisMP3Music;
+            music = MusicListManager.getInstance().find(filePath);
+            return music;
         } catch (Exception e1) {
             return null;
         }
@@ -121,7 +121,7 @@ public class CurrentMusic {
         if(isPlayable()) {
             mediaPlayerOptional.ifPresent(mediaPlayer -> {
                 mediaPlayer.play();
-                MusicListManager.getInstance().addToRecentPlayList(this.toMusic());
+                MusicListManager.getInstance().addToRecentPlayList(this.getMusic());
             });
             mediaPlayerOptional.get().setOnEndOfMedia(() -> {
                 Media media = mediaPlayerOptional.get().getMedia();
@@ -138,7 +138,7 @@ public class CurrentMusic {
                     case 2:
                         break;
                 }
-                setMedia(MusicListManager.getInstance().at(i).getFilename());
+                setMedia(MusicListManager.getInstance().at(i).toString());
             });
             return true;
         }
@@ -153,5 +153,6 @@ public class CurrentMusic {
         mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
 
+    public String getFileName() { return music.toString(); }
 
 }

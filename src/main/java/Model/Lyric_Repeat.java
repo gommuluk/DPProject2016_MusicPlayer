@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 import GUI.PlayerTab;
 
@@ -27,7 +27,7 @@ public class Lyric_Repeat extends Thread {
             }
             CurrentMusic currentMusicInstance = CurrentMusic.getInstance();
             String currentMusicTime = currentMusicInstance.getCurrentTime().toString();
-            
+
             if (!currentMusicTime.contains("empty")) {
                 total = Integer.parseInt(currentMusicTime.substring(9, currentMusicTime.indexOf("."))) / 10;
                 min = total / (60 * 100);

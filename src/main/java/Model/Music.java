@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 import java.io.File;
 
@@ -39,7 +39,9 @@ public abstract class Music implements Cloneable{
     public boolean getFavorite() { return this.isFavorite; }	// return favorite status
 
     public void setFavorite() { this.isFavorite = !this.isFavorite; }	// toggle favorite status
-    public String toString() {     //return file name
+    public String getFileName() {     //return file name
         return this.fileName;
     }
-    }
+
+
+}

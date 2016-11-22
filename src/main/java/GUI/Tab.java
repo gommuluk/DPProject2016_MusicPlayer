@@ -1,6 +1,6 @@
 package GUI;
 
-import Music.MusicListManager;
+import Model.MusicListManager;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;

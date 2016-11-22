@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 import FileIO.FileIO;
 import FileIO.FilePathParser;

@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 import FileIO.FileIO;
 
@@ -13,9 +13,9 @@ public class Lyric_Parser {
 
     public Lyric_Parser() {
     	CurrentMusic currentMusicInstance = CurrentMusic.getInstance();
-    	 if (currentMusicInstance.toMusic() == null) return;
+    	 if (currentMusicInstance.getMusic() == null) return;
          ArrayList<String> b = FileIO.readTextFile("",
-        		 currentMusicInstance.toMusic().getFilename().replace(".mp3", ".lrc"), "");
+        		 currentMusicInstance.getMusic().getFileName().replace(".mp3", ".lrc"), "");
 
          for (int i = 0; i < b.size(); i++) {
              index = b.get(i).split("]");

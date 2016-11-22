@@ -1,6 +1,6 @@
 package GUI;
 
-import Music.MusicListManager;
+import Model.MusicListManager;
 import Util.RecursiveFinder;
 
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class Toolbar implements Initializable {
                     for (String path : paths) {
                         MusicListManager.getInstance().addMusic(path);
                     }
-                    musicList.setMusicList(MusicListManager.getInstance().getMP3MusicList());
+                    musicList.setMusicList(MusicListManager.getInstance().getMusicList());
                     MusicList.listNum = 0;
                     musicList.getPane().requestLayout();
                 } catch (IOException exception) {

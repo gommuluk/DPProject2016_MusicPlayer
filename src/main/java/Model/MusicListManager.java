@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 import FileIO.FileIO;
 
@@ -14,9 +14,9 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
     private final String FILE_INFO_ADDRESS = System.getProperty("user.home") + "/Desktop/"+"music-info";	// file address
     private final String FILE_INFO_NAME = "MusicInfoFile";	// music information name
-    private final ArrayList<MP3Music> MP3MusicList = new ArrayList<>();	// musiclist that has all music object
-    private final ArrayList<MP3Music> recentPlayList = new ArrayList<>();	// save recent played music object
-    private final ArrayList<MP3Music> favoriteMP3MusicList = new ArrayList<>();	// save music object that is setted to favorite
+    private final ArrayList<Music> musicList = new ArrayList<>();	// musiclist that has all music object
+    private final ArrayList<Music> recentPlayList = new ArrayList<>();	// save recent played music object
+    private final ArrayList<Music> favoriteMP3MusicList = new ArrayList<>();	// save music object that is setted to favorite
 
     public static MusicListManager getInstance() {	// return unique object
         if (uniqueInstance == null) {
@@ -56,20 +56,20 @@ public class MusicListManager {	// manage music objects and it made by singleton
                     filepath.lastIndexOf("."));
             String fileAddress = filepath.substring(0, filepath.lastIndexOf(File.separatorChar));
             try {
-                MP3MusicList.add(new MP3Music(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress)));
+                musicList.add(new MP3Music(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress)));
             } catch (Exception e) {
                 new ErrorDetector();
             }
         }
-        ArrayList<String> infoFileInfo = MP3MusicList.stream().map(iter -> iter.getSaveInfo()).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<String> infoFileInfo = musicList.stream().map(iter -> iter.getFileInformationData()).collect(Collectors.toCollection(ArrayList::new));
 
         FileIO.writeTextFile(FILE_INFO_ADDRESS, FILE_INFO_NAME, infoFileInfo);
 
     }
 
-    public MP3Music find(String filePath) {	// find music file
+    public Music find(String filePath) {	// find music file
         try {
-            MP3Music temp = currentList().get(findIndex(filePath));
+            Music temp = currentList().get(findIndex(filePath));
             if (temp != null) return temp;
             else return null;
         } catch (Exception e) {
@@ -79,42 +79,42 @@ public class MusicListManager {	// manage music objects and it made by singleton
     }
 
     public int findIndex(String filePath){	// find music file's index
-        for(MP3Music iter : currentList()){
-            if(iter.getFilename().replaceAll("[+]", " ").equals(filePath)){
+        for(Music iter : currentList()){
+            if(iter.getFileName().replaceAll("[+]", " ").equals(filePath)){
                 return currentList().indexOf(iter);
             }
         }
         return -1;
     }
 
-    public MP3Music at(int i) {	// return music object
+    public Music at(int i) {	// return music object
        return currentList().get(i);
     }
 
-    public void addToRecentPlayList(MP3Music MP3Music) {	// add to recent play list
+    public void addToRecentPlayList(Music music) {	// add to recent play list
         int temp = MusicList.listNum;
         MusicList.listNum = 2;
-        if (isExist(MP3Music)) recentPlayList.remove(find(MP3Music.getFilename()));
+        if (isExist(music)) recentPlayList.remove(find(music.getFileName()));
         MusicList.listNum = temp;
-        recentPlayList.add(MP3Music);
+        recentPlayList.add(music);
     }
 
-    public void addToFavoriteMusicList(MP3Music MP3Music) {	// add to favorite MP3Music list
+    public void addToFavoriteMusicList(Music music) {	// add to favorite MP3Music list
         int temp = MusicList.listNum;
         MusicList.listNum = 1;
-        if(!isExist(MP3Music)) {
+        if(!isExist(music)) {
             MusicList.listNum = temp;
-            favoriteMP3MusicList.add(MP3Music.clone());
+            favoriteMP3MusicList.add(music.clone());
         }
         else {
             MusicList.listNum = temp;
         }
     }
 
-    public boolean deleteToFavoriteMusicList(MP3Music MP3Music) {	// delete MP3Music object in favoite MP3Music list
-        if(isExist(MP3Music)) {
+    public boolean deleteToFavoriteMusicList(Music music) {	// delete MP3Music object in favoite MP3Music list
+        if(isExist(music)) {
             for(int i = 0; i < currentList().size() ; i++) {
-                if(currentList().get(i).getFilename().equals(MP3Music.getFilename())) {
+                if(currentList().get(i).getFileName().equals(music.getFileName())) {
                     currentList().remove(i);
                     break;
                 }
@@ -127,13 +127,13 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
 
 
-    public ArrayList<MP3Music> getMP3MusicList() {	// return music list
-        return MP3MusicList;
+    public ArrayList<Music> getMusicList() {	// return music list
+        return musicList;
     }
-    public ArrayList<MP3Music> currentList() {	// return using list
+    public ArrayList<Music> currentList() {	// return using list
         switch(MusicList.listNum) {
             case 0 :
-                return MP3MusicList;
+                return musicList;
             case 1 :
                 return favoriteMP3MusicList;
             case 2 :
@@ -141,7 +141,7 @@ public class MusicListManager {	// manage music objects and it made by singleton
         }
         return null;
     }
-    private boolean isExist(MP3Music MP3Music) {	// check MP3Music object exist
-        return MusicListManager.getInstance().findIndex(MP3Music.getFilename()) != -1;
+    private boolean isExist(Music music) {	// check MP3Music object exist
+        return MusicListManager.getInstance().findIndex(music.getFileName()) != -1;
     }
 }

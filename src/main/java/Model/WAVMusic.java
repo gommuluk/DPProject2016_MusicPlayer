@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 /**
  * Created by Elliad on 2016-11-20.

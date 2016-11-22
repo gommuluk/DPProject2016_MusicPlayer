@@ -1,4 +1,4 @@
-package Music;
+package Model;
 
 class Lyric {
     private int[][] time;
