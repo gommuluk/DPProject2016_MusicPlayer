@@ -18,12 +18,10 @@ public abstract class Music implements Cloneable{
     protected byte[] image;
     protected boolean isFavorite;
     protected int playCnt;
-    private Lyric lyrics;	// lyric object
-    private String lyricsFileAddress, lyricsFileName;	// save lyric file's address and name
+    protected Lyric lyrics;	// lyric object
+    protected String lyricsFileAddress, lyricsFileName;	// save lyric file's address and name
 
-    public abstract void play();//behavior 적용 필요.
-    public abstract void pause();
-    public abstract void stop();
+    //play, pause, stop behavior 적용 필요 //TODO
     public abstract Music clone();
 
     public String getFileInformationData() {
@@ -41,5 +39,7 @@ public abstract class Music implements Cloneable{
     public boolean getFavorite() { return this.isFavorite; }	// return favorite status
 
     public void setFavorite() { this.isFavorite = !this.isFavorite; }	// toggle favorite status
-
+    public String toString() {     //return file name
+        return this.fileName;
+    }
     }
