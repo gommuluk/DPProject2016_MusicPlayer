@@ -23,10 +23,11 @@ public class Lyric_Repeat extends Thread {
             try {
                 sleep(10);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            String currentMusicTime = CurrentMusic.getInstance().getCurrentTime().toString();
+            CurrentMusic currentMusicInstance = CurrentMusic.getInstance();
+            String currentMusicTime = currentMusicInstance.getCurrentTime().toString();
+            
             if (!currentMusicTime.contains("empty")) {
                 total = Integer.parseInt(currentMusicTime.substring(9, currentMusicTime.indexOf("."))) / 10;
                 min = total / (60 * 100);
