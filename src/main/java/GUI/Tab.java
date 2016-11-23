@@ -17,7 +17,6 @@ class Tab extends Pane {
     private MusicList musicList;
     private PlayerTab playerTab;
 
-    public static int listNum = 0;
 
     public Tab() {
         setActionListeners();
@@ -36,20 +35,17 @@ class Tab extends Pane {
     /* add ActionListeners into Buttons */
     private void setActionListeners() {
         this.allMusic.setOnAction(e -> {
-            listNum = 0;
-            MusicList.listNum = 0;
+            MusicListManager.getInstance().currentList = 0;
             tabClicked();
         });
 
         this.favoriteMusic.setOnAction(e -> {
-            listNum = 1;
-            MusicList.listNum = 1;
+            MusicListManager.getInstance().currentList = 1;
             tabClicked();
         });
 
         this.recentMusic.setOnAction(e -> {
-            listNum = 2;
-            MusicList.listNum = 2;
+            MusicListManager.getInstance().currentList = 2;
             tabClicked();
         });
 
@@ -61,7 +57,7 @@ class Tab extends Pane {
     }
     /* refresh lists and reset whole player's buttons */
     private void tabClicked() {
-        musicList.setMusicList(MusicListManager.getInstance().currentList());
+        musicList.setMusicList(MusicListManager.getInstance().getCurrentList());
         musicList.getPane().requestLayout();
         playerTab.reset();
         //playerTab.updateUI();

@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 
 public class MusicList {
-    public static int listNum = 0;
 
     private ListView<Music> musicList;
     private BorderPane musicListPane = new BorderPane();
@@ -36,7 +35,6 @@ public class MusicList {
                 CurrentMusic.getInstance().setMedia(currentMusic.getFileName());
                 MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
                 playerTab.doPlay();
-                listNum = Tab.listNum;
             }
         });
 

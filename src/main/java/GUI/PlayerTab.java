@@ -204,7 +204,7 @@ public class PlayerTab extends VBox {
         starButton = new Button("★");
         starButton.setOnAction(e -> {
             Music temp = CurrentMusic.getInstance().getMusic();
-            if (MusicList.listNum != 1) {
+            if (MusicListManager.getInstance().currentList != 1) {
                 MusicListManager.getInstance().addToFavoriteMusicList(temp);
             } else {
                 MusicListManager.getInstance().deleteToFavoriteMusicList(temp);

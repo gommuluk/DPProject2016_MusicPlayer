@@ -92,7 +92,7 @@ public class Toolbar implements Initializable {
                         MusicListManager.getInstance().addMusic(path);
                     }
                     musicList.setMusicList(MusicListManager.getInstance().getMusicList());
-                    MusicList.listNum = 0;
+                    MusicListManager.getInstance().currentList = 0;
                     musicList.getPane().requestLayout();
                 } catch (IOException exception) {
                     exception.printStackTrace();

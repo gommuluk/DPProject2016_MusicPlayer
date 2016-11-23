@@ -16,7 +16,9 @@ public class MusicListManager {	// manage music objects and it made by singleton
     private final String FILE_INFO_NAME = "MusicInfoFile";	// music information name
     private final ArrayList<Music> musicList = new ArrayList<>();	// musiclist that has all music object
     private final ArrayList<Music> recentPlayList = new ArrayList<>();	// save recent played music object
-    private final ArrayList<Music> favoriteMP3MusicList = new ArrayList<>();	// save music object that is setted to favorite
+    private final ArrayList<Music> favoriteMusicList = new ArrayList<>();	// save music object that is setted to favorite
+
+    public  int   currentList = 0;
 
     public static MusicListManager getInstance() {	// return unique object
         if (uniqueInstance == null) {
@@ -69,7 +71,7 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
     public Music find(String filePath) {	// find music file
         try {
-            Music temp = currentList().get(findIndex(filePath));
+            Music temp = getCurrentList().get(findIndex(filePath));
             if (temp != null) return temp;
             else return null;
         } catch (Exception e) {
@@ -79,43 +81,43 @@ public class MusicListManager {	// manage music objects and it made by singleton
     }
 
     public int findIndex(String filePath){	// find music file's index
-        for(Music iter : currentList()){
+        for(Music iter : getCurrentList()){
             if(iter.getFileName().replaceAll("[+]", " ").equals(filePath)){
-                return currentList().indexOf(iter);
+                return getCurrentList().indexOf(iter);
             }
         }
         return -1;
     }
 
     public Music at(int i) {	// return music object
-       return currentList().get(i);
+       return getCurrentList().get(i);
     }
 
     public void addToRecentPlayList(Music music) {	// add to recent play list
-        int temp = MusicList.listNum;
-        MusicList.listNum = 2;
-        if (isExist(music)) recentPlayList.remove(find(music.getFileName()));
-        MusicList.listNum = temp;
+        int temp = currentList;
+        currentList = 2;
+        if (isExist(music)) recentPlayList.remove(find(music.getFileName())); //TODO
+        currentList = temp;
         recentPlayList.add(music);
     }
 
     public void addToFavoriteMusicList(Music music) {	// add to favorite MP3Music list
-        int temp = MusicList.listNum;
-        MusicList.listNum = 1;
+        int temp = currentList;
+        currentList = 1;
         if(!isExist(music)) {
-            MusicList.listNum = temp;
-            favoriteMP3MusicList.add(music.clone());
+            currentList = temp;
+            favoriteMusicList.add(music.clone());
         }
         else {
-            MusicList.listNum = temp;
+            currentList = temp;
         }
     }
 
     public boolean deleteToFavoriteMusicList(Music music) {	// delete MP3Music object in favoite MP3Music list
         if(isExist(music)) {
-            for(int i = 0; i < currentList().size() ; i++) {
-                if(currentList().get(i).getFileName().equals(music.getFileName())) {
-                    currentList().remove(i);
+            for(int i = 0; i < getCurrentList().size() ; i++) {
+                if(getCurrentList().get(i).getFileName().equals(music.getFileName())) {
+                    getCurrentList().remove(i);
                     break;
                 }
             }
@@ -130,12 +132,12 @@ public class MusicListManager {	// manage music objects and it made by singleton
     public ArrayList<Music> getMusicList() {	// return music list
         return musicList;
     }
-    public ArrayList<Music> currentList() {	// return using list
-        switch(MusicList.listNum) {
+    public ArrayList<Music> getCurrentList() {	// return using list
+        switch(currentList) {
             case 0 :
                 return musicList;
             case 1 :
-                return favoriteMP3MusicList;
+                return favoriteMusicList;
             case 2 :
                 return recentPlayList;
         }

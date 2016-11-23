@@ -129,11 +129,11 @@ public class CurrentMusic {
 
                 switch (playMode) {
                     case 0:
-                        if (i == MusicListManager.getInstance().currentList().size() - 1) i = 0;
+                        if (i == MusicListManager.getInstance().getCurrentList().size() - 1) i = 0;
                         else i++;
                         break;
                     case 1:
-                        if (!(i > MusicListManager.getInstance().currentList().size() - 1)) i++;
+                        if (!(i > MusicListManager.getInstance().getCurrentList().size() - 1)) i++;
                         break;
                     case 2:
                         break;
