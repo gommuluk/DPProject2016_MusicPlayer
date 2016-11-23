@@ -5,12 +5,12 @@
 <?import javafx.scene.control.MenuItem?>
 <MenuBar fx:id="menuBar" fx:controller="GUI.Toolbar" xmlns:fx="http://javafx.com/fxml/1">
   <Menu fx:id="fileMenu" text="File Path">
-    <MenuItem fx:id="setMenuItem" text="Set"/>
+    <MenuItem fx:id="setMenuItem" text="Set" onAction="#setDirectory"/>
   </Menu>
   <Menu fx:id="alarmMenu" text="Alarm">
-    <MenuItem fx:id="setAlarmMenuItem" text="Set"/>
+    <MenuItem fx:id="setAlarmMenuItem" text="Set" onAction="#openAlarm"/>
   </Menu>
   <Menu fx:id="automaticShutdownMenu" text="Automatic Shutdown">
-    <MenuItem fx:id="setAutomaticShutdownMenuItem" text="Set"/>
+    <MenuItem fx:id="setAutomaticShutdownMenuItem" text="Set" onAction="#openAutoShutdown"/>
   </Menu>
 </MenuBar>
