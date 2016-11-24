@@ -3,64 +3,69 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Button?>
 <VBox prefWidth="240" prefHeight="300" fx:controller="GUI.PlayerTab" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <ImageView fx:id="musicImageView">
+    <ImageView fitWidth="210" fitHeight="210" fx:id="musicImageView">
          <image>
            <Image url="@../defaultImage.jpg"/>
          </image>
     </ImageView>
     <Label fx:id="musicName" text="Ready" textFill="white" prefHeight="30" prefWidth="30"/>
-    <Slider fx:id="currentTimeSlider" min="0" max="1.0" value="0" valueChanging="true" />
-    <Button fx:id="seekPreviousButton" text="prev" maxWidth="72" maxHeight="72" onAction="#seekPrevious">
-      <graphic>
-        <ImageView>
-          <image>
-            <Image url="@../seek-previous.png"/>
-          </image>
-        </ImageView>
-      </graphic>
-    </Button>
-    <Button fx:id="playButton" text="▶" maxWidth="72" maxHeight="72" onAction="#play">
-      <graphic>
-        <ImageView>
-          <image>
-            <Image url="@../play.jpg"/>
-          </image>
-        </ImageView>
-      </graphic>
-    </Button>
-    <Button fx:id="seekNextButton" text=">>" maxWidth="72" maxHeight="72" onAction="#seekNext">
-      <graphic>
-        <ImageView>
-          <image>
-            <Image url="@../seek-next.png"/>
-          </image>
-        </ImageView>
-      </graphic>
-    </Button>
-    <Button fx:id="playModeButton" text="A/R" maxWidth="18" maxHeight="18" onAction="#changePlayMode">
-      <graphic>
-        <ImageView>
-          <image>
-            <Image url="@../loop.png"/>
-          </image>
-        </ImageView>
-      </graphic>
-    </Button>
-    <Button fx:id="stopButton" text="■" maxWidth="72" maxHeight="72" onAction="#stop">
-      <graphic>
-        <ImageView>
-          <image>
-            <Image url="@../stop.png"/>
-          </image>
-        </ImageView>
-      </graphic>
-    </Button>
-    <Button fx:id="starButton" text="★" maxWidth="72" maxHeight="72" onAction="#toggleFavorite"/>
+    <Slider fx:id="currentTimeSlider" min="0" max="1.0" maxWidth="210" value="0" valueChanging="true" />
+    <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
+      <Button fx:id="seekPreviousButton" maxWidth="40" maxHeight="40" onAction="#seekPrevious">
+        <graphic>
+          <ImageView fitWidth="40" fitHeight="40">
+            <image>
+              <Image url="@../seek-previous.png"/>
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
+      <Button fx:id="playButton" maxWidth="40" maxHeight="40" onAction="#play">
+        <graphic>
+          <ImageView fitWidth="40" fitHeight="40">
+             <image>
+              <Image url="@../play.jpg"/>
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
+      <Button fx:id="seekNextButton" maxWidth="40" maxHeight="40" onAction="#seekNext">
+        <graphic>
+          <ImageView fitWidth="40" fitHeight="40">
+            <image>
+              <Image url="@../seek-next.png"/>
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
+    </HBox>
+    <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
+      <Button fx:id="playModeButton" maxWidth="40" maxHeight="40" onAction="#changePlayMode">
+        <graphic>
+          <ImageView fitWidth="40" fitHeight="40">
+            <image>
+              <Image url="@../loop.png"/>
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
+      <Button fx:id="stopButton" maxWidth="40" maxHeight="40" onAction="#stop">
+        <graphic>
+          <ImageView fitWidth="40" fitHeight="40">
+            <image>
+              <Image url="@../stop.png"/>
+            </image>
+          </ImageView>
+        </graphic>
+      </Button>
+      <Button fx:id="starButton" text="★" prefWidth="40" prefHeight="40" onAction="#toggleFavorite"/>
+    </HBox>
     <Slider fx:id="volumeSlider" min="0" max="1" value="0.5"/>
   </children>
 </VBox>

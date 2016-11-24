@@ -25,7 +25,8 @@ public class MusicList {
     	musicList = new ListView<>();
         musicList.setOrientation(Orientation.VERTICAL);
 
-        musicList.setPrefHeight(300);
+        musicList.setPrefHeight(100);
+        musicList.setMaxWidth(100);
         musicList.setOnMouseClicked(click -> {
 
             if (click.getClickCount() == 2) {
