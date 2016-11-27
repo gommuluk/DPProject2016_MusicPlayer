@@ -21,7 +21,8 @@ public abstract class Music implements Cloneable{
     protected Lyric lyrics;	// lyric object
     protected String lyricsFileAddress, lyricsFileName;	// save lyric file's address and name
 
-    //play, pause, stop behavior 적용 필요 //TODO
+    public PlayerBehavior playerBehavior;
+
     public abstract Music clone();
 
     public String getFileInformationData() {
@@ -42,6 +43,8 @@ public abstract class Music implements Cloneable{
     public String getFileName() {     //return file name
         return this.fileName;
     }
-
-
+    public String getFileAddress() { return this.fileAddress;}
+    public boolean performPlay() { return playerBehavior.play();}
+    public void performPause() { playerBehavior.pause();}
+    public void performStop() { playerBehavior.stop();}
 }

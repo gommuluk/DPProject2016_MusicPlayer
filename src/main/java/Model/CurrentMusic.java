@@ -33,7 +33,9 @@ public class CurrentMusic {
 
     public boolean setVolume(float volume) {
         if (volume >= 0.0 && volume <= 1.0) {
-            mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setVolume(volume));
+            mediaPlayerOptional.ifPresent(mediaPlayer -> {
+                mediaPlayer.setVolume(volume);
+            });
             return true;
         }
         return false;
@@ -45,6 +47,9 @@ public class CurrentMusic {
             mediaPlayerOptional = Optional.of(
                     new MediaPlayer(
                             new Media(file.toURI().toString())));
+            filePath = mediaPlayerOptional.get().getMedia().getSource();
+            filePath = FilePathParser.parseSeparator(filePath);
+            music = MusicListManager.getInstance().find(filePath);
             return true;
         }
         return false;
@@ -71,20 +76,8 @@ public class CurrentMusic {
     }
 
     public Music getMusic() {
-        try {
-            String filePath = mediaPlayerOptional.get().getMedia().getSource();
-            filePath = FilePathParser.parseSeparator(filePath);
-            music = MusicListManager.getInstance().find(filePath);
             return music;
-        } catch (Exception e1) {
-            return null;
-        }
     }
-
-    public Status getStatus() {
-        return mediaPlayerOptional.get().getStatus();
-    }
-
 
     public <T> void addChangeTimeEvent(T t, Consumer<T> func) {
         mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.currentTimeProperty().addListener(observable -> {
@@ -92,21 +85,6 @@ public class CurrentMusic {
         }));
     }
 
-
-
-
-    /*private*/
-    private boolean isPlayable() {
-        if (mediaPlayerOptional.isPresent()) {
-            Status status = mediaPlayerOptional.get().getStatus();
-            return (status == Status.READY
-                    || status == Status.PAUSED
-                    || status == Status.STOPPED
-            );
-        }
-
-        return false;
-    }
 
     private void seek(int second) {
         if (mediaPlayerOptional.isPresent()) {
@@ -118,31 +96,8 @@ public class CurrentMusic {
     }
 
     public boolean play() {
-        if(isPlayable()) {
-            mediaPlayerOptional.ifPresent(mediaPlayer -> {
-                mediaPlayer.play();
-                MusicListManager.getInstance().addToRecentPlayList(this.getMusic());
-            });
-            mediaPlayerOptional.get().setOnEndOfMedia(() -> {
-                Media media = mediaPlayerOptional.get().getMedia();
-                int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
-
-                switch (playMode) {
-                    case 0:
-                        if (i == MusicListManager.getInstance().getCurrentList().size() - 1) i = 0;
-                        else i++;
-                        break;
-                    case 1:
-                        if (!(i > MusicListManager.getInstance().getCurrentList().size() - 1)) i++;
-                        break;
-                    case 2:
-                        break;
-                }
-                setMedia(MusicListManager.getInstance().at(i).toString());
-            });
-            return true;
-        }
-        return false;
+        music.performPlay();
+        return true;
     }
 
     public void pause() {
