@@ -147,6 +147,6 @@ public class MusicListManager {	// manage music objects and it made by singleton
         return musicList;
     }
     private boolean isExist(Music music) {	// check MP3Music object exist
-        return MusicListManager.getInstance().findIndex(music.getFileName()) != -1;
+        return MusicListManager.getInstance().findIndex(music.getFileAddress()) != -1;
     }
 }

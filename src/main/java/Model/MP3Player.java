@@ -34,7 +34,7 @@ public class MP3Player implements PlayerBehavior {
         set();
         if(isPlayable()) {
             mediaPlayerOptional.ifPresent(MediaPlayer::play);
-            //MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
+            MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
             return true;
         }
         return false;
