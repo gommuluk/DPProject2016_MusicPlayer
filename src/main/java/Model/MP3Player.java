@@ -12,9 +12,11 @@ import java.util.Optional;
  * Created by Elliad on 2016-11-25.
  */
 public class MP3Player implements PlayerBehavior, Iterator<Music> {
-
     private Optional<MediaPlayer> mediaPlayerOptional;
 
+    public MP3Player() {
+        mediaPlayerOptional = CurrentMusic.getInstance().mediaPlayerOptional;
+    }
 
     /*private*/
     private boolean isPlayable() {
@@ -30,11 +32,14 @@ public class MP3Player implements PlayerBehavior, Iterator<Music> {
         return false;
     }
     private void set() {
+        //if music is playing, stop playing.
+        if(mediaPlayerOptional.isPresent()) {
+            if(mediaPlayerOptional.get().getStatus() == MediaPlayer.Status.PLAYING) stop();
+        }
+
         File file = new File(CurrentMusic.getInstance().getMusic().getFileAddress());
         if (file.isFile()) {
-            mediaPlayerOptional = Optional.of(
-                new MediaPlayer(
-                    new Media(file.toURI().toString())));
+            mediaPlayerOptional = Optional.of(new MediaPlayer(new Media(file.toURI().toString())));
             mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(next().getFileAddress()));
 
         }
@@ -57,6 +62,7 @@ public class MP3Player implements PlayerBehavior, Iterator<Music> {
     }
     @Override
     public void stop() {
+        System.out.println(mediaPlayerOptional.get().getStatus());
         if(mediaPlayerOptional.isPresent()) mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
 

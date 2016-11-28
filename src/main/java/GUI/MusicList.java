@@ -32,6 +32,7 @@ public class MusicList {
 
             if (click.getClickCount() == 2) {
                 Music currentMusic = musicList.getSelectionModel().getSelectedItem();
+                CurrentMusic.getInstance().stop();
                 if(CurrentMusic.getInstance().setMedia(currentMusic.getFileAddress())) {
                     CurrentMusic.getInstance().play();
                     MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());

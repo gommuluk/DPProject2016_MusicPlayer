@@ -13,13 +13,12 @@ import java.util.function.Consumer;
 public class CurrentMusic {
     public static int playMode = 0;
     private static CurrentMusic uniqueInstance;
-    private Optional<MediaPlayer> mediaPlayerOptional;
+    Optional<MediaPlayer> mediaPlayerOptional;
     private Music music;
     private CurrentMusic() {
         this.mediaPlayerOptional = Optional.empty();
 
     }
-
 
 
     public static CurrentMusic getInstance() {
@@ -44,6 +43,12 @@ public class CurrentMusic {
     }
 
     public boolean setMedia(String filePath) {
+        if(mediaPlayerOptional.isPresent()) {
+            System.out.println(mediaPlayerOptional.get().getStatus());
+            if(mediaPlayerOptional.get().getStatus() == MediaPlayer.Status.PLAYING)
+                mediaPlayerOptional.get().stop();
+        }
+
         File file = new File(filePath);
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(
@@ -111,7 +116,7 @@ public class CurrentMusic {
     }
 
     public boolean play() { // 버튼을 누르면 이것이 실행됨.
-        if(isPlayable()) {
+        if(isPlayable() && music != null) {
             music.performPlay();
             return true;
         }
@@ -119,11 +124,11 @@ public class CurrentMusic {
     }
 
     public void pause() {
-        music.performPause();
+        if(music != null)   music.performPause();
     }
 
     public void stop() {
-        music.performStop();
+        if(music != null)   music.performStop();
     }
 
     public String getFileName() { return music.toString(); }

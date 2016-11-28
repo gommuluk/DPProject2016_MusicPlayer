@@ -46,7 +46,6 @@ public class MP3Music extends Music {	// extends MP3File - it is in Mp3agic libr
         this.musicInfo = infoInfo;
         this.playerBehavior = new MP3Player();
         setMusicInformation();
-
     }
 
     //make an object with file
