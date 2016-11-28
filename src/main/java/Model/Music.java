@@ -47,4 +47,5 @@ public abstract class Music implements Cloneable{
     public boolean performPlay() { return playerBehavior.play();}
     public void performPause() { playerBehavior.pause();}
     public void performStop() { playerBehavior.stop();}
+    public String toString() { return getFileName();}
 }
