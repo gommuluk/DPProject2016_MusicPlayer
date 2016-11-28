@@ -106,4 +106,12 @@ public class MP3Music extends Music {	// extends MP3File - it is in Mp3agic libr
         return null;
     }
 
+    @Override
+    public String getFileAddress() {
+        return fileAddress
+            + File.separatorChar
+            + fileName
+            + ".mp3";
+    }
+
 }

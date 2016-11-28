@@ -8,4 +8,9 @@ public class WAVMusic extends Music{
     public Music clone() {
         return null;
     }
+
+    @Override
+    public String getFileAddress() {
+        return null;
+    }
 }

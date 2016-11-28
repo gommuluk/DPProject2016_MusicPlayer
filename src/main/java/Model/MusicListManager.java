@@ -14,9 +14,9 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
     private final String FILE_INFO_ADDRESS = System.getProperty("user.home") + "/Desktop/"+"music-info";	// file address
     private final String FILE_INFO_NAME = "MusicInfoFile";	// music information name
-    private final ArrayList<Music> musicList = new ArrayList<>();	// musiclist that has all music object
-    private final ArrayList<Music> recentPlayList = new ArrayList<>();	// save recent played music object
-    private final ArrayList<Music> favoriteMusicList = new ArrayList<>();	// save music object that is setted to favorite
+    private ArrayList<Music> musicList;                  	// musiclist that has all music object
+    private ArrayList<Music> recentPlayList;                // save recent played music object
+    private ArrayList<Music> favoriteMusicList;	            // save music object that is setted to favorite
 
     public  int   currentList = 0;
 
@@ -29,6 +29,13 @@ public class MusicListManager {	// manage music objects and it made by singleton
             }
         }
         return uniqueInstance;
+    }
+
+    private MusicListManager() {
+        musicList = new ArrayList<>();
+        recentPlayList = new ArrayList<>();
+        favoriteMusicList = new ArrayList<>();
+
     }
 
     private String[] getMusicInfoFile(final String fileName, final String fileAddress) {	// read musicinfo file's information
@@ -82,7 +89,7 @@ public class MusicListManager {	// manage music objects and it made by singleton
 
     public int findIndex(String filePath){	// find music file's index
         for(Music iter : getCurrentList()){
-            if(iter.getFileName().replaceAll("[+]", " ").equals(filePath)){
+            if(iter.getFileAddress().replaceAll("[+]", " ").equals(filePath)){
                 return getCurrentList().indexOf(iter);
             }
         }
@@ -96,9 +103,9 @@ public class MusicListManager {	// manage music objects and it made by singleton
     public void addToRecentPlayList(Music music) {	// add to recent play list
         int temp = currentList;
         currentList = 2;
-        if (isExist(music)) recentPlayList.remove(find(music.getFileName())); //TODO
+        if (isExist(music)) recentPlayList.remove(find(music.getFileAddress())); //TODO
         currentList = temp;
-        recentPlayList.add(music);
+        recentPlayList.add(music.clone());
     }
 
     public void addToFavoriteMusicList(Music music) {	// add to favorite MP3Music list
@@ -116,7 +123,7 @@ public class MusicListManager {	// manage music objects and it made by singleton
     public boolean deleteToFavoriteMusicList(Music music) {	// delete MP3Music object in favoite MP3Music list
         if(isExist(music)) {
             for(int i = 0; i < getCurrentList().size() ; i++) {
-                if(getCurrentList().get(i).getFileName().equals(music.getFileName())) {
+                if(getCurrentList().get(i).getFileName().equals(music.getFileAddress())) {
                     getCurrentList().remove(i);
                     break;
                 }
@@ -128,10 +135,6 @@ public class MusicListManager {	// manage music objects and it made by singleton
     }
 
 
-
-    public ArrayList<Music> getMusicList() {	// return music list
-        return musicList;
-    }
     public ArrayList<Music> getCurrentList() {	// return using list
         switch(currentList) {
             case 0 :
@@ -141,7 +144,7 @@ public class MusicListManager {	// manage music objects and it made by singleton
             case 2 :
                 return recentPlayList;
         }
-        return null;
+        return musicList;
     }
     private boolean isExist(Music music) {	// check MP3Music object exist
         return MusicListManager.getInstance().findIndex(music.getFileName()) != -1;

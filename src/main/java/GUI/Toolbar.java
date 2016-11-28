@@ -1,5 +1,6 @@
 package GUI;
 
+import Model.Music;
 import Model.MusicListManager;
 import Util.RecursiveFinder;
 
@@ -60,6 +61,9 @@ public class Toolbar implements Initializable {
                 exception.printStackTrace();
             }
         }
+        for(Music iter : MusicListManager.getInstance().getCurrentList()) {
+            System.out.println(iter.getFileAddress());
+        }//TODO//TEST
     }
 
     @FXML

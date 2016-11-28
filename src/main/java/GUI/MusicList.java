@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import org.omg.CORBA.Current;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,9 @@ public class MusicList {
 
             if (click.getClickCount() == 2) {
                 Music currentMusic = musicList.getSelectionModel().getSelectedItem();
-
-                playerTab.doStop();
-                CurrentMusic.getInstance().setMedia(currentMusic.getFileName());
-                MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
-                playerTab.doPlay();
+                if(CurrentMusic.getInstance().setMedia(currentMusic.getFileAddress()))
+                    CurrentMusic.getInstance().play();
+                //MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
             }
         });
 
@@ -56,6 +55,7 @@ public class MusicList {
     }
 
     public void setMusicList(ArrayList<Music> arrMusic) {
+
         ObservableList<Music> items = FXCollections.observableArrayList(arrMusic);
         musicList.setItems(items);
         updateVBox();

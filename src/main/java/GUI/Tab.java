@@ -1,5 +1,6 @@
 package GUI;
 
+import Model.Music;
 import Model.MusicListManager;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

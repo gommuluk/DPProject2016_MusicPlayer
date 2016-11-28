@@ -20,6 +20,8 @@ public class CurrentMusic {
 
     }
 
+
+
     public static CurrentMusic getInstance() {
         if (uniqueInstance == null) {
             synchronized (CurrentMusic.class) {
@@ -85,6 +87,19 @@ public class CurrentMusic {
         }));
     }
 
+    /*private*/
+    private boolean isPlayable() {
+        if (mediaPlayerOptional.isPresent()) {
+            MediaPlayer.Status status = mediaPlayerOptional.get().getStatus();
+            return (status == Status.READY
+                || status == Status.PAUSED
+                || status == Status.STOPPED
+                || status == Status.UNKNOWN
+            );
+        }
+
+        return false;
+    }
 
     private void seek(int second) {
         if (mediaPlayerOptional.isPresent()) {
@@ -95,9 +110,30 @@ public class CurrentMusic {
         }
     }
 
-    public boolean play() {
-        music.performPlay();
-        return true;
+    public boolean play() { // 버튼을 누르면 이것이 실행됨.
+        if(isPlayable()) {
+            if(mediaPlayerOptional.get().getStatus() == Status.PLAYING) stop();
+            mediaPlayerOptional.ifPresent(MediaPlayer::play);
+            MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
+            mediaPlayerOptional.get().setOnEndOfMedia(() -> {
+                Media media = mediaPlayerOptional.get().getMedia();
+                int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
+
+                switch (CurrentMusic.playMode) {
+                    case 0:
+                        i++; i = i % (MusicListManager.getInstance().getCurrentList().size() - 1);
+                        break;
+                    case 1:
+                        if (i <= MusicListManager.getInstance().getCurrentList().size() - 1) i++;
+                        break;
+                    case 2:
+                        break;
+                }
+                setMedia(MusicListManager.getInstance().at(i).getFileAddress());
+            });
+            return true;
+        }
+        return false;
     }
 
     public void pause() {
@@ -105,6 +141,7 @@ public class CurrentMusic {
     }
 
     public void stop() {
+        if(mediaPlayerOptional.isPresent())
         mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
 

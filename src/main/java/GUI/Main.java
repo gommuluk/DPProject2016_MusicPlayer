@@ -28,6 +28,7 @@ public class Main extends Application{
         root.setRight(playerPanel.<VBox>load());
 
         MusicList musicList = new MusicList(playerTab);               // MP3Music List Panel
+        tabPanel.connectPanels(playerTab, musicList);
         root.setCenter(musicList.getPane());
 
         root.setVisible(true);

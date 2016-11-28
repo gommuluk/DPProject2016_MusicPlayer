@@ -43,7 +43,7 @@ public abstract class Music implements Cloneable{
     public String getFileName() {     //return file name
         return this.fileName;
     }
-    public String getFileAddress() { return this.fileAddress;}
+    public abstract String getFileAddress();
     public boolean performPlay() { return playerBehavior.play();}
     public void performPause() { playerBehavior.pause();}
     public void performStop() { playerBehavior.stop();}

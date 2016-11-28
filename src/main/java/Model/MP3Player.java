@@ -33,26 +33,7 @@ public class MP3Player implements PlayerBehavior {
         set();
         if(isPlayable()) {
             mediaPlayerOptional.ifPresent(MediaPlayer::play);
-            MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
-            mediaPlayerOptional.get().setOnEndOfMedia(() -> {
-                Media media = mediaPlayerOptional.get().getMedia();
-                int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
-
-                switch (CurrentMusic.playMode) {
-                    case 0:
-                        if (i == MusicListManager.getInstance().getCurrentList().size() - 1) i = 0;
-                        else i++;
-                        break;
-                    case 1:
-                        if (!(i > MusicListManager.getInstance().getCurrentList().size() - 1)) i++;
-                        break;
-                    case 2:
-                        break;
-                }
-                this.mediaPlayerOptional = Optional.of(
-                    new MediaPlayer(
-                        new Media(MusicListManager.getInstance().at(i).toString())));
-            });
+            //MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
             return true;
         }
         return false;
