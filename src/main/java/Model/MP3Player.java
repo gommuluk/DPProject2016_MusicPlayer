@@ -5,12 +5,13 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.Optional;
 
 /**
  * Created by Elliad on 2016-11-25.
  */
-public class MP3Player implements PlayerBehavior {
+public class MP3Player implements PlayerBehavior, Iterator<Music> {
 
     private Optional<MediaPlayer> mediaPlayerOptional;
 
@@ -28,36 +29,68 @@ public class MP3Player implements PlayerBehavior {
 
         return false;
     }
-
-    @Override
-    public boolean play() {
-        set();
-        if(isPlayable()) {
-            mediaPlayerOptional.ifPresent(MediaPlayer::play);
-            MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void pause() {
-        if(mediaPlayerOptional.isPresent())
-        mediaPlayerOptional.ifPresent(MediaPlayer::pause);
-    }
-
-    @Override
-    public void stop() {
-        if(mediaPlayerOptional.isPresent()) mediaPlayerOptional.ifPresent(MediaPlayer::stop);
-    }
-
     private void set() {
         File file = new File(CurrentMusic.getInstance().getMusic().getFileAddress());
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(
                 new MediaPlayer(
                     new Media(file.toURI().toString())));
-        }
+            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(next().getFileAddress()));
 
+        }
+    }
+
+    /*PlayerBehavior*/
+    @Override
+    public boolean play() {
+        set();
+        if(isPlayable()) {
+            mediaPlayerOptional.ifPresent(MediaPlayer::play);
+            return true;
+        }
+        return false;
+    }
+    @Override
+    public void pause() {
+        if(mediaPlayerOptional.isPresent())
+        mediaPlayerOptional.ifPresent(MediaPlayer::pause);
+    }
+    @Override
+    public void stop() {
+        if(mediaPlayerOptional.isPresent()) mediaPlayerOptional.ifPresent(MediaPlayer::stop);
+    }
+
+
+
+
+
+    /*Iteration Behavior*/
+    @Override
+    public boolean hasNext() {
+        Media media = mediaPlayerOptional.get().getMedia();
+        int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
+        if(CurrentMusic.playMode == 1 && i > MusicListManager.getInstance().getCurrentList().size() - 1)
+            return false;
+        else return true;
+    }
+    @Override
+    public Music next() {
+        if(hasNext()) {
+            Media media = mediaPlayerOptional.get().getMedia();
+            int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
+            switch(CurrentMusic.playMode) {
+                case 0 :
+                    i++;
+                    i %= MusicListManager.getInstance().getCurrentList().size() - 1;
+                    break;
+                case 1 :
+                    i++;
+                    break;
+                default :
+                    break;
+            }
+            return MusicListManager.getInstance().getCurrentList().get(i);
+        }
+        return null;
     }
 }

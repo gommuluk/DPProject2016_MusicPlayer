@@ -113,26 +113,6 @@ public class CurrentMusic {
     public boolean play() { // 버튼을 누르면 이것이 실행됨.
         if(isPlayable()) {
             music.performPlay();
-            /*if(mediaPlayerOptional.get().getStatus() == Status.PLAYING) stop();
-            mediaPlayerOptional.ifPresent(MediaPlayer::play);
-            MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
-            mediaPlayerOptional.get().setOnEndOfMedia(() -> {
-                Media media = mediaPlayerOptional.get().getMedia();
-                int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
-
-                switch (CurrentMusic.playMode) {
-                    case 0:
-                        i++; i = i % (MusicListManager.getInstance().getCurrentList().size() - 1);
-                        break;
-                    case 1:
-                        if (i <= MusicListManager.getInstance().getCurrentList().size() - 1) i++;
-                        break;
-                    case 2:
-                        break;
-                }
-                setMedia(MusicListManager.getInstance().at(i).getFileAddress());
-
-            });*/
             return true;
         }
         return false;
