@@ -3,6 +3,7 @@ package GUI;
 import FileIO.FileIO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
@@ -20,12 +21,14 @@ public class Main extends Application{
 
         root.setPrefSize(800, 600);
 
-        FXMLLoader f = new FXMLLoader(getClass().getResource("fxml/Toolbar.fxml"));
-        root.setTop(f.<MenuBar>load());
+        FXMLLoader toolbarLoader = new FXMLLoader(getClass().getResource("fxml/Toolbar.fxml"));
+        Parent toolbarNode = toolbarLoader.<MenuBar>load();
+        root.setTop(toolbarNode);
 
         FXMLLoader playerPanel = new FXMLLoader(getClass().getResource("fxml/PlayerTab.fxml"));
+        Parent playerTabNode = playerPanel.<VBox>load();
         PlayerTab playerTab = playerPanel.getController();
-        root.setRight(playerPanel.<VBox>load());
+        root.setRight(playerTabNode);
 
         MusicList musicList = new MusicList(playerTab);               // MP3Music List Panel
         tabPanel.connectPanels(playerTab, musicList);
