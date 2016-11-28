@@ -112,7 +112,8 @@ public class CurrentMusic {
 
     public boolean play() { // 버튼을 누르면 이것이 실행됨.
         if(isPlayable()) {
-            if(mediaPlayerOptional.get().getStatus() == Status.PLAYING) stop();
+            music.performPlay();
+            /*if(mediaPlayerOptional.get().getStatus() == Status.PLAYING) stop();
             mediaPlayerOptional.ifPresent(MediaPlayer::play);
             MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
             mediaPlayerOptional.get().setOnEndOfMedia(() -> {
@@ -130,19 +131,19 @@ public class CurrentMusic {
                         break;
                 }
                 setMedia(MusicListManager.getInstance().at(i).getFileAddress());
-            });
+
+            });*/
             return true;
         }
         return false;
     }
 
     public void pause() {
-        mediaPlayerOptional.ifPresent(MediaPlayer::pause);
+        music.performPause();
     }
 
     public void stop() {
-        if(mediaPlayerOptional.isPresent())
-        mediaPlayerOptional.ifPresent(MediaPlayer::stop);
+        music.performStop();
     }
 
     public String getFileName() { return music.toString(); }

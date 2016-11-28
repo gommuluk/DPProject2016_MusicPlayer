@@ -178,10 +178,8 @@ public class PlayerTab implements Initializable {
     }
 
     public void reset() {
-        System.out.println("ABC");
         Platform.runLater(() -> {
             starButton.setText("★");
-            playButton.setText("▶");
             changeButtonToImage(playButton, "play.jpg");
         });
     }

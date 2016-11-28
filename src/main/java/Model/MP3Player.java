@@ -22,6 +22,7 @@ public class MP3Player implements PlayerBehavior {
             return (status == MediaPlayer.Status.READY
                 || status == MediaPlayer.Status.PAUSED
                 || status == MediaPlayer.Status.STOPPED
+                || status == MediaPlayer.Status.UNKNOWN
             );
         }
 
@@ -41,12 +42,13 @@ public class MP3Player implements PlayerBehavior {
 
     @Override
     public void pause() {
+        if(mediaPlayerOptional.isPresent())
         mediaPlayerOptional.ifPresent(MediaPlayer::pause);
     }
 
     @Override
     public void stop() {
-        mediaPlayerOptional.ifPresent(MediaPlayer::stop);
+        if(mediaPlayerOptional.isPresent()) mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
 
     private void set() {
