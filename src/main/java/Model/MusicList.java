@@ -31,7 +31,7 @@ public class MusicList extends Observable implements Iterable<Music> {
                 iterator = new MusicListIterator(new MusicList(oneElementList));
                 break;
             case SHUFFLE :
-                iterator = new MusicListShuffleIterator(this);
+                iterator = new MusicListShuffleIterator(new MusicListIterator(this));
                 break;
             default :  // WHOLE CASE
                 break;

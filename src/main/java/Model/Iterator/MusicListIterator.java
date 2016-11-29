@@ -9,8 +9,8 @@ import java.util.Iterator;
  * Created by Yong Woon Jang on 2016-11-29.
  */
 public class MusicListIterator implements Iterator {
-    MusicList musicList;
-    int idx;
+    protected MusicList musicList;
+    private int idx;
 
     public MusicListIterator(MusicList m) {
         musicList = m;
