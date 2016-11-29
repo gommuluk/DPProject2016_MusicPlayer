@@ -12,9 +12,10 @@ import java.util.function.Consumer;
 
 public class CurrentMusic {
     public static int playMode = 0;
-    private static CurrentMusic uniqueInstance;
+    private static volatile CurrentMusic uniqueInstance;
     Optional<MediaPlayer> mediaPlayerOptional;
     private Music music;
+
     private CurrentMusic() {
         this.mediaPlayerOptional = Optional.empty();
 
@@ -46,8 +47,8 @@ public class CurrentMusic {
         File file = new File(filePath);
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(
-                    new MediaPlayer(
-                            new Media(file.toURI().toString())));
+                new MediaPlayer(
+                    new Media(file.toURI().toString())));
             filePath = mediaPlayerOptional.get().getMedia().getSource();
             filePath = FilePathParser.parseSeparator(filePath);
             music = MusicListManager.getInstance().find(filePath);
@@ -59,6 +60,7 @@ public class CurrentMusic {
     public Optional<Duration> getCurrentTime() {
         return mediaPlayerOptional.map(MediaPlayer::getCurrentTime);
     }
+
     public Optional<Duration> getTotalTime() {
         return mediaPlayerOptional.map(MediaPlayer::getTotalDuration);
     }
@@ -66,9 +68,11 @@ public class CurrentMusic {
     public void seekNext() {
         seek(10);
     }
+
     public void seekPrevious() {
         seek(-10);
     }
+
     public void seek(float percent) {
         if (percent >= 0 && percent <= 1 && mediaPlayerOptional.isPresent()) {
             MediaPlayer mediaPlayer = mediaPlayerOptional.get();
@@ -77,7 +81,7 @@ public class CurrentMusic {
     }
 
     public Music getMusic() {
-            return music;
+        return music;
     }
 
     public <T> void addChangeTimeEvent(T t, Consumer<T> func) {
@@ -110,7 +114,7 @@ public class CurrentMusic {
     }
 
     public boolean play() { // 버튼을 누르면 이것이 실행됨.
-        if(isPlayable() && music != null) {
+        if (isPlayable() && music != null) {
             music.performPlay();
             return true;
         }
@@ -118,13 +122,15 @@ public class CurrentMusic {
     }
 
     public void pause() {
-        if(music != null)   music.performPause();
+        if (music != null) music.performPause();
     }
 
     public void stop() {
-        if(music != null)   music.performStop();
+        if (music != null) music.performStop();
     }
 
-    public String getFileName() { return music.toString(); }
+    public String getFileName() {
+        return music.toString();
+    }
 
 }

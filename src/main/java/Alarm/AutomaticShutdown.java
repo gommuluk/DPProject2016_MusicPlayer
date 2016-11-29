@@ -2,11 +2,12 @@ package Alarm;
 
 import Model.MusicListManager;
 
-public class AutomaticShutdown extends Thread {	// automatic shutdown with thread to run under main program
+public class AutomaticShutdown extends Thread {    // automatic shutdown with thread to run under main program
 
-	private static AutomaticShutdown uniqueInstance;
+    private static volatile AutomaticShutdown uniqueInstance;
     private long ringring;
     private boolean flag = true;
+
     public static AutomaticShutdown getInstance() {
         if (uniqueInstance == null) {
             synchronized (MusicListManager.class) {
@@ -20,25 +21,25 @@ public class AutomaticShutdown extends Thread {	// automatic shutdown with threa
 
     @Override
     public void run() { // to run
-    	this.flag = false;
+        this.flag = false;
         try {
             Thread.sleep(ringring);
             System.exit(0);
         } catch (InterruptedException e) {
             e.printStackTrace();
 
-    	}
+        }
     }
 
-    public void setShutdown(String time) {	// set shutdown program
+    public void setShutdown(String time) {    // set shutdown program
 
         int setTime = Integer.parseInt(time);
 
         this.ringring = setTime * 1000 * 60;
     }
 
-    public boolean getStatus(){
-    	return flag;
+    public boolean getStatus() {
+        return flag;
     }
 
 }
