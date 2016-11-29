@@ -135,6 +135,14 @@ public class MusicListManager {
         return playlist;
     }
 
+    public MusicList getRecentPlaylist() {
+        return recentPlaylist;
+    }
+
+    public MusicList getFavoritePlaylist() {
+        return favoritePlaylist;
+    }
+
     public MusicList getCurrentList() {    // return using list
         switch (currentList) {
             case 1:
