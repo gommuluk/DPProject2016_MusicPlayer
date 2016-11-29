@@ -16,10 +16,14 @@ public class MusicList extends Observable implements Iterable<Music> {
 
     @Override
     public MusicListIterator iterator() {
-        MusicListIterator iterator;
+        return new MusicListIterator(this);
+    }
+
+    public MusicListIterator decoratedIterator() {
+        MusicListIterator iterator = iterator();
         switch(playMode) {
             case CYCLIC_WHOLE :
-                iterator = new CyclicIterator(new MusicListIterator(this));
+                iterator = new CyclicIterator(iterator);
                 break;
             case ONE_REPEAT :
                 ArrayList<Music> oneElementList = new ArrayList<Music>();
@@ -30,7 +34,6 @@ public class MusicList extends Observable implements Iterable<Music> {
                 iterator = new MusicListShuffleIterator(this);
                 break;
             default :  // WHOLE CASE
-                iterator = new MusicListIterator(this);
                 break;
         }
         return iterator;

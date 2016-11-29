@@ -35,7 +35,7 @@ public class MP3Player implements PlayerBehavior {
         File file = new File(CurrentMusic.getInstance().getMusic().getFileAddress());
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(new MediaPlayer(new Media(file.toURI().toString())));
-            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(MusicListManager.getInstance().getCurrentList().iterator().next().getFileAddress())); //TODO
+            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(MusicListManager.getInstance().getCurrentList().decoratedIterator().next().getFileAddress())); //TODO
 
         }
     }
@@ -43,7 +43,7 @@ public class MP3Player implements PlayerBehavior {
     /*PlayerBehavior*/
     @Override
     public boolean play() { //TODO
-        if(mediaPlayerOptional.get().getStatus() != MediaPlayer.Status.PAUSED) set();
+        set();
         // 플레이 버튼을 눌러서 PAUSE로 들어가는 경우, PAUSE에서 다시 플레이를 눌러서 재생하는 경우
         // 리스트를 더블 클릭해서 재생을 시작하는 경우,
         if(isPlayable()) {

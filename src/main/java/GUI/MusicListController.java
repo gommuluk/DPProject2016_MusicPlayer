@@ -42,9 +42,11 @@ public class MusicListController implements Initializable {
     private void changeMusic(MouseEvent event) {
         if (event.getClickCount() == 2) {
             Music music = musicListView.getSelectionModel().getSelectedItem();
-
-            CurrentMusic.getInstance().setMedia(music.getFileAddress());
-            MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
+            CurrentMusic.getInstance().stop();
+            if(CurrentMusic.getInstance().setMedia(music.getFileAddress())) {
+                CurrentMusic.getInstance().play();
+                MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
+            }
         }
     }
 

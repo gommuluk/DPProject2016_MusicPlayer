@@ -63,7 +63,7 @@ public class MusicListManager {
                 filepath.lastIndexOf("."));
             String fileAddress = filepath.substring(0, filepath.lastIndexOf(File.separatorChar));
             try {
-                playlist.addMusic(new MP3Music(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress)));
+                playlist.addMusic(new MP3Music(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress))); //TODO
             } catch (Exception e) {
                 new ErrorDetector();
             }
