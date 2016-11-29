@@ -35,7 +35,7 @@ public class MP3Player implements PlayerBehavior {
         File file = new File(CurrentMusic.getInstance().getMusic().getFileAddress());
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(new MediaPlayer(new Media(file.toURI().toString())));
-            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(MusicListManager.getInstance().getCurrentList().iterator().next().getFileAddress()));
+            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(MusicListManager.getInstance().getCurrentList().iterator().next().getFileAddress())); //TODO
 
         }
     }
