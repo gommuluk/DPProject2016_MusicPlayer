@@ -10,21 +10,24 @@ import java.util.Iterator;
 /**
  * Created by Yong Woon Jang on 2016-11-29.
  */
-public class MusicListShuffleIterator extends MusicListIterator {
-    int shuffle[];
-    int shuffleidx;
-    final int size;
+public class MusicListShuffleIterator extends IteratorDecorator {
+    private MusicListIterator iterator;
 
-    public MusicListShuffleIterator(MusicList m) {
-        super(m);
-        size = m.size();
+    private int shuffle[];
+    private int shuffleidx;
+    private final int range;
 
-        shuffle = new int[size];
+    public MusicListShuffleIterator(MusicListIterator it) {
+        super(null);
+        iterator = it;
+        range = it.size();
+
+        shuffle = new int[range];
         ArrayList<Integer> arrayList = new ArrayList<>();
-        for (int i=0; i<size; i++)
+        for (int i=0; i<range; i++)
             arrayList.add(i);
         Collections.shuffle(arrayList);
-        for (int i=0; i<size; i++)
+        for (int i=0; i<range; i++)
             shuffle[i] = arrayList.get(i);
 
         shuffleidx = 0;
@@ -32,12 +35,12 @@ public class MusicListShuffleIterator extends MusicListIterator {
 
     @Override
     public Music next() {
-        return musicList.at(shuffle[shuffleidx++]);
+        return iterator.musicList.at(shuffle[shuffleidx++]);
     }
 
     @Override
     public boolean hasNext() {
-        if (shuffleidx < size) return true;
+        if (shuffleidx < range) return true;
         return false;
     }
 }
