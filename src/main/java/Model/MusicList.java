@@ -38,10 +38,12 @@ public class MusicList extends Observable implements Iterable<Music> {
 
     public MusicList() {
         this.list = new ArrayList<>();
+        this.playMode = PlayMode.CYCLIC_WHOLE;
     }
 
     public MusicList(List<Music> list) {
         this.list = list;
+        this.playMode = PlayMode.CYCLIC_WHOLE;
     }
 
     public List<Music> getMusicList() {
