@@ -24,6 +24,6 @@ public class CyclicIterator extends IteratorDecorator {
 
     @Override
     public boolean hasNext() {
-        return true;
+        return iterator.size() != 0;
     }
 }

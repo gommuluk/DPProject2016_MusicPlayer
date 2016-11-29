@@ -32,4 +32,8 @@ public class MusicListIterator implements Iterator {
     public void reset() {
         idx = 0;
     }
+
+    public int size() {
+        return musicList.size();
+    }
 }
