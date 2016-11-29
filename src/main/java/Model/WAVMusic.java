@@ -10,12 +10,11 @@ import org.jaudiotagger.tag.*;
 import FileIO.FileIO;
 import FileIO.FilePathParser;
 
-import sun.security.krb5.internal.ccache.Tag;
 
 
 
 public class WAVMusic extends Music{
-/*
+
 	private AudioFile wavFile;
 	private Tag tag;
 
@@ -64,7 +63,7 @@ public class WAVMusic extends Music{
         this.lyricsFileAddress = "null";
 
 	}
-*/
+
 	@Override
     public Music clone() {
 			return /*new WAVMusic(fileName, fileAddress, musicInfo)*/ null;
