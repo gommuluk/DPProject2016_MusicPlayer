@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Created by Elliad on 2016-11-25.
  */
-public class MP3Player implements PlayerBehavior, Iterator<Music> {
+public class MP3Player implements PlayerBehavior {
     private Optional<MediaPlayer> mediaPlayerOptional;
 
     public MP3Player() {
@@ -62,37 +62,4 @@ public class MP3Player implements PlayerBehavior, Iterator<Music> {
         if(mediaPlayerOptional.isPresent()) mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
 
-
-
-
-
-    /*Iteration Behavior*/
-    @Override
-    public boolean hasNext() {
-        Media media = mediaPlayerOptional.get().getMedia();
-        int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
-        if(CurrentMusic.playMode == 1 && i > MusicListManager.getInstance().getCurrentList().size() - 1)
-            return false;
-        else return true;
-    }
-    @Override
-    public Music next() {
-        if(hasNext()) {
-            Media media = mediaPlayerOptional.get().getMedia();
-            int i = MusicListManager.getInstance().findIndex(FilePathParser.parseSeparator(media.getSource()));
-            switch(CurrentMusic.playMode) {
-                case 0 :
-                    i++;
-                    i %= MusicListManager.getInstance().getCurrentList().size() - 1;
-                    break;
-                case 1 :
-                    i++;
-                    break;
-                default :
-                    break;
-            }
-            return MusicListManager.getInstance().getCurrentList().at(i);
-        }
-        return null;
-    }
 }
