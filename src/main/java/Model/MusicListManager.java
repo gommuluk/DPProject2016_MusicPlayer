@@ -65,7 +65,6 @@ public class MusicListManager {
             try {
                 playlist.addMusic(new MP3Music(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress)));
             } catch (Exception e) {
-                e.printStackTrace();
                 new ErrorDetector();
             }
         }
@@ -81,6 +80,7 @@ public class MusicListManager {
             if (temp != null) return temp;
             else return null;
         } catch (Exception e) {
+            e.printStackTrace();
             new ErrorDetector();
             return null;
         }
@@ -88,7 +88,7 @@ public class MusicListManager {
 
     public int findIndex(String filePath) {    // find music file's index
         for (Music iter : getCurrentList()) {
-            if (iter.getFileName().replaceAll("[+]", " ").equals(filePath)) {
+            if (iter.getFileAddress().replaceAll("[+]", " ").equals(filePath)) {
                 return getCurrentList().find(iter);
             }
         }
@@ -145,6 +145,8 @@ public class MusicListManager {
 
     public MusicList getCurrentList() {    // return using list
         switch (currentList) {
+            case 0:
+                return playlist;
             case 1:
                 return favoritePlaylist;
             case 2:
