@@ -32,23 +32,20 @@ public class MP3Player implements PlayerBehavior, Iterator<Music> {
         return false;
     }
     private void set() {
-        //if music is playing, stop playing.
-        if(mediaPlayerOptional.isPresent()) {
-            if(mediaPlayerOptional.get().getStatus() == MediaPlayer.Status.PLAYING) stop();
-        }
-
         File file = new File(CurrentMusic.getInstance().getMusic().getFileAddress());
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(new MediaPlayer(new Media(file.toURI().toString())));
-            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(next().getFileAddress()));
+            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(MusicListManager.getInstance().getCurrentList().iterator().next().getFileAddress()));
 
         }
     }
 
     /*PlayerBehavior*/
     @Override
-    public boolean play() {
-        set();
+    public boolean play() { //TODO
+        if(mediaPlayerOptional.get().getStatus() != MediaPlayer.Status.PAUSED) set();
+        // 플레이 버튼을 눌러서 PAUSE로 들어가는 경우, PAUSE에서 다시 플레이를 눌러서 재생하는 경우
+        // 리스트를 더블 클릭해서 재생을 시작하는 경우,
         if(isPlayable()) {
             mediaPlayerOptional.ifPresent(MediaPlayer::play);
             return true;
@@ -62,7 +59,6 @@ public class MP3Player implements PlayerBehavior, Iterator<Music> {
     }
     @Override
     public void stop() {
-        System.out.println(mediaPlayerOptional.get().getStatus());
         if(mediaPlayerOptional.isPresent()) mediaPlayerOptional.ifPresent(MediaPlayer::stop);
     }
 

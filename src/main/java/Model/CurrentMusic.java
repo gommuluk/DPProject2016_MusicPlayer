@@ -43,12 +43,6 @@ public class CurrentMusic {
     }
 
     public boolean setMedia(String filePath) {
-        if(mediaPlayerOptional.isPresent()) {
-            System.out.println(mediaPlayerOptional.get().getStatus());
-            if(mediaPlayerOptional.get().getStatus() == MediaPlayer.Status.PLAYING)
-                mediaPlayerOptional.get().stop();
-        }
-
         File file = new File(filePath);
         if (file.isFile()) {
             mediaPlayerOptional = Optional.of(

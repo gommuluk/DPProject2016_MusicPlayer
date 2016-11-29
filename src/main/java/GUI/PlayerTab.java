@@ -95,7 +95,7 @@ public class PlayerTab implements Initializable {
     @FXML
     private void play(ActionEvent event) {
         CurrentMusic currentMusic = CurrentMusic.getInstance();
-        if (currentMusic.play()) {
+        if (currentMusic.play()) { //TODO
             playButton.setText("||");
             changeButtonToImage(playButton, "pause.png");
             MusicListManager.getInstance().addToRecentPlayList(currentMusic.getMusic());

@@ -1,43 +1,33 @@
 package Model;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.RandomAccessFile;
-import java.util.logging.Logger;
 import java.util.ArrayList;
 
-import org.jaudiotagger.audio.*;
-import org.jaudiotagger.audio.exceptions.*;
-import org.jaudiotagger.audio.wav.WavTag;
 import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.AudioFile.*;
 import org.jaudiotagger.tag.*;
 
 
 import FileIO.FileIO;
 import FileIO.FilePathParser;
 
-import com.mpatric.mp3agic.*;
+import sun.security.krb5.internal.ccache.Tag;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class WAVMusic extends Music{
-    
+/*
 	private AudioFile wavFile;
 	private Tag tag;
-	
-	private String[] musicInfo;	
-	
+
+	private String[] musicInfo;
+
 	public WAVMusic(String musicFileName, String musicFileAddress, String[] infoInfo){
-		
+
 		//FieldKey.TITLE   FieldKey.ARTIST   FieldKey.ALBUM   FieldKey.YEAR   FieldKey.GENRE
 		String fileName = musicFileAddress + File.separatorChar + musicFileName + ".wav";
 		  if (infoInfo != null) {
 			  try{
-			  tag.setField(FieldKey.TITLE, infoInfo[1]);  
+			  tag.setField(FieldKey.TITLE, infoInfo[1]);
 			  } catch(FieldDataInvalidException e) {
 				  e.printStackTrace();
 			  }
@@ -50,12 +40,12 @@ public class WAVMusic extends Music{
 	    wavFile = new AudioFile(fileName, null, tag);
 	    isFavorite = false;	// default setting - favorite is false
 	    this.playerBehavior = new WAVPlayer();
-	    
+
 	}
-	
+
 	public WAVMusic(File file){
 		wavFile = new AudioFile(file, null, null);
-		
+
 		boolean check = true;
     	String path = file.getAbsolutePath();
     	this.fileName = FilePathParser.getFileName(path);
@@ -73,13 +63,13 @@ public class WAVMusic extends Music{
         this.lyricsFileName = "null";
         this.lyricsFileAddress = "null";
 
-	}	
-	
+	}
+*/
 	@Override
     public Music clone() {
-			return new WAVMusic(fileName, fileAddress, musicInfo);
-    } 
-	
+			return /*new WAVMusic(fileName, fileAddress, musicInfo)*/ null;
+    }
+
 	@Override
 	public String getFileAddress(){
 		return null;

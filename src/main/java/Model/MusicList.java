@@ -1,17 +1,39 @@
 package Model;
 
+import Model.Iterator.CyclicIterator;
 import Model.Iterator.MusicListIterator;
+import Model.Iterator.MusicListShuffleIterator;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+
 public class MusicList extends Observable implements Iterable<Music> {
     List<Music> list;
+    PlayMode playMode;
 
     @Override
     public MusicListIterator iterator() {
-        return new MusicListIterator(this);
+        MusicListIterator iterator;
+        switch(playMode) {
+            case CYCLIC_WHOLE :
+                iterator = new CyclicIterator(new MusicListIterator(this));
+                break;
+            case ONE_REPEAT :
+                ArrayList<Music> oneElementList = new ArrayList<Music>();
+                oneElementList.add(CurrentMusic.getInstance().getMusic());
+                iterator = new MusicListIterator(new MusicList(oneElementList));
+                break;
+            case SHUFFLE :
+                iterator = new MusicListShuffleIterator(this);
+                break;
+            default :  // WHOLE CASE
+                iterator = new MusicListIterator(this);
+                break;
+        }
+        return iterator;
     }
 
     public MusicList() {
