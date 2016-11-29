@@ -1,6 +1,5 @@
 package GUI;
 
-import Model.Music;
 import Model.MusicListManager;
 import Util.RecursiveFinder;
 

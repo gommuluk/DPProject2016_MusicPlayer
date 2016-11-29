@@ -95,7 +95,7 @@ public class MP3Player implements PlayerBehavior, Iterator<Music> {
                 default :
                     break;
             }
-            return MusicListManager.getInstance().getCurrentList().get(i);
+            return MusicListManager.getInstance().getCurrentList().at(i);
         }
         return null;
     }

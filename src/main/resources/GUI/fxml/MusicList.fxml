@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.ListView?>
-<ListView orientation="VERTICAL" prefHeight="300"/>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<HBox fx:controller="GUI.MusicListController" xmlns:fx="http://javafx.com/fxml/1">
+  <VBox>
+    <Button fx:id="bnPlaylist" text="전체 음악" onAction="#showPlaylist"/>
+    <Button fx:id="bnFavoritePlaylist" text="즐겨찾기" onAction="#showFavoritePlaylist"/>
+    <Button fx:id="bnRecentPlaylist" text="최근 재생한 곡" onAction="#showRecentPlaylist"/>
+  </VBox>
+  <ListView fx:id="musicListView" orientation="VERTICAL" prefHeight="300" onMouseClicked="#changeMusic" />
+</HBox>
