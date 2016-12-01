@@ -1,9 +1,7 @@
 package GUI;
 
 import FileIO.FilePathParser;
-import Model.CurrentMusic;
-import Model.Music;
-import Model.MusicListManager;
+import Model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 import java.io.ByteArrayInputStream;
@@ -95,11 +94,14 @@ public class PlayerTab implements Initializable {
     @FXML
     private void play(ActionEvent event) {
         CurrentMusic currentMusic = CurrentMusic.getInstance();
-        if (currentMusic.play()) { //TODO
+        if (currentMusic.getStatus() == MediaPlayer.Status.PAUSED ||
+            currentMusic.getStatus() == MediaPlayer.Status.READY  ||
+            currentMusic.getStatus() == MediaPlayer.Status.UNKNOWN) {
+            currentMusic.play();
             playButton.setText("||");
             changeButtonToImage(playButton, "pause.png");
-            MusicListManager.getInstance().addToRecentPlayList(currentMusic.getMusic());
-        } else {
+        }
+        else if (currentMusic.getStatus() == MediaPlayer.Status.PLAYING){
             currentMusic.pause();
             reset();
         }
@@ -113,18 +115,21 @@ public class PlayerTab implements Initializable {
 
     @FXML
     private void changePlayMode(ActionEvent event) {
-        if (CurrentMusic.playMode == 0) {
-            CurrentMusic.playMode++;
+        if (MusicList.playMode == PlayMode.CYCLIC_WHOLE) {
+            MusicList.playMode = PlayMode.WHOLE;
             playModeButton.setText("A/N");
 
-        } else if (CurrentMusic.playMode == 1) {
-            CurrentMusic.playMode++;
+        } else if (MusicList.playMode == PlayMode.WHOLE) {
+            MusicList.playMode = PlayMode.ONE_REPEAT;
             playModeButton.setText("O/R");
 
-        } else {
-            CurrentMusic.playMode = 0;
-            playModeButton.setText("A/R");
+        } else if (MusicList.playMode == PlayMode.ONE_REPEAT){
+            MusicList.playMode = PlayMode.SHUFFLE;
+            playModeButton.setText("SHUFFLE");
 
+        } else if (MusicList.playMode == PlayMode.SHUFFLE) {
+            MusicList.playMode = PlayMode.CYCLIC_WHOLE;
+            playModeButton.setText("A/R");
         }
     }
 
@@ -179,7 +184,6 @@ public class PlayerTab implements Initializable {
 
     public void reset() {
         Platform.runLater(() -> {
-            starButton.setText("★");
             playButton.setText("▶");
             changeButtonToImage(playButton, "play.jpg");
         });

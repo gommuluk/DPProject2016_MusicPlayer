@@ -4,7 +4,6 @@ import Model.Iterator.CyclicIterator;
 import Model.Iterator.MusicListIterator;
 import Model.Iterator.MusicListShuffleIterator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -12,7 +11,7 @@ import java.util.Observable;
 
 public class MusicList extends Observable implements Iterable<Music> {
     List<Music> list;
-    PlayMode playMode;
+    public static PlayMode playMode = PlayMode.CYCLIC_WHOLE;
 
     @Override
     public MusicListIterator iterator() {
@@ -41,12 +40,10 @@ public class MusicList extends Observable implements Iterable<Music> {
 
     public MusicList() {
         this.list = new ArrayList<>();
-        this.playMode = PlayMode.CYCLIC_WHOLE;
     }
 
     public MusicList(List<Music> list) {
         this.list = list;
-        this.playMode = PlayMode.CYCLIC_WHOLE;
     }
 
     public List<Music> getMusicList() {

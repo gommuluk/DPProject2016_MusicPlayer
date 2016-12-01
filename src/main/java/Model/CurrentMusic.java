@@ -7,10 +7,11 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.Observable;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class CurrentMusic {
+public class CurrentMusic extends Observable {
     public static int playMode = 0;
     private static volatile CurrentMusic uniqueInstance;
     Optional<MediaPlayer> mediaPlayerOptional;
@@ -49,6 +50,7 @@ public class CurrentMusic {
             mediaPlayerOptional = Optional.of(
                 new MediaPlayer(
                     new Media(file.toURI().toString())));
+            mediaPlayerOptional.get().setOnEndOfMedia(() -> CurrentMusic.getInstance().setMedia(MusicListManager.getInstance().getCurrentList().decoratedIterator().next().getFileAddress())); //TODO
             filePath = mediaPlayerOptional.get().getMedia().getSource();
             filePath = FilePathParser.parseSeparator(filePath);
             music = MusicListManager.getInstance().find(filePath);
@@ -115,8 +117,7 @@ public class CurrentMusic {
 
     public boolean play() { // 버튼을 누르면 이것이 실행됨.
         if (isPlayable() && music != null) {
-            music.performPlay();
-            return true;
+            return music.performPlay();
         }
         return false;
     }
@@ -132,5 +133,8 @@ public class CurrentMusic {
     public String getFileName() {
         return music.toString();
     }
+
+    public Status getStatus() {return this.mediaPlayerOptional.get().getStatus();}
+
 
 }
