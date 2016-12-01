@@ -173,4 +173,12 @@ public class MusicListManager {
         favoritePlaylist.addObserver(o);
         return this;
     }
+
+    public boolean setCurrentList(int i) {
+        if(i >= 0 && i <= 2) {
+            currentList = i;
+            return true;
+        }
+        else return false;
+    }
 }

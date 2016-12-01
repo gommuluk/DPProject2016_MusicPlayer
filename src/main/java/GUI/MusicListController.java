@@ -27,6 +27,7 @@ public class MusicListController implements Initializable {
     @FXML
     private ListView<Music> musicListView;
 
+    private int pressedBtn;
     private enum Now {
         Playlist,
         FavoritePlaylist,
@@ -41,6 +42,7 @@ public class MusicListController implements Initializable {
     @FXML
     private void changeMusic(MouseEvent event) {
         if (event.getClickCount() == 2) {
+            MusicListManager.getInstance().setCurrentList(pressedBtn);
             Music music = musicListView.getSelectionModel().getSelectedItem();
             CurrentMusic.getInstance().stop();
             if(CurrentMusic.getInstance().setMedia(music.getFileAddress())) {
@@ -57,16 +59,19 @@ public class MusicListController implements Initializable {
 
     @FXML
     private void showPlaylist(ActionEvent event) {
+        pressedBtn = 0;
         redrawPlaylist(MusicListManager.getInstance().getPlaylist());
     }
 
     @FXML
     private void showFavoritePlaylist(ActionEvent event) {
+        pressedBtn = 1;
         redrawPlaylist(MusicListManager.getInstance().getFavoritePlaylist());
     }
 
     @FXML
     private void showRecentPlaylist(ActionEvent event) {
+        pressedBtn = 2;
         redrawPlaylist(MusicListManager.getInstance().getRecentPlaylist());
     }
 
@@ -74,7 +79,7 @@ public class MusicListController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         this.musicList = new SimpleListProperty<>(FXCollections.observableArrayList());
         musicListView.setItems(musicList);
-
+        pressedBtn = 0;
         playinglist = null;
 
         MusicListManager.getInstance().addRecentPlaylistObserver(new Observer() {
