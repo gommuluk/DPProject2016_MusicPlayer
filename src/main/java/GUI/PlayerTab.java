@@ -144,9 +144,11 @@ public class PlayerTab implements Initializable {
     private void toggleFavorite() {
         Music temp = CurrentMusic.getInstance().getMusic();
         MusicListManager musicList = MusicListManager.getInstance();
-        if (musicList.currentList != 1) {
+        if (!temp.getFavorite()) {
+            temp.setFavorite();
             musicList.addToFavoriteMusicList(temp);
         } else {
+            temp.setFavorite();
             musicList.deleteToFavoriteMusicList(temp);
         }
     }

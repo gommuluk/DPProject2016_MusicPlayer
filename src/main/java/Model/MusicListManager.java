@@ -112,7 +112,7 @@ public class MusicListManager {
         currentList = 1;
         if (!isExist(music)) {
             currentList = temp;
-            favoritePlaylist.addMusic(music.clone());
+            favoritePlaylist.addMusic(music);
         } else {
             currentList = temp;
         }
@@ -120,9 +120,9 @@ public class MusicListManager {
 
     public boolean deleteToFavoriteMusicList(Music music) {    // delete MP3Music object in favoite MP3Music list
         if (isExist(music)) {
-            for (int i = 0; i < getCurrentList().size(); i++) {
-                if (getCurrentList().at(i).getFileName().equals(music.getFileName())) {
-                    getCurrentList().remove(i);
+            for (Music iter : favoritePlaylist) {
+                if (iter.getFileName().equals(music.getFileName())) {
+                    favoritePlaylist.remove(favoritePlaylist.find(iter));
                     break;
                 }
             }
