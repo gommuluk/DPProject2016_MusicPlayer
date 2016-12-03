@@ -56,8 +56,9 @@ public class MusicListController implements Initializable {
     }
 
     @FXML
-    private void changeSortMode(MouseEvent event) {
-        String mode = sortMode.getSelectionModel().getSelectedItem();
+    private void changeSortMode(ActionEvent event) {
+        String mode = sortMode.getValue();
+        System.out.println(mode);
         //TODO MODE SELECTION.
         //TODO SORT
         //TODO NULL 처리
