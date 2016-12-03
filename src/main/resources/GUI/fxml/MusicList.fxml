@@ -7,20 +7,26 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.collections.*?>
 <?import java.lang.String?>
+<?import javafx.scene.layout.GridPane?>
 <HBox fx:controller="GUI.MusicListController" xmlns:fx="http://javafx.com/fxml/1">
   <VBox>
-    <Button fx:id="bnPlaylist" text="전체 음악" onAction="#showPlaylist"/>
-    <Button fx:id="bnFavoritePlaylist" text="즐겨찾기" onAction="#showFavoritePlaylist"/>
-    <Button fx:id="bnRecentPlaylist" text="최근 재생한 곡" onAction="#showRecentPlaylist"/>
+
   </VBox>
-  <ListView fx:id="musicListView" orientation="VERTICAL" prefHeight="300" onMouseClicked="#changeMusic" />
-  <ComboBox fx:id="sortMode" layoutX="74.0" layoutY="106.0" onAction="#changeSortMode" prefHeight="52.0" prefWidth="153.0" promptText="Select Name" >
-    <items>
-      <FXCollections fx:factory="observableArrayList"  >
-          <String fx:value="제목" />
-          <String fx:value="날짜" />
-          <String fx:value="아티스트" />
-      </FXCollections>
-    </items>
-  </ComboBox>
+  <GridPane>
+    <HBox>
+      <Button fx:id="bnPlaylist" text="전체 음악" prefWidth="150" prefHeight="10" onAction="#showPlaylist" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+      <Button fx:id="bnFavoritePlaylist" text="즐겨찾기" prefWidth="150" prefHeight="10" onAction="#showFavoritePlaylist" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+      <Button fx:id="bnRecentPlaylist" text="최근 재생한 곡" prefWidth="150" prefHeight="10" onAction="#showRecentPlaylist" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+      <ComboBox fx:id="sortMode" layoutX="80.0" layoutY="20.0" onAction="#changeSortMode" prefHeight="20.0" prefWidth="150.0" promptText="Select Name" GridPane.columnIndex="3" GridPane.rowIndex="0" >
+        <items>
+          <FXCollections fx:factory="observableArrayList"  >
+            <String fx:value="제목" />
+            <String fx:value="날짜" />
+            <String fx:value="아티스트" />
+          </FXCollections>
+        </items>
+      </ComboBox>
+    </HBox>
+    <ListView fx:id="musicListView" orientation="VERTICAL" prefHeight="300" prefWidth="450" onMouseClicked="#changeMusic" GridPane.rowIndex="1"/>
+  </GridPane>
 </HBox>
