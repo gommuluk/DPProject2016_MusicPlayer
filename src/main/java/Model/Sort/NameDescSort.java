@@ -10,7 +10,7 @@ public class NameDescSort implements SortBehavior {
 
 	public void sort(ArrayList<Music> musicList){
 
-		Collections.sort(musicList, new Model.NameDescCompare());
+		Collections.sort(musicList, new NameDescCompare());
 	}
 }
 

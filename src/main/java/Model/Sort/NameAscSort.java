@@ -10,6 +10,6 @@ public class NameAscSort implements SortBehavior {
 
 	public void sort(ArrayList<Music> musicList){
 
-		Collections.sort(musicList, new Model.NameAscCompare());
+		Collections.sort(musicList, new NameAscCompare());
 	}
 }

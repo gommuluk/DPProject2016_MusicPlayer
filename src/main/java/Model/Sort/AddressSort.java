@@ -13,7 +13,7 @@ public class AddressSort implements SortBehavior {
 
 	public void sort(ArrayList<Music> musicList){
 
-		Collections.sort(musicList, new Model.AddressCompare());
+		Collections.sort(musicList, new AddressCompare());
 	}
 }
 
