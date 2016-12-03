@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
@@ -26,6 +27,8 @@ public class MusicListController implements Initializable {
     private Button bnRecentPlaylist;
     @FXML
     private ListView<Music> musicListView;
+    @FXML
+    private ComboBox<String> sortMode;
 
     private int pressedBtn;
     private enum Now {
@@ -50,6 +53,15 @@ public class MusicListController implements Initializable {
                 MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
             }
         }
+    }
+
+    @FXML
+    private void changeSortMode(MouseEvent event) {
+        String mode = sortMode.getSelectionModel().getSelectedItem();
+        //TODO MODE SELECTION.
+        //TODO SORT
+        //TODO NULL 처리
+        redrawPlaylist(MusicListManager.getInstance().getCurrentList());
     }
 
     private void redrawPlaylist(MusicList drawlist) {

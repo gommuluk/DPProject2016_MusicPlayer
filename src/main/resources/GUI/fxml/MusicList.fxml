@@ -4,6 +4,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.*?>
+<?import java.lang.String?>
 <HBox fx:controller="GUI.MusicListController" xmlns:fx="http://javafx.com/fxml/1">
   <VBox>
     <Button fx:id="bnPlaylist" text="전체 음악" onAction="#showPlaylist"/>
@@ -11,4 +14,13 @@
     <Button fx:id="bnRecentPlaylist" text="최근 재생한 곡" onAction="#showRecentPlaylist"/>
   </VBox>
   <ListView fx:id="musicListView" orientation="VERTICAL" prefHeight="300" onMouseClicked="#changeMusic" />
+  <ComboBox fx:id="sortMode" layoutX="74.0" layoutY="106.0" onAction="#changeSortMode" prefHeight="52.0" prefWidth="153.0" promptText="Select Name" >
+    <items>
+      <FXCollections fx:factory="observableArrayList"  >
+          <String fx:value="제목" />
+          <String fx:value="날짜" />
+          <String fx:value="아티스트" />
+      </FXCollections>
+    </items>
+  </ComboBox>
 </HBox>
