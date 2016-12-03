@@ -1,5 +1,8 @@
 
-package Model;
+package Model.Sort
+    ;
+
+import Model.Music;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,8 +12,8 @@ import java.util.Collections;
 public class AddressSort implements SortBehavior {
 
 	public void sort(ArrayList<Music> musicList){
-		
-		Collections.sort(musicList, new AddressCompare());		
+
+		Collections.sort(musicList, new Model.AddressCompare());
 	}
 }
 

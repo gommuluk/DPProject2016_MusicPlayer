@@ -1,4 +1,6 @@
-package Model;
+package Model.Sort;
+
+import Model.Music;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +9,8 @@ import java.util.Collections;
 public class RandomSort implements SortBehavior {
 
 	public void sort(ArrayList<Music> musicList){
-		
-		Collections.shuffle(musicList); 
+
+		Collections.shuffle(musicList);
 	}
 }
 

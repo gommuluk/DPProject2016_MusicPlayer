@@ -1,4 +1,6 @@
-package Model;
+package Model.Sort;
+
+import Model.Music;
 
 import java.util.ArrayList;
 
