@@ -14,7 +14,6 @@ public class Lyric_Repeat extends Thread {
         int sec = 0;
         int msec = 0;
         int total;
-        // String showLyric;
 
         while (true) {
             Lyric_Parser b = new Lyric_Parser();
