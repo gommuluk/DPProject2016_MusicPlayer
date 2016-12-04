@@ -41,4 +41,9 @@ public abstract class Music implements Cloneable {
     public String toString() {
         return getFileName();
     }
+
+    public boolean getFavorite() {
+        return isFavorite;
+    }
+    public void setFavorite() { this.isFavorite = !this.isFavorite; }
 }

@@ -142,13 +142,13 @@ public class PlayerTab implements Initializable, Observer {
     private void toggleFavorite() {
         Music temp = CurrentMusicPlayer.getInstance().getMusic();
         MusicListManager musicList = MusicListManager.getInstance();
-//        if (!temp.getFavorite()) {
-//            temp.setFavorite();
-//            musicList.addToFavoriteMusicList(temp);
-//        } else {
-//            temp.setFavorite();
-//            musicList.deleteToFavoriteMusicList(temp);
-//        }
+        if (!temp.getFavorite()) {
+            temp.setFavorite();
+            musicList.addToFavoriteMusicList(temp);
+        } else {
+            temp.setFavorite();
+            musicList.deleteToFavoriteMusicList(temp);
+        }
     }
 
     private void addVolumeSlider() {
