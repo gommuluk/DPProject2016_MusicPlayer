@@ -17,7 +17,7 @@
     <Label fx:id="musicName" text="Ready" textFill="white" prefHeight="30" prefWidth="30"/>
     <Slider fx:id="currentTimeSlider" min="0" max="1.0" maxWidth="150" value="0"/>
     <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
-      <Button fx:id="seekPreviousButton" maxWidth="40" maxHeight="40" onAction="#seekPrevious">
+      <Button fx:id="seekPreviousButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#seekPrevious">
         <graphic>
           <ImageView fitWidth="40" fitHeight="40">
             <image>
@@ -26,7 +26,7 @@
           </ImageView>
         </graphic>
       </Button>
-      <Button fx:id="playButton" maxWidth="40" maxHeight="40" onAction="#play">
+      <Button fx:id="playButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#play">
         <graphic>
           <ImageView fitWidth="40" fitHeight="40">
              <image>
@@ -35,7 +35,7 @@
           </ImageView>
         </graphic>
       </Button>
-      <Button fx:id="seekNextButton" maxWidth="40" maxHeight="40" onAction="#seekNext">
+      <Button fx:id="seekNextButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#seekNext">
         <graphic>
           <ImageView fitWidth="40" fitHeight="40">
             <image>
@@ -46,7 +46,7 @@
       </Button>
     </HBox>
     <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
-      <Button fx:id="playModeButton" maxWidth="40" maxHeight="40" onAction="#changePlayMode">
+      <Button fx:id="playModeButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#changePlayMode">
         <graphic>
           <ImageView fitWidth="40" fitHeight="40">
             <image>
@@ -55,7 +55,7 @@
           </ImageView>
         </graphic>
       </Button>
-      <Button fx:id="stopButton" maxWidth="40" maxHeight="40" onAction="#stop">
+      <Button fx:id="stopButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#stop">
         <graphic>
           <ImageView fitWidth="40" fitHeight="40">
             <image>
