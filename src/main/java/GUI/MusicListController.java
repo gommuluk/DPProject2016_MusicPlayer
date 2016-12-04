@@ -1,6 +1,6 @@
 package GUI;
 
-import Model.CurrentMusic;
+import Model.CurrentMusicPlayer;
 import Model.Music;
 import Model.MusicList;
 import Model.MusicListManager;
@@ -31,13 +31,13 @@ public class MusicListController implements Initializable {
     private ComboBox<String> sortMode;
 
     private int pressedBtn;
-    private enum Now {
+    private enum NowList {
         Playlist,
         FavoritePlaylist,
         RecentPlaylist
     }
 
-    Now playinglist;
+    NowList playinglist;
 
     // Music list to be drawn
     private ObservableList<Music> musicList;
@@ -47,10 +47,10 @@ public class MusicListController implements Initializable {
         if (event.getClickCount() == 2) {
             MusicListManager.getInstance().setCurrentList(pressedBtn);
             Music music = musicListView.getSelectionModel().getSelectedItem();
-            CurrentMusic.getInstance().stop();
-            if(CurrentMusic.getInstance().setMedia(music.getFileAddress())) {
-                CurrentMusic.getInstance().play();
-                MusicListManager.getInstance().addToRecentPlayList(CurrentMusic.getInstance().getMusic());
+            CurrentMusicPlayer.getInstance().stop();
+            if(CurrentMusicPlayer.getInstance().setCurrentMusic(music)) {
+                CurrentMusicPlayer.getInstance().play();
+                MusicListManager.getInstance().addToRecentPlayList(CurrentMusicPlayer.getInstance().getMusic());
             }
         }
     }
@@ -98,21 +98,21 @@ public class MusicListController implements Initializable {
         MusicListManager.getInstance().addRecentPlaylistObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                if (playinglist == Now.RecentPlaylist) {
+                if (playinglist == NowList.RecentPlaylist) {
                     redrawPlaylist(MusicListManager.getInstance().getRecentPlaylist());
                 }
             }
         }).addPlaylistObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                if (playinglist == Now.Playlist) {
+                if (playinglist == NowList.Playlist) {
                     redrawPlaylist(MusicListManager.getInstance().getPlaylist());
                 }
             }
         }).addFavoritePlaylistObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
-                if (playinglist == Now.FavoritePlaylist) {
+                if (playinglist == NowList.FavoritePlaylist) {
                     redrawPlaylist(MusicListManager.getInstance().getFavoritePlaylist());
                 }
             }

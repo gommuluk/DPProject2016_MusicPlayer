@@ -16,10 +16,12 @@ import javafx.util.Duration;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class PlayerTab implements Initializable {
+public class PlayerTab implements Initializable, Observer {
     public static Label lyric;
 
     /* MP3Music info -> Image, name */
@@ -49,28 +51,26 @@ public class PlayerTab implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        addCurrentTimeSliderEventHandler();
-        addVolumeSlider();
-//        addLyric();
+        CurrentMusicPlayer.getInstance().addObserver(this);
     }
 
     private void addCurrentTimeSliderEventHandler() {
         // TODO
         // horizontal plz
-        CurrentMusic currentMusic = CurrentMusic.getInstance();
+        CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
 
         currentTimeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             double percent = (newValue.floatValue() - currentTimeSlider.getMin()) / (currentTimeSlider.getMax() - currentTimeSlider.getMin());
-            currentMusic.seek((float)percent);
+            currentMusicPlayer.seek(percent);
         });
 
-        currentMusic.addChangeTimeEvent(currentTimeSlider, (Slider jSlider) -> {
+        currentMusicPlayer.addChangeTimeEvent(currentTimeSlider, (Slider slider) -> {
             Platform.runLater(() -> {
-                Optional<Duration> currentTimeOptional = currentMusic.getCurrentTime();
-                Optional<Duration> totalTimeOptional = currentMusic.getTotalTime();
+                Optional<Duration> currentTimeOptional = currentMusicPlayer.getCurrentTime();
+                Optional<Duration> totalTimeOptional = currentMusicPlayer.getTotalTime();
                 if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent()) {
                     double percent = currentTimeOptional.get().toMillis() / totalTimeOptional.get().toMillis();
-                    jSlider.setValue((int) (percent * (jSlider.getMax() - jSlider.getMin())) + jSlider.getMin());
+                    slider.setValue(percent);
                 }
             });
         });
@@ -87,30 +87,29 @@ public class PlayerTab implements Initializable {
 
     @FXML
     private void seekPrevious(ActionEvent event) {
-        CurrentMusic currentMusic = CurrentMusic.getInstance();
-        currentMusic.seekPrevious();
+        CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
+        currentMusicPlayer.seekPrevious();
     }
 
     @FXML
     private void play(ActionEvent event) {
-        CurrentMusic currentMusic = CurrentMusic.getInstance();
-        if (currentMusic.getStatus() == MediaPlayer.Status.PAUSED ||
-            currentMusic.getStatus() == MediaPlayer.Status.READY  ||
-            currentMusic.getStatus() == MediaPlayer.Status.UNKNOWN) {
-            currentMusic.play();
+        CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
+        if (currentMusicPlayer.getStatus() == MediaPlayer.Status.PAUSED ||
+            currentMusicPlayer.getStatus() == MediaPlayer.Status.READY ||
+            currentMusicPlayer.getStatus() == MediaPlayer.Status.UNKNOWN) {
+            currentMusicPlayer.play();
             playButton.setText("||");
             changeButtonToImage(playButton, "pause.png");
-        }
-        else if (currentMusic.getStatus() == MediaPlayer.Status.PLAYING){
-            currentMusic.pause();
-            reset();
+        } else if (currentMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            currentMusicPlayer.pause();
+            resetPlayButtonIcon();
         }
     }
 
     @FXML
     private void seekNext(ActionEvent event) {
-        CurrentMusic currentMusic = CurrentMusic.getInstance();
-        currentMusic.seekNext();
+        CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
+        currentMusicPlayer.seekNext();
     }
 
     @FXML
@@ -118,15 +117,12 @@ public class PlayerTab implements Initializable {
         if (MusicList.playMode == PlayMode.CYCLIC_WHOLE) {
             MusicList.playMode = PlayMode.WHOLE;
             playModeButton.setText("A/N");
-
         } else if (MusicList.playMode == PlayMode.WHOLE) {
             MusicList.playMode = PlayMode.ONE_REPEAT;
             playModeButton.setText("O/R");
-
-        } else if (MusicList.playMode == PlayMode.ONE_REPEAT){
+        } else if (MusicList.playMode == PlayMode.ONE_REPEAT) {
             MusicList.playMode = PlayMode.SHUFFLE;
             playModeButton.setText("SHUFFLE");
-
         } else if (MusicList.playMode == PlayMode.SHUFFLE) {
             MusicList.playMode = PlayMode.CYCLIC_WHOLE;
             playModeButton.setText("A/R");
@@ -135,34 +131,33 @@ public class PlayerTab implements Initializable {
 
     @FXML
     private void stop(ActionEvent event) {
-        CurrentMusic currentMusic = CurrentMusic.getInstance();
-        currentMusic.stop();
-        reset();
+        CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
+        currentMusicPlayer.stop();
+        resetPlayButtonIcon();
     }
 
     @FXML
     private void toggleFavorite() {
-        Music temp = CurrentMusic.getInstance().getMusic();
+        Music temp = CurrentMusicPlayer.getInstance().getMusic();
         MusicListManager musicList = MusicListManager.getInstance();
-        if (!temp.getFavorite()) {
-            temp.setFavorite();
-            musicList.addToFavoriteMusicList(temp);
-        } else {
-            temp.setFavorite();
-            musicList.deleteToFavoriteMusicList(temp);
-        }
+//        if (!temp.getFavorite()) {
+//            temp.setFavorite();
+//            musicList.addToFavoriteMusicList(temp);
+//        } else {
+//            temp.setFavorite();
+//            musicList.deleteToFavoriteMusicList(temp);
+//        }
     }
 
     private void addVolumeSlider() {
-        // TODO implements with progress bar
         volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            CurrentMusic.getInstance().setVolume(newValue.floatValue());
+            CurrentMusicPlayer.getInstance().setVolume(newValue.floatValue());
         });
     }
 
     private void replaceMusicInfo() {
         try {
-            Music music = CurrentMusic.getInstance().getMusic();
+            Music music = CurrentMusicPlayer.getInstance().getMusic();
             if (music.getAlbumArt() != null) {
                 musicImage = new Image(new ByteArrayInputStream(music.getAlbumArt()), 200, 200, true, true);
                 musicImageView.setImage(musicImage);
@@ -173,32 +168,20 @@ public class PlayerTab implements Initializable {
         }
     }
 
-    public void doStop() {
-        Platform.runLater(() -> stopButton.fire());
-    }
-
-    public void doPlay() {
-        Platform.runLater(() -> {
-            replaceMusicInfo();
-            playButton.fire();
-        });
-    }
-
-    public void reset() {
+    public void resetPlayButtonIcon() {
         Platform.runLater(() -> {
             playButton.setText("▶");
             changeButtonToImage(playButton, "play.jpg");
         });
     }
 
-//    private void addLyric() {
-//        lyric = new Label();
-//
-//        lyric.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-//        lyric.setTextFill(Color.WHITE);
-//        lyric.setPrefSize(30, 30);
-//
-//        // new Lyric_Repeat();
-//        //buttonPanel.add(text1);
-//    }
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof CurrentMusicPlayer) {
+            CurrentMusicPlayer o1 = (CurrentMusicPlayer) o;
+            // TODO : exist a lot of methods calling. remove it
+            addCurrentTimeSliderEventHandler();
+            addVolumeSlider();
+        }
+    }
 }

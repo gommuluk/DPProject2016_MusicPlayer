@@ -26,7 +26,7 @@ public class MusicList extends Observable implements Iterable<Music> {
                 break;
             case ONE_REPEAT :
                 ArrayList<Music> oneElementList = new ArrayList<Music>();
-                oneElementList.add(CurrentMusic.getInstance().getMusic());
+                oneElementList.add(CurrentMusicPlayer.getInstance().getMusic());
                 iterator = new MusicListIterator(new MusicList(oneElementList));
                 break;
             case SHUFFLE :

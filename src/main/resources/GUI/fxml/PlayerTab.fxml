@@ -15,7 +15,7 @@
          </image>
     </ImageView>
     <Label fx:id="musicName" text="Ready" textFill="white" prefHeight="30" prefWidth="30"/>
-    <Slider fx:id="currentTimeSlider" min="0" max="1.0" maxWidth="210" value="0" valueChanging="true" />
+    <Slider fx:id="currentTimeSlider" min="0" max="1.0" maxWidth="150" value="0"/>
     <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
       <Button fx:id="seekPreviousButton" maxWidth="40" maxHeight="40" onAction="#seekPrevious">
         <graphic>
@@ -66,6 +66,6 @@
       </Button>
       <Button fx:id="starButton" text="★" prefWidth="40" prefHeight="40" onAction="#toggleFavorite"/>
     </HBox>
-    <Slider fx:id="volumeSlider" min="0" max="1" value="0.5"/>
+    <Slider fx:id="volumeSlider" min="0" max="1" value="0.5" maxWidth="150"/>
   </children>
 </VBox>
