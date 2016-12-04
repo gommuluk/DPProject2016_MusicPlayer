@@ -180,7 +180,7 @@ public class PlayerTab implements Initializable, Observer {
         if (o instanceof CurrentMusicPlayer) {
             CurrentMusicPlayer o1 = (CurrentMusicPlayer) o;
             // TODO : exist a lot of methods calling. remove useless method call
-            addCurrentTimeSliderEventHandler();
+            // addCurrentTimeSliderEventHandler();
             addVolumeSlider();
         }
 
