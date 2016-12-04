@@ -54,6 +54,7 @@ public class CurrentMusicPlayer extends Observable {
 
     public boolean setMedia(Media media) {
         mediaPlayerOptional = Optional.of(new MediaPlayer(media));
+        mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setAutoPlay(true));
         mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setOnEndOfMedia(() -> CurrentMusicPlayer.getInstance().setCurrentMusic(MusicListManager.getInstance().getCurrentList().decoratedIterator().next())));
         return true;
     }
