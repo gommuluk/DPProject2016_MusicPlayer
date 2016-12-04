@@ -177,11 +177,12 @@ public class PlayerTab implements Initializable, Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if (o instanceof CurrentMusicPlayer) {
+        if (o instanceof CurrentMusicPlayer && arg == null) {
             CurrentMusicPlayer o1 = (CurrentMusicPlayer) o;
             // TODO : exist a lot of methods calling. remove useless method call
             // addCurrentTimeSliderEventHandler();
             addVolumeSlider();
+            replaceMusicInfo();
         }
 
         if (arg instanceof MediaPlayer.Status) {
