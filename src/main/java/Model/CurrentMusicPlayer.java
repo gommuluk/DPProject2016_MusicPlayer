@@ -56,6 +56,18 @@ public class CurrentMusicPlayer extends Observable {
         mediaPlayerOptional = Optional.of(new MediaPlayer(media));
         mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setAutoPlay(true));
         mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setOnEndOfMedia(() -> CurrentMusicPlayer.getInstance().setCurrentMusic(MusicListManager.getInstance().getCurrentList().decoratedIterator().next())));
+        mediaPlayerOptional.ifPresent(mediaPlayer -> {
+            mediaPlayer.setOnReady(() -> notifyStatus());
+        });
+        mediaPlayerOptional.ifPresent(mediaPlayer -> {
+            mediaPlayer.setOnPlaying(() -> notifyStatus());
+        });
+        mediaPlayerOptional.ifPresent(mediaPlayer -> {
+            mediaPlayer.setOnPaused(() -> notifyStatus());
+        });
+        mediaPlayerOptional.ifPresent(mediaPlayer -> {
+            mediaPlayer.setOnStopped(() -> notifyStatus());
+        });
         return true;
     }
 
@@ -123,5 +135,13 @@ public class CurrentMusicPlayer extends Observable {
 
     private void dispose() {
         mediaPlayerOptional.ifPresent(MediaPlayer::dispose);
+    }
+
+    private void notifyStatus() {
+        if (mediaPlayerOptional.isPresent()) {
+            setChanged();
+            Status status = mediaPlayerOptional.get().getStatus();
+            notifyObservers(status);
+        }
     }
 }

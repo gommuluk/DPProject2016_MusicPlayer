@@ -98,11 +98,8 @@ public class PlayerTab implements Initializable, Observer {
             currentMusicPlayer.getStatus() == MediaPlayer.Status.READY ||
             currentMusicPlayer.getStatus() == MediaPlayer.Status.UNKNOWN) {
             currentMusicPlayer.play();
-            playButton.setText("||");
-            changeButtonToImage(playButton, "pause.png");
         } else if (currentMusicPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             currentMusicPlayer.pause();
-            resetPlayButtonIcon();
         }
     }
 
@@ -133,7 +130,7 @@ public class PlayerTab implements Initializable, Observer {
     private void stop(ActionEvent event) {
         CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
         currentMusicPlayer.stop();
-        resetPlayButtonIcon();
+        setPlayButtonToPlay();
     }
 
     @FXML
@@ -168,20 +165,38 @@ public class PlayerTab implements Initializable, Observer {
         }
     }
 
-    public void resetPlayButtonIcon() {
-        Platform.runLater(() -> {
-            playButton.setText("▶");
-            changeButtonToImage(playButton, "play.jpg");
-        });
+    private void setPlayButtonToPause() {
+        playButton.setText("||");
+        // changeButtonToImage(playButton, "pause.png");
+    }
+
+    private void setPlayButtonToPlay() {
+        playButton.setText("▶");
+        // changeButtonToImage(playButton, "play.jpg");
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof CurrentMusicPlayer) {
             CurrentMusicPlayer o1 = (CurrentMusicPlayer) o;
-            // TODO : exist a lot of methods calling. remove it
+            // TODO : exist a lot of methods calling. remove useless method call
             addCurrentTimeSliderEventHandler();
             addVolumeSlider();
+        }
+
+        if (arg instanceof MediaPlayer.Status) {
+            MediaPlayer.Status st = (MediaPlayer.Status) arg;
+            switch (st) {
+                case READY:
+                    setPlayButtonToPlay();
+                    break;
+                case PLAYING:
+                    setPlayButtonToPause();
+                    break;
+                case PAUSED:
+                    setPlayButtonToPlay();
+                    break;
+            }
         }
     }
 }
