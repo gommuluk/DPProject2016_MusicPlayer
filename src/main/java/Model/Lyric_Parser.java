@@ -12,10 +12,10 @@ public class Lyric_Parser {
     private String[] index = new String[10];
 
     public Lyric_Parser() {
-    	CurrentMusic currentMusicInstance = CurrentMusic.getInstance();
-    	 if (currentMusicInstance.getMusic() == null) return;
+    	CurrentMusicPlayer currentMusicPlayerInstance = CurrentMusicPlayer.getInstance();
+    	 if (currentMusicPlayerInstance.getMusic() == null) return;
          ArrayList<String> b = FileIO.readTextFile("",
-        		 currentMusicInstance.getMusic().getFileName().replace(".mp3", ".lrc"), "");
+        		 currentMusicPlayerInstance.getMusic().getFileName().replace(".mp3", ".lrc"), "");
 
          for (int i = 0; i < b.size(); i++) {
              index = b.get(i).split("]");

@@ -25,8 +25,8 @@ public class Lyric_Repeat extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            CurrentMusic currentMusicInstance = CurrentMusic.getInstance();
-            String currentMusicTime = currentMusicInstance.getCurrentTime().toString();
+            CurrentMusicPlayer currentMusicPlayerInstance = CurrentMusicPlayer.getInstance();
+            String currentMusicTime = currentMusicPlayerInstance.getCurrentTime().toString();
 
             if (!currentMusicTime.contains("empty")) {
                 total = Integer.parseInt(currentMusicTime.substring(9, currentMusicTime.indexOf("."))) / 10;
