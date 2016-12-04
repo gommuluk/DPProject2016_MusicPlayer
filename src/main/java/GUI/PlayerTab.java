@@ -77,11 +77,13 @@ public class PlayerTab implements Initializable, Observer {
     }
 
     //add whole Buttons
-    private void changeButtonToImage(Button button, String imageFileName) {
+    private void changeButtonToImage(Button button, String imageFileName, String text) {
         Image buttonImage = new Image(getClass().getResourceAsStream(imageFileName), 20, 20, true, true);
         if (buttonImage.getWidth() != 0) {
             button.setText(null);
             button.setGraphic(new ImageView(buttonImage));
+        } else {
+            button.setText(text);
         }
     }
 
@@ -166,13 +168,11 @@ public class PlayerTab implements Initializable, Observer {
     }
 
     private void setPlayButtonToPause() {
-        playButton.setText("||");
-        // changeButtonToImage(playButton, "pause.png");
+        changeButtonToImage(playButton, "pause.png", "||");
     }
 
     private void setPlayButtonToPlay() {
-        playButton.setText("▶");
-        // changeButtonToImage(playButton, "play.jpg");
+        changeButtonToImage(playButton, "play.jpg", "▶");
     }
 
     @Override
