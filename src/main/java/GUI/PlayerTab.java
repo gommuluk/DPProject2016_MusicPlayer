@@ -65,17 +65,15 @@ public class PlayerTab implements Initializable, Observer {
             }
         });
 
-        currentMusicPlayer.addChangeTimeEvent(currentTimeSlider, (Slider slider) -> {
-            Platform.runLater(() -> {
-                Optional<Duration> currentTimeOptional = currentMusicPlayer.getCurrentTime();
-                Optional<Duration> totalTimeOptional = currentMusicPlayer.getTotalTime();
-                if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent() && !slider.isValueChanging()) {
-                    double currentTime = currentTimeOptional.get().toMillis();
-                    double totalTime = totalTimeOptional.get().toMillis();
-                    slider.setValue(currentTime / totalTime);
-                }
-            });
-        });
+        currentMusicPlayer.addChangeTimeEvent(currentTimeSlider, (Slider slider) -> Platform.runLater(() -> {
+            Optional<Duration> currentTimeOptional = currentMusicPlayer.getCurrentTime();
+            Optional<Duration> totalTimeOptional = currentMusicPlayer.getTotalTime();
+            if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent() && !slider.isValueChanging()) {
+                double currentTime = currentTimeOptional.get().toMillis();
+                double totalTime = totalTimeOptional.get().toMillis();
+                slider.setValue(currentTime / totalTime);
+            }
+        }));
     }
 
     //add whole Buttons
@@ -146,9 +144,11 @@ public class PlayerTab implements Initializable, Observer {
         if (!music.isFavorite()) {
             music.setFavorite(true);
             musicList.addToFavoriteMusicList(music);
+            setFavoriteButton(true);
         } else {
             music.setFavorite(false);
             musicList.deleteToFavoriteMusicList(music);
+            setFavoriteButton(false);
         }
     }
 
@@ -168,6 +168,14 @@ public class PlayerTab implements Initializable, Observer {
             musicName.setText(music.getFileName());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void setFavoriteButton(boolean isFavorite) {
+        if (isFavorite) {
+            starButton.setText("★");
+        } else {
+            starButton.setText("☆");
         }
     }
 
