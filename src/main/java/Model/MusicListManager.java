@@ -2,8 +2,11 @@ package Model;
 
 import FileIO.FileIO;
 import GUI.ErrorDetector;
+import Model.Sort.AddressSort;
+import Model.Sort.SortBehavior;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Observer;
 import java.util.stream.Collectors;
@@ -23,37 +26,12 @@ public class MusicListManager {
     // Favorite musics list
     private final MusicList favoritePlaylist = new MusicList();
 
+    private SortBehavior sortBehavior = new AddressSort();
     public int currentList = 0;
 
-    public static MusicListManager getInstance() {    // return unique object
-        if (uniqueInstance == null) {
-            synchronized (MusicListManager.class) {
-                if (uniqueInstance == null) {
-                    uniqueInstance = new MusicListManager();
-                }
-            }
-        }
-        return uniqueInstance;
-    }
 
-    private String[] getMusicInfoFile(final String fileName, final String fileAddress) {    // read musicinfo file's information
-        ArrayList<String> informationString = FileIO.readTextFile(FILE_INFO_ADDRESS, FILE_INFO_NAME, ".txt");
-        String[] information = new String[5];
 
-        assert informationString != null;
-        for (String iter : informationString) {
-            information = iter.split("/");
-            if (information[1].equals(fileName)) {
-                return information;
-            }
-        }
-        information[0] = "0";
-        information[1] = fileName;
-        information[2] = fileAddress;
-        information[3] = "null";
-        information[4] = "null";
-        return information;
-    }
+
 
     public void addMusic(String filepath) {    // add music file's with path, it get all music file in path and under path
         File file = new File(filepath);
@@ -131,6 +109,35 @@ public class MusicListManager {
 
     }
 
+    public static MusicListManager getInstance() {    // return unique object
+        if (uniqueInstance == null) {
+            synchronized (MusicListManager.class) {
+                if (uniqueInstance == null) {
+                    uniqueInstance = new MusicListManager();
+                }
+            }
+        }
+        return uniqueInstance;
+    }
+    private String[] getMusicInfoFile(final String fileName, final String fileAddress) {    // read musicinfo file's information
+        ArrayList<String> informationString = FileIO.readTextFile(FILE_INFO_ADDRESS, FILE_INFO_NAME, ".txt");
+        String[] information = new String[5];
+
+        assert informationString != null;
+        for (String iter : informationString) {
+            information = iter.split("/");
+            if (information[1].equals(fileName)) {
+                return information;
+            }
+        }
+        information[0] = "0";
+        information[1] = fileName;
+        information[2] = fileAddress;
+        information[3] = "null";
+        information[4] = "null";
+        return information;
+    }
+
     public MusicList getPlaylist() {    // return music list
         return playlist;
     }
@@ -180,5 +187,13 @@ public class MusicListManager {
             return true;
         }
         else return false;
+    }
+
+    public void performSort() {
+        sortBehavior.sort((ArrayList<Music>)this.getCurrentList().getMusicList());
+    }
+
+    public void setSortBehavior(SortBehavior sortBehavior) {
+        this.sortBehavior = sortBehavior;
     }
 }

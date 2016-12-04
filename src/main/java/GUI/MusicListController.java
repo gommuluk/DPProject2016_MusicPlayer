@@ -4,6 +4,10 @@ import Model.CurrentMusic;
 import Model.Music;
 import Model.MusicList;
 import Model.MusicListManager;
+import Model.Sort.AddressSort;
+import Model.Sort.NameAscSort;
+import Model.Sort.NameDescSort;
+import Model.Sort.RandomSort;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import sun.security.pkcs11.wrapper.CK_SSL3_RANDOM_DATA;
 
 import java.net.URL;
 import java.util.*;
@@ -58,10 +63,22 @@ public class MusicListController implements Initializable {
     @FXML
     private void changeSortMode(ActionEvent event) {
         String mode = sortMode.getValue();
-        System.out.println(mode);
-        //TODO MODE SELECTION.
-        //TODO SORT
-        //TODO NULL 처리
+        switch(mode) {
+            case "제목 순" :
+                MusicListManager.getInstance().setSortBehavior(new NameAscSort());
+                break;
+            case "제목 역순" :
+                MusicListManager.getInstance().setSortBehavior(new NameDescSort());
+                break;
+            case "섞기" :
+                MusicListManager.getInstance().setSortBehavior(new RandomSort());
+                break;
+            default : //경로 + 제목순
+                MusicListManager.getInstance().setSortBehavior(new AddressSort());
+                break;
+
+        }
+        MusicListManager.getInstance().performSort();
         redrawPlaylist(MusicListManager.getInstance().getCurrentList());
     }
 

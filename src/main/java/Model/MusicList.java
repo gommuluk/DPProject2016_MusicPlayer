@@ -47,7 +47,7 @@ public class MusicList extends Observable implements Iterable<Music> {
     }
 
     public List<Music> getMusicList() {
-        return java.util.Collections.unmodifiableList(this.list);
+        return this.list;
     }
 
     public boolean addMusic(Music music) {

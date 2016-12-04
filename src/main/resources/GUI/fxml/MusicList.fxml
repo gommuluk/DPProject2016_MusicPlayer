@@ -20,9 +20,10 @@
       <ComboBox fx:id="sortMode" layoutX="80.0" layoutY="20.0" onAction="#changeSortMode" prefHeight="20.0" prefWidth="150.0" promptText="Select Name" GridPane.columnIndex="3" GridPane.rowIndex="0" >
         <items>
           <FXCollections fx:factory="observableArrayList"  >
-            <String fx:value="제목" />
-            <String fx:value="날짜" />
-            <String fx:value="아티스트" />
+            <String fx:value="제목+경로순" />
+            <String fx:value="제목 순" />
+            <String fx:value="제목 역순" />
+            <String fx:value="섞기" />
           </FXCollections>
         </items>
       </ComboBox>
