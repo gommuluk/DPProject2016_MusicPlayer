@@ -14,7 +14,7 @@
            <Image url="@../defaultImage.jpg"/>
          </image>
     </ImageView>
-    <Label fx:id="musicName" text="Ready" textFill="white" prefHeight="30" prefWidth="30"/>
+    <Label fx:id="musicName" text="No Music" textFill="black" prefHeight="30"/>
     <Slider fx:id="currentTimeSlider" min="0" max="1.0" maxWidth="150" value="0"/>
     <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
       <Button fx:id="seekPreviousButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#seekPrevious">

@@ -161,7 +161,7 @@ public class PlayerTab implements Initializable, Observer {
                 musicImage = new Image(new ByteArrayInputStream(music.getAlbumArt()), 200, 200, true, true);
                 musicImageView.setImage(musicImage);
             }
-            musicName.setText(FilePathParser.getFileName(music.getFileName()));
+            musicName.setText(music.getFileName());
         } catch (Exception e) {
             e.printStackTrace();
         }
