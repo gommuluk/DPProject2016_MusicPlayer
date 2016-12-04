@@ -61,16 +61,19 @@ public class PlayerTab implements Initializable, Observer {
 
         currentTimeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             double percent = (newValue.floatValue() - currentTimeSlider.getMin()) / (currentTimeSlider.getMax() - currentTimeSlider.getMin());
-            currentMusicPlayer.seek(percent);
+            if (currentTimeSlider.isValueChanging()) {
+                currentMusicPlayer.seek(percent);
+            }
         });
 
         currentMusicPlayer.addChangeTimeEvent(currentTimeSlider, (Slider slider) -> {
             Platform.runLater(() -> {
                 Optional<Duration> currentTimeOptional = currentMusicPlayer.getCurrentTime();
                 Optional<Duration> totalTimeOptional = currentMusicPlayer.getTotalTime();
-                if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent()) {
-                    double percent = currentTimeOptional.get().toMillis() / totalTimeOptional.get().toMillis();
-                    slider.setValue(percent);
+                if (currentTimeOptional.isPresent() && totalTimeOptional.isPresent() && !slider.isValueChanging()) {
+                    double currentTime = currentTimeOptional.get().toMillis();
+                    double totalTime = totalTimeOptional.get().toMillis();
+                    slider.setValue(currentTime / totalTime);
                 }
             });
         });
@@ -180,7 +183,7 @@ public class PlayerTab implements Initializable, Observer {
         if (o instanceof CurrentMusicPlayer && arg == null) {
             CurrentMusicPlayer o1 = (CurrentMusicPlayer) o;
             // TODO : exist a lot of methods calling. remove useless method call
-            // addCurrentTimeSliderEventHandler();
+            addCurrentTimeSliderEventHandler();
             addVolumeSlider();
             replaceMusicInfo();
         }
