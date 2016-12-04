@@ -1,6 +1,5 @@
 package GUI;
 
-import FileIO.FilePathParser;
 import Model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -85,8 +84,10 @@ public class PlayerTab implements Initializable, Observer {
         if (buttonImage.getWidth() != 0) {
             button.setText(null);
             button.setGraphic(new ImageView(buttonImage));
+            button.setPrefSize(40, 40);
         } else {
             button.setText(text);
+            button.setPrefSize(40, 40);
         }
     }
 
@@ -140,14 +141,14 @@ public class PlayerTab implements Initializable, Observer {
 
     @FXML
     private void toggleFavorite() {
-        Music temp = CurrentMusicPlayer.getInstance().getMusic();
+        Music music = CurrentMusicPlayer.getInstance().getMusic();
         MusicListManager musicList = MusicListManager.getInstance();
-        if (!temp.getFavorite()) {
-            temp.setFavorite();
-            musicList.addToFavoriteMusicList(temp);
+        if (!music.isFavorite()) {
+            music.setFavorite(true);
+            musicList.addToFavoriteMusicList(music);
         } else {
-            temp.setFavorite();
-            musicList.deleteToFavoriteMusicList(temp);
+            music.setFavorite(false);
+            musicList.deleteToFavoriteMusicList(music);
         }
     }
 

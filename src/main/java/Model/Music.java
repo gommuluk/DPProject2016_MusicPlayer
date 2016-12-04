@@ -42,8 +42,11 @@ public abstract class Music implements Cloneable {
         return getFileName();
     }
 
-    public boolean getFavorite() {
+    public boolean isFavorite() {
         return isFavorite;
     }
-    public void setFavorite() { this.isFavorite = !this.isFavorite; }
+
+    public void setFavorite(boolean flag) {
+        this.isFavorite = flag;
+    }
 }
