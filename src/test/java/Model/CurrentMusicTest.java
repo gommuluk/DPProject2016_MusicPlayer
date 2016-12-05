@@ -1,20 +1,14 @@
-package Model.Test;
+package Model;
 
-import Model.CurrentMusicPlayer;
-import Model.MP3Music;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import org.junit.Test;
-
 
 import java.io.File;
 import java.io.IOException;
 
 import static junit.framework.TestCase.assertEquals;
 
-/**
- * Created by Elliad on 2016-12-05.
- */
 public class CurrentMusicTest {
     @Test
     public void TestSingleton() {
@@ -28,7 +22,7 @@ public class CurrentMusicTest {
         boolean result;
         try {
             result = currentMusicPlayer.setCurrentMusic(new MP3Music(new File("non_exist_file.file")));
-        } catch(IOException e) {
+        } catch (IOException e) {
             result = false;
         }
         assertEquals(result, false);
