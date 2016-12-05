@@ -2,6 +2,7 @@ package Model;
 
 import FileIO.FileIO;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class Lyric_Parser {
@@ -14,8 +15,8 @@ public class Lyric_Parser {
     public Lyric_Parser() {
     	CurrentMusicPlayer currentMusicPlayerInstance = CurrentMusicPlayer.getInstance();
     	 if (currentMusicPlayerInstance.getMusic() == null) return;
-         ArrayList<String> b = FileIO.readTextFile("",
-        		 currentMusicPlayerInstance.getMusic().getFileName().replace(".mp3", ".lrc"), "");
+            ArrayList<String> b = FileIO.readTextFile("",
+                currentMusicPlayerInstance.getMusic().getFileName().replace(".mp3", ".lrc"), "");
 
          for (int i = 0; i < b.size(); i++) {
              index = b.get(i).split("]");

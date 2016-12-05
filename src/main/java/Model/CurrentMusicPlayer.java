@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 
 public class CurrentMusicPlayer extends Observable {
     private static volatile CurrentMusicPlayer uniqueInstance;
-    public Optional<MediaPlayer> mediaPlayerOptional;
+    private Optional<MediaPlayer> mediaPlayerOptional;
     private Music music;
 
     private CurrentMusicPlayer() {
@@ -52,7 +52,7 @@ public class CurrentMusicPlayer extends Observable {
         }
     }
 
-    public boolean setMedia(Media media) {
+    private boolean setMedia(Media media) {
         mediaPlayerOptional = Optional.of(new MediaPlayer(media));
         mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setAutoPlay(true));
         mediaPlayerOptional.ifPresent(mediaPlayer -> mediaPlayer.setOnEndOfMedia(() -> CurrentMusicPlayer.getInstance().setCurrentMusic(MusicListManager.getInstance().getCurrentList().decoratedIterator().next())));
