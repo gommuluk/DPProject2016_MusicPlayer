@@ -42,7 +42,7 @@ public class MusicListController implements Initializable {
         RecentPlaylist
     }
 
-    NowList playinglist;
+    private NowList playinglist;
 
     // Music list to be drawn
     private ObservableList<Music> musicList;

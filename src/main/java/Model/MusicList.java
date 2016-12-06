@@ -10,7 +10,7 @@ import java.util.Observable;
 
 
 public class MusicList extends Observable implements Iterable<Music> {
-    List<Music> list;
+    private List<Music> list;
     public static PlayMode playMode = PlayMode.CYCLIC_WHOLE;
 
     @Override
@@ -42,7 +42,7 @@ public class MusicList extends Observable implements Iterable<Music> {
         this.list = new ArrayList<>();
     }
 
-    public MusicList(List<Music> list) {
+    private MusicList(List<Music> list) {
         this.list = list;
     }
 

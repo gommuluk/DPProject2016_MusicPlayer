@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MP3Music extends Music {	// extends MP3File - it is in Mp3agic library
 
-    Mp3File mp3File;
+    private Mp3File mp3File;
     private ID3v1 id3v1Tag;	// save id3v1tag
     private ID3v2 id3v2Tag;	// save id3v2tag
     private boolean isV1Tag = false, isV2Tag = false;	// check tag is existing

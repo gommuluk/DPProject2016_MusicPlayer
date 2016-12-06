@@ -12,8 +12,8 @@ import org.junit.rules.ExternalResource;
 import java.io.File;
 
 public class MP3MusicTest {
-    File musicFile;
-    MP3Music mp3Music;
+    private File musicFile;
+    private MP3Music mp3Music;
 
     @Rule
     public ExternalResource resource = new ExternalResource() {

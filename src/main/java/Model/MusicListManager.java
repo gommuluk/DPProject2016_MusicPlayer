@@ -30,7 +30,7 @@ public class MusicListManager {
     private final MusicList favoritePlaylist = new MusicList();
 
     private SortBehavior sortBehavior = new AddressSort();
-    public int currentList = 0;
+    private int currentList = 0;
 
 
 
@@ -68,7 +68,7 @@ public class MusicListManager {
         }
     }
 
-    public int findIndex(String filePath) {    // find music file's index
+    private int findIndex(String filePath) {    // find music file's index
         for (Music iter : getCurrentList()) {
             if (iter.getFileAddress().replaceAll("[+]", " ").equals(filePath)) {
                 return getCurrentList().find(iter);
@@ -201,7 +201,7 @@ public class MusicListManager {
         this.sortBehavior = sortBehavior;
     }
 
-    public Music makeMusic(String fileName, String fileAddress, String[] fileInfo, String extension ) throws InvalidDataException, IOException, UnsupportedTagException {
+    private Music makeMusic(String fileName, String fileAddress, String[] fileInfo, String extension) throws InvalidDataException, IOException, UnsupportedTagException {
 
         if(extension.equals("mp3")) return new MP3Music(fileName, fileAddress, fileInfo);
         else if(extension.equals("wav")) return new WAVMusic(fileName, fileAddress, fileInfo);
