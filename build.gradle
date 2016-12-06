@@ -36,4 +36,10 @@ compileTestJava {
     options.incremental = true
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'GUI.Main'
+    }
+}
+
 mainClassName = "GUI.Main"
