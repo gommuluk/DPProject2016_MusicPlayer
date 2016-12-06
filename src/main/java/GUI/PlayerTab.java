@@ -54,8 +54,6 @@ public class PlayerTab implements Initializable, Observer {
     }
 
     private void addCurrentTimeSliderEventHandler() {
-        // TODO
-        // horizontal plz
         CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
 
         currentTimeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -191,7 +189,6 @@ public class PlayerTab implements Initializable, Observer {
     public void update(Observable o, Object arg) {
         if (o instanceof CurrentMusicPlayer && arg == null) {
             CurrentMusicPlayer o1 = (CurrentMusicPlayer) o;
-            // TODO : exist a lot of methods calling. remove useless method call
             addCurrentTimeSliderEventHandler();
             addVolumeSlider();
             replaceMusicInfo();

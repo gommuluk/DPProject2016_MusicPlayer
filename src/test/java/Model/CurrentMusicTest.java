@@ -6,8 +6,10 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.easymock.EasyMock.createMock;
 
 public class CurrentMusicTest {
     @Test
@@ -29,7 +31,15 @@ public class CurrentMusicTest {
     }
 
     @Test
-    public void TestMediaSettingSuccess() {
-        //createMock(MP3Music.class);
+    public void TestMediaSettingSuccess() throws InvalidDataException, UnsupportedTagException, URISyntaxException {
+        CurrentMusicPlayer currentMusicPlayer = CurrentMusicPlayer.getInstance();
+        boolean result;
+        try {
+            result = currentMusicPlayer.setCurrentMusic(new MP3Music(new File(getClass().getResource("Alan Walker - Fade.mp3").toURI())));
+        } catch (IOException e) {
+            result = false;
+        }
+        assertEquals(result, true);
     }
+
 }

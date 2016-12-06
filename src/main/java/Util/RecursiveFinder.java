@@ -29,7 +29,7 @@ public class RecursiveFinder {
 
     public RecursiveFinder(String startingDir) {
         this.startingDir = Paths.get(startingDir);
-        this.pattern = "*.mp3";
+        this.pattern = "*.{mp3,wav}";
     }
 
     public ArrayList<Path> find() throws IOException {

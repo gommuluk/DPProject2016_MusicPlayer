@@ -4,8 +4,11 @@ import FileIO.FileIO;
 import GUI.ErrorDetector;
 import Model.Sort.AddressSort;
 import Model.Sort.SortBehavior;
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Observer;
@@ -40,8 +43,9 @@ public class MusicListManager {
             String fileName = filepath.substring(filepath.lastIndexOf(File.separatorChar) + 1,
                 filepath.lastIndexOf("."));
             String fileAddress = filepath.substring(0, filepath.lastIndexOf(File.separatorChar));
+            String extension = filepath.substring(filepath.lastIndexOf("."), filepath.length() - 1);
             try {
-                playlist.addMusic(new MP3Music(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress))); //TODO
+                playlist.addMusic(makeMusic(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress), extension)); //TODO
             } catch (Exception e) {
                 new ErrorDetector();
             }
@@ -80,7 +84,7 @@ public class MusicListManager {
     public void addToRecentPlayList(Music music) {    // add to recent play list
         int temp = currentList;
         currentList = 2;
-        if (isExist(music)) recentPlaylist.remove(recentPlaylist.find(music)); //TODO
+        if (isExist(music)) recentPlaylist.remove(recentPlaylist.find(music));
         currentList = temp;
         recentPlaylist.addMusic(music);
     }
@@ -195,5 +199,11 @@ public class MusicListManager {
 
     public void setSortBehavior(SortBehavior sortBehavior) {
         this.sortBehavior = sortBehavior;
+    }
+
+    public Music makeMusic(String fileName, String fileAddress, String[] fileInfo, String extension ) throws InvalidDataException, IOException, UnsupportedTagException {
+        if(extension.equals("mp3")) return new MP3Music(fileName, fileAddress, fileInfo);
+        else if(extension.equals("wav")) return new WAVMusic(fileName, fileAddress, fileInfo);
+        else return null;
     }
 }
