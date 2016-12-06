@@ -16,45 +16,30 @@ public class WAVMusic extends Music {
 
     private String[] musicInfo;
 
-    public WAVMusic(String musicFileName, String musicFileAddress, String[] infoInfo) {
+    public WAVMusic(String musicFileName, String musicFileAddress) {
 
         //FieldKey.TITLE   FieldKey.ARTIST   FieldKey.ALBUM   FieldKey.YEAR   FieldKey.GENRE
         String fileName = musicFileAddress + File.separatorChar + musicFileName + ".wav";
-
-        if (infoInfo != null) {
-
-            this.playCnt = Integer.parseInt(infoInfo[0]);
-            this.fileName = infoInfo[1];
-            this.fileAddress = infoInfo[2];
-            this.lyricsFileName = infoInfo[3];
-            this.lyricsFileAddress = infoInfo[4];
-        }
+        this.filePath = fileName;
         isFavorite = false;    // default setting - favorite is false
+        this.fileName = musicFileName;
+        this.fileAddress = musicFileAddress;
+        this.lyricsFileName = "null";
+        this.lyricsFileAddress = "null";
     }
 
     public WAVMusic(File file) {
-
         boolean check = true;
         String path = file.getAbsolutePath();
         this.fileName = FilePathParser.getFileName(path);
         this.fileAddress = FilePathParser.getPath(path);
-        ArrayList<String> informationString = FileIO.readTextFile(FILE_INFO_ADDRESS, FILE_INFO_NAME, ".txt");
-
-        assert informationString != null;
-        for (String iter : informationString) {
-            musicInfo = iter.split(":");
-            if (musicInfo[1].equals(fileName)) {
-                break;
-            }
-        }
-        this.playCnt = 0;
         this.lyricsFileName = "null";
         this.lyricsFileAddress = "null";
     }
 
     @Override
     public Music clone() {
-        return new WAVMusic(fileName, fileAddress, musicInfo);
+        return new WAVMusic(fileName, fileAddress);
     }
 
     @Override

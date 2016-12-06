@@ -45,7 +45,7 @@ public class MusicListManager {
             String fileAddress = filepath.substring(0, filepath.lastIndexOf(File.separatorChar));
             String extension = filepath.substring(filepath.lastIndexOf(".") + 1, filepath.length());
             try {
-                playlist.addMusic(makeMusic(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress), extension)); //TODO
+                playlist.addMusic(makeMusic(fileName, fileAddress, extension)); //TODO
             } catch (Exception e) {
                 new ErrorDetector();
             }
@@ -123,24 +123,6 @@ public class MusicListManager {
         }
         return uniqueInstance;
     }
-    private String[] getMusicInfoFile(final String fileName, final String fileAddress) {    // read musicinfo file's information
-        ArrayList<String> informationString = FileIO.readTextFile(FILE_INFO_ADDRESS, FILE_INFO_NAME, ".txt");
-        String[] information = new String[5];
-
-        assert informationString != null;
-        for (String iter : informationString) {
-            information = iter.split(":");
-            if (information[1].equals(fileName)) {
-                return information;
-            }
-        }
-        information[0] = "0";
-        information[1] = fileName;
-        information[2] = fileAddress;
-        information[3] = "null";
-        information[4] = "null";
-        return information;
-    }
 
     public MusicList getPlaylist() {    // return music list
         return playlist;
@@ -201,10 +183,9 @@ public class MusicListManager {
         this.sortBehavior = sortBehavior;
     }
 
-    private Music makeMusic(String fileName, String fileAddress, String[] fileInfo, String extension) throws InvalidDataException, IOException, UnsupportedTagException {
-
-        if(extension.equals("mp3")) return new MP3Music(fileName, fileAddress, fileInfo);
-        else if(extension.equals("wav")) return new WAVMusic(fileName, fileAddress, fileInfo);
+    private Music makeMusic(String fileName, String fileAddress, String extension) throws InvalidDataException, IOException, UnsupportedTagException {
+        if(extension.equals("mp3")) return new MP3Music(fileName, fileAddress);
+        else if(extension.equals("wav")) return new WAVMusic(fileName, fileAddress);
         else return null;
     }
 }

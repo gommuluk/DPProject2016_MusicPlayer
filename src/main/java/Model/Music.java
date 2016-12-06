@@ -1,25 +1,20 @@
 package Model;
 
 import java.io.File;
+import java.nio.file.Path;
 
 public abstract class Music implements Cloneable {
-    protected final String FILE_INFO_NAME = "MusicInfoFile";
-    protected final String FILE_INFO_ADDRESS = System.getProperty("user.home")
-        + File.separatorChar
-        + "music-info"
-        + File.separatorChar;    // music info file's address
+    protected String filePath;
     protected String fileName, fileAddress;
     protected String artist, composer, name, album;
     protected byte[] image;
     protected boolean isFavorite;
-    protected int playCnt;
     protected String lyricsFileAddress, lyricsFileName;    // save lyric file's address and name
 
     public abstract Music clone();
 
     public String getFileInformationData() {
-        return Integer.toString(this.playCnt) + ":" + this.fileName + ":" +
-            this.fileAddress + ":" + this.lyricsFileName + ":" + this.lyricsFileAddress + "\n";
+        return this.filePath + ":" + this.lyricsFileName + ":" + this.lyricsFileAddress + "\n";
     }
 
     public byte[] getAlbumArt() {    //return album art
