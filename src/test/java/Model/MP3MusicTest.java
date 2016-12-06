@@ -1,6 +1,7 @@
 package Model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -40,5 +41,22 @@ public class MP3MusicTest {
     @Test
     public void getFileAddressTest() throws Exception {
         assertEquals(musicFile.getAbsolutePath(), mp3Music.getFileAddress());
+    }
+
+    @Test
+    public void getFileInformationDataTest() throws Exception {
+
+    }
+
+    @Test
+    public void getFileNameTest() throws Exception {
+        assertTrue(musicFile.getName().startsWith(mp3Music.getFileName()));
+    }
+
+    @Test
+    public void isFavoriteTest() throws Exception {
+        assertEquals(false, mp3Music.isFavorite());
+        mp3Music.setFavorite(true);
+        assertEquals(true, mp3Music.isFavorite());
     }
 }
