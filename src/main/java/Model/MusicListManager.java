@@ -43,7 +43,7 @@ public class MusicListManager {
             String fileName = filepath.substring(filepath.lastIndexOf(File.separatorChar) + 1,
                 filepath.lastIndexOf("."));
             String fileAddress = filepath.substring(0, filepath.lastIndexOf(File.separatorChar));
-            String extension = filepath.substring(filepath.lastIndexOf("."), filepath.length());
+            String extension = filepath.substring(filepath.lastIndexOf(".") + 1, filepath.length());
             try {
                 playlist.addMusic(makeMusic(fileName, fileAddress, getMusicInfoFile(fileName, fileAddress), extension)); //TODO
             } catch (Exception e) {
