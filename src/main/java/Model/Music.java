@@ -13,7 +13,6 @@ public abstract class Music implements Cloneable {
     protected byte[] image;
     protected boolean isFavorite;
     protected int playCnt;
-    protected Lyric lyrics;    // lyric object
     protected String lyricsFileAddress, lyricsFileName;    // save lyric file's address and name
 
     public abstract Music clone();
@@ -21,11 +20,6 @@ public abstract class Music implements Cloneable {
     public String getFileInformationData() {
         return Integer.toString(this.playCnt) + "/" + this.fileName + "/" +
             this.fileAddress + "/" + this.lyricsFileName + "/" + this.lyricsFileAddress + "\n";
-    }
-
-    public void setLyrics(Lyric lyrics, String lyricsFileName, String lyricsFileAddress) { //set lyric
-        this.lyricsFileName = lyricsFileName;
-        this.lyricsFileAddress = lyricsFileAddress;
     }
 
     public byte[] getAlbumArt() {    //return album art
