@@ -19,8 +19,8 @@ public abstract class Music implements Cloneable {
     public abstract Music clone();
 
     public String getFileInformationData() {
-        return Integer.toString(this.playCnt) + "/" + this.fileName + "/" +
-            this.fileAddress + "/" + this.lyricsFileName + "/" + this.lyricsFileAddress + "\n";
+        return Integer.toString(this.playCnt) + ":" + this.fileName + ":" +
+            this.fileAddress + ":" + this.lyricsFileName + ":" + this.lyricsFileAddress + "\n";
     }
 
     public void setLyrics(Lyric lyrics, String lyricsFileName, String lyricsFileAddress) { //set lyric
