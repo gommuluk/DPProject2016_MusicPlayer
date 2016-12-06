@@ -38,7 +38,7 @@ public class MP3MusicTest {
     }
 
     @Test
-    public void getFileInformationDataTest() throws Exception {
+    public void getFileAddressTest() throws Exception {
         assertEquals(musicFile.getAbsolutePath(), mp3Music.getFileAddress());
     }
 }
