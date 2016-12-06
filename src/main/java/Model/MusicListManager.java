@@ -202,6 +202,7 @@ public class MusicListManager {
     }
 
     public Music makeMusic(String fileName, String fileAddress, String[] fileInfo, String extension ) throws InvalidDataException, IOException, UnsupportedTagException {
+
         if(extension.equals("mp3")) return new MP3Music(fileName, fileAddress, fileInfo);
         else if(extension.equals("wav")) return new WAVMusic(fileName, fileAddress, fileInfo);
         else return null;

@@ -12,8 +12,7 @@ import java.util.ArrayList;
 
 
 public class WAVMusic extends Music {
-    private AudioFile wavFile;
-    private Tag tag;
+
 
     private String[] musicInfo;
 
@@ -21,24 +20,19 @@ public class WAVMusic extends Music {
 
         //FieldKey.TITLE   FieldKey.ARTIST   FieldKey.ALBUM   FieldKey.YEAR   FieldKey.GENRE
         String fileName = musicFileAddress + File.separatorChar + musicFileName + ".wav";
+
         if (infoInfo != null) {
-            try {
-                tag.setField(FieldKey.TITLE, infoInfo[1]);
-            } catch (FieldDataInvalidException e) {
-                e.printStackTrace();
-            }
+
             this.playCnt = Integer.parseInt(infoInfo[0]);
             this.fileName = infoInfo[1];
             this.fileAddress = infoInfo[2];
             this.lyricsFileName = infoInfo[3];
             this.lyricsFileAddress = infoInfo[4];
         }
-        wavFile = new AudioFile(fileName, null, tag);
         isFavorite = false;    // default setting - favorite is false
     }
 
     public WAVMusic(File file) {
-        wavFile = new AudioFile(file, null, null);
 
         boolean check = true;
         String path = file.getAbsolutePath();
@@ -60,11 +54,14 @@ public class WAVMusic extends Music {
 
     @Override
     public Music clone() {
-        return /*new WAVMusic(fileName, fileAddress, musicInfo)*/ null;
+        return new WAVMusic(fileName, fileAddress, musicInfo);
     }
 
     @Override
     public String getFileAddress() {
-        return null;
+        return fileAddress
+            + File.separatorChar
+            + fileName
+            + ".wav";
     }
 }

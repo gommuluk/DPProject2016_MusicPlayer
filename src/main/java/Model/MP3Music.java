@@ -111,8 +111,4 @@ public class MP3Music extends Music {	// extends MP3File - it is in Mp3agic libr
             + fileName
             + ".mp3";
     }
-
-    private MP3Music(){
-
-    }
 }
