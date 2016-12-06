@@ -19,16 +19,16 @@
     <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
       <Button fx:id="seekPreviousButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#seekPrevious">
         <graphic>
-          <ImageView fitWidth="40" fitHeight="40">
+          <ImageView fitWidth="20" fitHeight="20">
             <image>
-              <Image url="@../seek-previous.png"/>
+              <Image requestedWidth="20" requestedHeight="20" url="@../seek-previous.png"/>
             </image>
           </ImageView>
         </graphic>
       </Button>
       <Button fx:id="playButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#play">
         <graphic>
-          <ImageView fitWidth="40" fitHeight="40">
+          <ImageView fitWidth="20" fitHeight="20">
              <image>
               <Image url="@../play.jpg"/>
             </image>
@@ -37,7 +37,7 @@
       </Button>
       <Button fx:id="seekNextButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#seekNext">
         <graphic>
-          <ImageView fitWidth="40" fitHeight="40">
+          <ImageView fitWidth="20" fitHeight="20">
             <image>
               <Image url="@../seek-next.png"/>
             </image>
@@ -46,18 +46,11 @@
       </Button>
     </HBox>
     <HBox prefWidth="120" prefHeight="150" xmlns:fx="http://javafx.com/fxml/1">
-      <Button fx:id="playModeButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#changePlayMode">
-        <graphic>
-          <ImageView fitWidth="40" fitHeight="40">
-            <image>
-              <Image url="@../loop.png"/>
-            </image>
-          </ImageView>
-        </graphic>
+      <Button fx:id="playModeButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#changePlayMode" text="A/R">
       </Button>
       <Button fx:id="stopButton" prefWidth="40" prefHeight="40" maxWidth="40" maxHeight="40" onAction="#stop">
         <graphic>
-          <ImageView fitWidth="40" fitHeight="40">
+          <ImageView fitWidth="20" fitHeight="20">
             <image>
               <Image url="@../stop.png"/>
             </image>

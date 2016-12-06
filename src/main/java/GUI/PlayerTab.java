@@ -121,7 +121,7 @@ public class PlayerTab implements Initializable, Observer {
             playModeButton.setText("O/R");
         } else if (MusicList.playMode == PlayMode.ONE_REPEAT) {
             MusicList.playMode = PlayMode.SHUFFLE;
-            playModeButton.setText("SHUFFLE");
+            playModeButton.setText("SHU");
         } else if (MusicList.playMode == PlayMode.SHUFFLE) {
             MusicList.playMode = PlayMode.CYCLIC_WHOLE;
             playModeButton.setText("A/R");

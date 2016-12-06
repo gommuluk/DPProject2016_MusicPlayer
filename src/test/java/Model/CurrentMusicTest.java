@@ -121,14 +121,5 @@ public class CurrentMusicTest {
         });
     }
 
-    @Test
-    public void TestSeekNext() {
-
-    }
-
-    @Test
-    public void TestSeekPrevious() {
-
-    }
 }
 
