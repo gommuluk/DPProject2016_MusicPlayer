@@ -59,7 +59,7 @@ public class MP3Music extends Music {	// extends MP3File - it is in Mp3agic libr
     	//save information when info exist
         assert informationString != null;
         for (String iter : informationString) {
-            musicInfo = iter.split("/");
+            musicInfo = iter.split(":");
             if (musicInfo[1].equals(fileName)) {
             	 this.playCnt = Integer.parseInt(musicInfo[0]);
                  this.fileName = musicInfo[1];

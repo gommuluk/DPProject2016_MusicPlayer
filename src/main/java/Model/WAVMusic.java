@@ -42,7 +42,7 @@ public class WAVMusic extends Music {
 
         assert informationString != null;
         for (String iter : informationString) {
-            musicInfo = iter.split("/");
+            musicInfo = iter.split(":");
             if (musicInfo[1].equals(fileName)) {
                 break;
             }

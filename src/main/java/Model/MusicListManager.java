@@ -129,7 +129,7 @@ public class MusicListManager {
 
         assert informationString != null;
         for (String iter : informationString) {
-            information = iter.split("/");
+            information = iter.split(":");
             if (information[1].equals(fileName)) {
                 return information;
             }
